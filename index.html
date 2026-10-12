@@ -130,6 +130,36 @@
           </button>
         </li>
 
+        <li class="component-item">
+          <button class="component-button" type="button" data-component="dropdown">
+            <span class="component-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M7 10l5 5 5-5z"/>
+              </svg>
+            </span>
+            <div class="component-meta">
+              <span class="component-name">Dropdown Menu</span>
+              <span class="component-desc">Exposed Select & Action Menus</span>
+            </div>
+            <span class="badge badge-active" style="display: none;">Active</span>
+          </button>
+        </li>
+
+        <li class="component-item">
+          <button class="component-button" type="button" data-component="fabMenu">
+            <span class="component-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M12 4c4.41 0 8 3.59 8 8 0 1.82-.62 3.49-1.64 4.83l1.43 1.43C21.2 16.59 22 14.4 22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 2.4.8 4.59 2.21 6.26l1.43-1.43C4.62 15.49 4 13.82 4 12c0-4.41 3.59-8 8-8zm-1 4v3H8v2h3v3h2v-3h3v-2h-3V8h-2z"/>
+              </svg>
+            </span>
+            <div class="component-meta">
+              <span class="component-name">FAB Menu</span>
+              <span class="component-desc">Speed Dial & Action Items</span>
+            </div>
+            <span class="badge badge-active" style="display: none;">Active</span>
+          </button>
+        </li>
+
         <li class="component-divider" role="separator" aria-hidden="true"></li>
         <li class="component-group-label">Planned for Future</li>
 
@@ -1271,6 +1301,466 @@
               </button>
             </div>
             <p class="prop-hint">Pure CSS uses box-shadow transitions. Vanilla JS adds radial click ripple animation.</p>
+          </div>
+        </fieldset>
+
+        <!-- ================= DROPDOWN MENU PROPERTIES ================= -->
+        <!-- Dropdown Section 1: Type & Anchor -->
+        <fieldset class="prop-group" data-for-component="dropdown">
+          <legend class="prop-legend">Style & Anchor Type</legend>
+
+          <!-- Type / Variant -->
+          <div class="prop-item">
+            <label class="prop-label">Dropdown Type</label>
+            <div class="segmented-control" role="radiogroup" aria-label="Dropdown type">
+              <button type="button" class="segment-btn active" data-dropdown-type="filled" role="radio" aria-checked="true">
+                Filled
+              </button>
+              <button type="button" class="segment-btn" data-dropdown-type="outlined" role="radio" aria-checked="false">
+                Outlined
+              </button>
+              <button type="button" class="segment-btn" data-dropdown-type="button" role="radio" aria-checked="false">
+                Button
+              </button>
+              <button type="button" class="segment-btn" data-dropdown-type="icon" role="radio" aria-checked="false">
+                Icon
+              </button>
+            </div>
+            <p id="dropdown-type-desc" class="prop-hint">Filled: Canonical M3 exposed dropdown with surface container and indicator line.</p>
+          </div>
+
+          <!-- Label Input -->
+          <div id="dropdown-label-row" class="prop-item">
+            <label for="dropdown-label-input" class="prop-label">Field Label</label>
+            <input type="text" id="dropdown-label-input" class="md-text-input" value="Favorite Fruit" placeholder="Label text" maxlength="32" aria-label="Dropdown field label">
+          </div>
+
+          <!-- Selected Value / Placeholder Input -->
+          <div id="dropdown-value-row" class="prop-item">
+            <label for="dropdown-value-input" class="prop-label">Selected Value</label>
+            <input type="text" id="dropdown-value-input" class="md-text-input" value="Apple" placeholder="Selected option text" maxlength="32" aria-label="Dropdown selected value">
+          </div>
+
+          <!-- Helper / Supporting Text -->
+          <div id="dropdown-helper-row" class="prop-item">
+            <label for="dropdown-helper-input" class="prop-label">Helper / Supporting Text</label>
+            <input type="text" id="dropdown-helper-input" class="md-text-input" value="Select your preferred fruit option" placeholder="Helper description" maxlength="48" aria-label="Dropdown helper text">
+          </div>
+        </fieldset>
+
+        <!-- Dropdown Section 2: Menu Options & Content -->
+        <fieldset class="prop-group" data-for-component="dropdown">
+          <legend class="prop-legend">Menu Content & Items</legend>
+
+          <!-- Options Preset -->
+          <div class="prop-item">
+            <label class="prop-label">Items Preset</label>
+            <div class="segmented-control" role="radiogroup" aria-label="Menu items preset">
+              <button type="button" class="segment-btn active" data-dropdown-preset="fruits" role="radio" aria-checked="true">
+                Fruits
+              </button>
+              <button type="button" class="segment-btn" data-dropdown-preset="account" role="radio" aria-checked="false">
+                Account
+              </button>
+              <button type="button" class="segment-btn" data-dropdown-preset="actions" role="radio" aria-checked="false">
+                Actions
+              </button>
+            </div>
+            <p id="dropdown-preset-desc" class="prop-hint">Fruits: 5 selectable options with leading sparkle/favorite icons.</p>
+          </div>
+
+          <!-- Leading Icons toggle -->
+          <div class="prop-toggle-row">
+            <div class="toggle-text">
+              <label for="dropdown-icons-switch" class="toggle-label">Leading Icons</label>
+              <span class="toggle-desc">Display 24dp icons alongside menu items</span>
+            </div>
+            <label class="md-switch">
+              <input type="checkbox" id="dropdown-icons-switch" checked aria-label="Toggle leading icons">
+              <span class="switch-track">
+                <span class="switch-thumb"></span>
+              </span>
+            </label>
+          </div>
+
+          <!-- Trailing Shortcuts toggle -->
+          <div class="prop-toggle-row">
+            <div class="toggle-text">
+              <label for="dropdown-shortcuts-switch" class="toggle-label">Keyboard Shortcuts</label>
+              <span class="toggle-desc">Show trailing hotkeys (e.g. ⌘P, ⌘E)</span>
+            </div>
+            <label class="md-switch">
+              <input type="checkbox" id="dropdown-shortcuts-switch" aria-label="Toggle keyboard shortcuts">
+              <span class="switch-track">
+                <span class="switch-thumb"></span>
+              </span>
+            </label>
+          </div>
+
+          <!-- Dividers toggle -->
+          <div class="prop-toggle-row">
+            <div class="toggle-text">
+              <label for="dropdown-dividers-switch" class="toggle-label">Section Dividers</label>
+              <span class="toggle-desc">Horizontal dividers between item groups</span>
+            </div>
+            <label class="md-switch">
+              <input type="checkbox" id="dropdown-dividers-switch" checked aria-label="Toggle section dividers">
+              <span class="switch-track">
+                <span class="switch-thumb"></span>
+              </span>
+            </label>
+          </div>
+
+          <!-- Scrollable / Max Height toggle -->
+          <div class="prop-toggle-row">
+            <div class="toggle-text">
+              <label for="dropdown-scrollable-switch" class="toggle-label">Scrollable Container</label>
+              <span class="toggle-desc">Constrain menu to 200px max height with scroll</span>
+            </div>
+            <label class="md-switch">
+              <input type="checkbox" id="dropdown-scrollable-switch" aria-label="Toggle scrollable menu">
+              <span class="switch-track">
+                <span class="switch-thumb"></span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Dropdown Section 3: State & Dimensions -->
+        <fieldset class="prop-group" data-for-component="dropdown">
+          <legend class="prop-legend">State & Dimensions</legend>
+
+          <!-- Menu State: Open vs Closed -->
+          <div class="prop-item">
+            <label class="prop-label">Menu State</label>
+            <div class="segmented-control" role="radiogroup" aria-label="Menu open state">
+              <button type="button" class="segment-btn active" data-dropdown-state="expanded" role="radio" aria-checked="true">
+                Expanded (Open)
+              </button>
+              <button type="button" class="segment-btn" data-dropdown-state="collapsed" role="radio" aria-checked="false">
+                Collapsed (Closed)
+              </button>
+            </div>
+            <p class="prop-hint">Click the trigger in live preview anytime to toggle open/close interactively.</p>
+          </div>
+
+          <!-- Menu Width -->
+          <div class="prop-item">
+            <label class="prop-label">Menu Width</label>
+            <div class="segmented-control" role="radiogroup" aria-label="Dropdown width">
+              <button type="button" class="segment-btn active" data-dropdown-width="anchor" role="radio" aria-checked="true">
+                Match Anchor
+              </button>
+              <button type="button" class="segment-btn" data-dropdown-width="compact" role="radio" aria-checked="false">
+                200dp
+              </button>
+              <button type="button" class="segment-btn" data-dropdown-width="standard" role="radio" aria-checked="false">
+                280dp
+              </button>
+            </div>
+          </div>
+
+          <!-- Disabled toggle -->
+          <div class="prop-toggle-row">
+            <div class="toggle-text">
+              <label for="dropdown-disabled-switch" class="toggle-label">Disabled State</label>
+              <span class="toggle-desc">Dim trigger & block menu popup expansion</span>
+            </div>
+            <label class="md-switch">
+              <input type="checkbox" id="dropdown-disabled-switch" aria-label="Toggle dropdown disabled state">
+              <span class="switch-track">
+                <span class="switch-thumb"></span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Dropdown Section 4: Color Customization -->
+        <fieldset class="prop-group" data-for-component="dropdown">
+          <legend class="prop-legend">Theme & Color</legend>
+          <div class="prop-item">
+            <label class="prop-label">Active Focus Color</label>
+            <div class="color-presets" role="radiogroup" aria-label="Dropdown Color Presets">
+              <button type="button" class="color-swatch dropdown-color-swatch active" data-color="#6750A4" style="--swatch-color: #6750A4" title="Primary Purple (#6750A4)" aria-label="Primary Purple"></button>
+              <button type="button" class="color-swatch dropdown-color-swatch" data-color="#006A6A" style="--swatch-color: #006A6A" title="Teal (#006A6A)" aria-label="Teal"></button>
+              <button type="button" class="color-swatch dropdown-color-swatch" data-color="#00639B" style="--swatch-color: #00639B" title="Blue (#00639B)" aria-label="Blue"></button>
+              <button type="button" class="color-swatch dropdown-color-swatch" data-color="#386A20" style="--swatch-color: #386A20" title="Green (#386A20)" aria-label="Green"></button>
+              <button type="button" class="color-swatch dropdown-color-swatch" data-color="#984061" style="--swatch-color: #984061" title="Rose (#984061)" aria-label="Rose"></button>
+              <button type="button" class="color-swatch dropdown-color-swatch" data-color="#B3261E" style="--swatch-color: #B3261E" title="Error Red (#B3261E)" aria-label="Red"></button>
+            </div>
+            <div class="custom-color-row">
+              <div class="color-input-preview-box">
+                <input type="color" id="dropdown-color-picker" value="#6750A4" aria-label="Choose custom dropdown color">
+              </div>
+              <input type="text" id="dropdown-color-hex" class="md-text-input" value="#6750A4" maxlength="7" pattern="^#[0-9A-Fa-f]{6}$" aria-label="Dropdown hex color code">
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Dropdown Section 5: Output Engine -->
+        <fieldset class="prop-group" data-for-component="dropdown">
+          <legend class="prop-legend">Output Implementation</legend>
+          <div class="prop-item">
+            <label class="prop-label">Code Format</label>
+            <div class="segmented-control" role="radiogroup" aria-label="Dropdown code output engine">
+              <button type="button" class="segment-btn active" data-dropdown-engine="js" role="radio" aria-checked="true" title="Vanilla JS interactive controller">
+                Vanilla JS (Interactive)
+              </button>
+              <button type="button" class="segment-btn" data-dropdown-engine="css" role="radio" aria-checked="false" title="Pure HTML & CSS focus-within controller">
+                Pure CSS (:focus-within)
+              </button>
+            </div>
+            <p class="prop-hint">Vanilla JS supports click-outside closing and selection sync. Pure CSS uses :focus-within transitions.</p>
+          </div>
+        </fieldset>
+
+        <!-- ================================================================
+             FAB MENU PROPERTIES
+             ================================================================ -->
+
+        <!-- FAB Menu Section 1: Direction & Layout -->
+        <fieldset class="prop-group" data-for-component="fabMenu">
+          <legend class="prop-legend">Layout & Behavior</legend>
+          <div class="prop-item">
+            <label class="prop-label">Expand Direction</label>
+            <div class="segmented-control" role="radiogroup" aria-label="FAB Menu Expand Direction">
+              <button type="button" class="segment-btn active" data-fab-menu-direction="upwards" role="radio" aria-checked="true" title="Vertical stack upwards">
+                Upwards (Vertical)
+              </button>
+              <button type="button" class="segment-btn" data-fab-menu-direction="horizontal" role="radio" aria-checked="false" title="Horizontal row to the left">
+                Horizontal
+              </button>
+            </div>
+            <p class="prop-hint" id="fab-menu-direction-desc">Upwards: Canonical M3 speed dial stacking mini-FABs vertically above primary FAB.</p>
+          </div>
+
+          <div class="prop-item">
+            <label class="prop-label">Action Label Style</label>
+            <div class="segmented-control" role="radiogroup" aria-label="FAB Menu Label Style">
+              <button type="button" class="segment-btn active" data-fab-menu-label-style="pill" role="radio" aria-checked="true" title="Text pill container beside mini FAB">
+                Pill Labels
+              </button>
+              <button type="button" class="segment-btn" data-fab-menu-label-style="icon" role="radio" aria-checked="false" title="Icon only mini FABs without text">
+                Icon Only
+              </button>
+            </div>
+            <p class="prop-hint">Pill labels provide high-contrast text containers alongside each action item.</p>
+          </div>
+
+          <div class="prop-item">
+            <div class="switch-row">
+              <div class="switch-label-col">
+                <span class="prop-label">Backdrop Scrim Overlay</span>
+                <span class="prop-hint">Dims stage with 32% scrim overlay when expanded</span>
+              </div>
+              <label class="md-switch" for="fab-menu-scrim-switch">
+                <input type="checkbox" id="fab-menu-scrim-switch" checked aria-label="Toggle background scrim">
+                <span class="switch-track">
+                  <span class="switch-thumb"></span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- FAB Menu Section 2: Items & Content -->
+        <fieldset class="prop-group" data-for-component="fabMenu">
+          <legend class="prop-legend">Action Items & Presets</legend>
+          <div class="prop-item">
+            <label class="prop-label">Action Items Preset</label>
+            <div class="segmented-control" role="radiogroup" aria-label="FAB Menu Preset">
+              <button type="button" class="segment-btn active" data-fab-menu-preset="create" role="radio" aria-checked="true" title="Content creation actions">
+                Create
+              </button>
+              <button type="button" class="segment-btn" data-fab-menu-preset="share" role="radio" aria-checked="false" title="Share and export actions">
+                Share
+              </button>
+              <button type="button" class="segment-btn" data-fab-menu-preset="tasks" role="radio" aria-checked="false" title="Task and productivity actions">
+                Tasks
+              </button>
+            </div>
+            <p class="prop-hint" id="fab-menu-preset-desc">Create: New document, Take photo, Record audio, and Attach file.</p>
+          </div>
+
+          <div class="prop-item">
+            <label class="prop-label">Number of Actions</label>
+            <div class="segmented-control" role="radiogroup" aria-label="FAB Menu Item Count">
+              <button type="button" class="segment-btn active" data-fab-menu-item-count="4" role="radio" aria-checked="true">
+                4 Items
+              </button>
+              <button type="button" class="segment-btn" data-fab-menu-item-count="3" role="radio" aria-checked="false">
+                3 Items
+              </button>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- FAB Menu Section 3: State & Color Theme -->
+        <fieldset class="prop-group" data-for-component="fabMenu">
+          <legend class="prop-legend">State & Color</legend>
+          <div class="prop-item">
+            <label class="prop-label">Initial Preview State</label>
+            <div class="segmented-control" role="radiogroup" aria-label="FAB Menu Open State">
+              <button type="button" class="segment-btn active" data-fab-menu-state="expanded" role="radio" aria-checked="true">
+                Expanded (Open)
+              </button>
+              <button type="button" class="segment-btn" data-fab-menu-state="collapsed" role="radio" aria-checked="false">
+                Collapsed
+              </button>
+            </div>
+            <p class="prop-hint">Click the FAB in the live preview anytime to expand or collapse it interactively.</p>
+          </div>
+
+          <div class="prop-item">
+            <label class="prop-label">Color Role</label>
+            <div class="segmented-control" role="radiogroup" aria-label="FAB Menu Color Role">
+              <button type="button" class="segment-btn active" data-fab-menu-color-role="primary" role="radio" aria-checked="true" title="Primary Purple">
+                Primary
+              </button>
+              <button type="button" class="segment-btn" data-fab-menu-color-role="secondary" role="radio" aria-checked="false" title="Secondary Tonal Container">
+                Secondary
+              </button>
+              <button type="button" class="segment-btn" data-fab-menu-color-role="tertiary" role="radio" aria-checked="false" title="Tertiary Container">
+                Tertiary
+              </button>
+              <button type="button" class="segment-btn" data-fab-menu-color-role="surface" role="radio" aria-checked="false" title="Surface Elevation Container">
+                Surface
+              </button>
+            </div>
+            <p class="prop-hint" id="fab-menu-color-desc">Primary: High-emphasis primary tonal role for the main trigger FAB.</p>
+          </div>
+
+          <div class="prop-item">
+            <label class="prop-label">Custom Accent Color</label>
+            <div class="color-presets" role="radiogroup" aria-label="FAB Menu Color Presets">
+              <button type="button" class="color-swatch fab-menu-color-swatch active" data-color="#6750A4" style="--swatch-color: #6750A4" title="Primary Purple (#6750A4)" aria-label="Primary Purple"></button>
+              <button type="button" class="color-swatch fab-menu-color-swatch" data-color="#006A6A" style="--swatch-color: #006A6A" title="Teal (#006A6A)" aria-label="Teal"></button>
+              <button type="button" class="color-swatch fab-menu-color-swatch" data-color="#00639B" style="--swatch-color: #00639B" title="Blue (#00639B)" aria-label="Blue"></button>
+              <button type="button" class="color-swatch fab-menu-color-swatch" data-color="#386A20" style="--swatch-color: #386A20" title="Green (#386A20)" aria-label="Green"></button>
+              <button type="button" class="color-swatch fab-menu-color-swatch" data-color="#984061" style="--swatch-color: #984061" title="Rose (#984061)" aria-label="Rose"></button>
+              <button type="button" class="color-swatch fab-menu-color-swatch" data-color="#B3261E" style="--swatch-color: #B3261E" title="Error Red (#B3261E)" aria-label="Red"></button>
+            </div>
+            <div class="custom-color-row">
+              <div class="color-input-preview-box">
+                <input type="color" id="fab-menu-color-picker" value="#6750A4" aria-label="Choose custom FAB menu color">
+              </div>
+              <input type="text" id="fab-menu-color-hex" class="md-text-input" value="#6750A4" maxlength="7" pattern="^#[0-9A-Fa-f]{6}$" aria-label="FAB menu hex color code">
+            </div>
+          </div>
+
+          <div class="prop-item">
+            <div class="switch-row">
+              <div class="switch-label-col">
+                <span class="prop-label">Disabled State</span>
+                <span class="prop-hint">Disables click interactions and reduces opacity</span>
+              </div>
+              <label class="md-switch" for="fab-menu-disabled-switch">
+                <input type="checkbox" id="fab-menu-disabled-switch" aria-label="Toggle disabled state">
+                <span class="switch-track">
+                  <span class="switch-thumb"></span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- FAB Menu Section 4: Motion & Smooth Animations -->
+        <fieldset class="prop-group" data-for-component="fabMenu">
+          <legend class="prop-legend">Motion & Smooth Animation</legend>
+
+          <!-- Animation Easing Style -->
+          <div class="prop-item">
+            <label class="prop-label">Animation Physics / Curve</label>
+            <div class="segmented-control" role="radiogroup" aria-label="FAB Menu Animation Style">
+              <button type="button" class="segment-btn active" data-fab-menu-anim-style="spring" role="radio" aria-checked="true" title="Expressive M3 spring physics with elastic overshoot">
+                Spring
+              </button>
+              <button type="button" class="segment-btn" data-fab-menu-anim-style="emphasized" role="radio" aria-checked="false" title="Material 3 Emphasized deceleration curve">
+                Emphasized
+              </button>
+              <button type="button" class="segment-btn" data-fab-menu-anim-style="gentle" role="radio" aria-checked="false" title="Smooth gentle cinematic glide">
+                Gentle
+              </button>
+            </div>
+            <p class="prop-hint" id="fab-menu-anim-style-desc">Spring: Expressive Material 3 elastic spring with natural overshoot bounce.</p>
+          </div>
+
+          <!-- Animation Duration Range Slider -->
+          <div class="prop-item">
+            <div class="prop-label-row">
+              <label for="fab-menu-duration-input" class="prop-label">Animation Duration</label>
+              <span id="fab-menu-duration-badge" class="prop-value-badge">350ms</span>
+            </div>
+            <input type="range" id="fab-menu-duration-input" min="150" max="650" step="25" value="350" aria-label="FAB Menu animation duration in milliseconds">
+            <div class="range-labels" aria-hidden="true">
+              <span>150ms (Snappy)</span>
+              <span>350ms (Standard)</span>
+              <span>650ms (Cinematic)</span>
+            </div>
+          </div>
+
+          <!-- Stagger Cascade Delay Range Slider -->
+          <div class="prop-item">
+            <div class="prop-label-row">
+              <label for="fab-menu-stagger-input" class="prop-label">Stagger Cascade Delay</label>
+              <span id="fab-menu-stagger-badge" class="prop-value-badge">40ms</span>
+            </div>
+            <input type="range" id="fab-menu-stagger-input" min="0" max="80" step="5" value="40" aria-label="Stagger delay between items in milliseconds">
+            <div class="range-labels" aria-hidden="true">
+              <span>0ms (Simultaneous)</span>
+              <span>40ms (Cascade)</span>
+              <span>80ms (Pronounced)</span>
+            </div>
+            <p class="prop-hint">Action items blossom outwards with forward stagger, and retract with reverse stagger.</p>
+          </div>
+
+          <!-- Trigger Icon Rotation Option -->
+          <div class="prop-item">
+            <label class="prop-label">Trigger Icon Rotation</label>
+            <div class="segmented-control" role="radiogroup" aria-label="Trigger icon rotation">
+              <button type="button" class="segment-btn active" data-fab-menu-rotation="45" role="radio" aria-checked="true" title="Canonical 45 degree turn: + becomes ×">
+                45° (+ to ×)
+              </button>
+              <button type="button" class="segment-btn" data-fab-menu-rotation="135" role="radio" aria-checked="false" title="Expressive 135 degree spin turn">
+                135° (Spin)
+              </button>
+              <button type="button" class="segment-btn" data-fab-menu-rotation="225" role="radio" aria-checked="false" title="Dynamic 225 degree full spin">
+                225° (Full Spin)
+              </button>
+            </div>
+          </div>
+
+          <!-- Blossom Micro-rotation Switch -->
+          <div class="prop-item">
+            <div class="switch-row">
+              <div class="switch-label-col">
+                <span class="prop-label">Action Blossom Micro-Rotation</span>
+                <span class="prop-hint">Mini-FABs slightly rotate into place during expansion</span>
+              </div>
+              <label class="md-switch" for="fab-menu-item-rotate-switch">
+                <input type="checkbox" id="fab-menu-item-rotate-switch" checked aria-label="Toggle action item micro-rotation">
+                <span class="switch-track">
+                  <span class="switch-thumb"></span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- FAB Menu Section 5: Output Engine -->
+        <fieldset class="prop-group" data-for-component="fabMenu">
+          <legend class="prop-legend">Output Implementation</legend>
+          <div class="prop-item">
+            <label class="prop-label">Code Format</label>
+            <div class="segmented-control" role="radiogroup" aria-label="FAB Menu code output engine">
+              <button type="button" class="segment-btn active" data-fab-menu-engine="js" role="radio" aria-checked="true" title="Vanilla JS interactive controller">
+                Vanilla JS (Interactive)
+              </button>
+              <button type="button" class="segment-btn" data-fab-menu-engine="css" role="radio" aria-checked="false" title="Pure HTML & CSS focus-within controller">
+                Pure CSS (:focus-within)
+              </button>
+            </div>
+            <p class="prop-hint">Vanilla JS provides keyboard navigation (Esc), click-outside closing, and backdrop dismissal. Pure CSS uses :focus-within transitions.</p>
           </div>
         </fieldset>
       </form>

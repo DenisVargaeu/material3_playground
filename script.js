@@ -118,6 +118,39 @@
     fabDisabled: false,
     fabEngine: 'css', // 'css' | 'js'
 
+    // Dropdown Menu properties
+    dropdownType: 'filled', // 'filled' | 'outlined' | 'button' | 'icon'
+    dropdownLabel: 'Favorite Fruit',
+    dropdownValue: 'Apple',
+    dropdownHelper: 'Select your preferred fruit option',
+    dropdownPreset: 'fruits', // 'fruits' | 'account' | 'actions'
+    dropdownShowIcons: true,
+    dropdownShowShortcuts: false,
+    dropdownShowDividers: true,
+    dropdownOpen: true,
+    dropdownWidth: 'anchor', // 'anchor' | 'compact' | 'standard'
+    dropdownScrollable: false,
+    dropdownDisabled: false,
+    dropdownColor: '#6750A4',
+    dropdownEngine: 'js', // 'js' | 'css'
+
+    // FAB Menu properties
+    fabMenuDirection: 'upwards', // 'upwards' | 'horizontal'
+    fabMenuLabelStyle: 'pill', // 'pill' | 'icon'
+    fabMenuShowScrim: true,
+    fabMenuPreset: 'create', // 'create' | 'share' | 'tasks'
+    fabMenuItemCount: 4, // 3 | 4
+    fabMenuOpen: true,
+    fabMenuColorRole: 'primary', // 'primary' | 'secondary' | 'tertiary' | 'surface'
+    fabMenuColor: '#6750A4',
+    fabMenuDisabled: false,
+    fabMenuEngine: 'js', // 'js' | 'css'
+    fabMenuAnimStyle: 'spring', // 'spring' | 'emphasized' | 'gentle'
+    fabMenuAnimDuration: 350, // 150 to 650 ms
+    fabMenuAnimStagger: 40, // 0 to 80 ms
+    fabMenuAnimRotation: 45, // 45 | 135 | 225 deg
+    fabMenuAnimItemRotate: true,
+
     // Playground UI state
     activeTab: 'html', // 'html' | 'css' | 'js' | 'full'
     previewBg: 'surface', // 'surface' | 'light' | 'dark' | 'checker'
@@ -299,7 +332,72 @@
     download: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>',
     edit: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>',
     share: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>',
-    navigation: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>'
+    navigation: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>',
+    chevron_down: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>',
+    more_vert: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>',
+    check: '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>',
+    person: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>',
+    settings: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>',
+    delete: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>',
+    logout: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>',
+    content_copy: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>',
+    photo_camera: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><circle cx="12" cy="12" r="3.2"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>',
+    description: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>',
+    mic: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>',
+    attach_file: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5a2.5 2.5 0 0 1 5 0v10.5c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5V6H9v9.5a3.5 3.5 0 0 0 7 0V5c0-2.21-1.79-4-4-4S5 2.79 5 5v12.5c0 3.31 2.69 6 6 6s6-2.69 6-6V6h-1.5z"/></svg>',
+    email: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>',
+    print: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>',
+    task_alt: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M22 5.18L10.59 16.6l-4.24-4.24 1.41-1.41 2.83 2.83 10-10L22 5.18zM19.79 10.22C19.92 10.79 20 11.39 20 12c0 4.41-3.59 8-8 8s-8-3.59-8-8 3.59-8 8-8c1.66 0 3.19.51 4.47 1.38l1.45-1.45C16.27 2.68 14.23 2 12 2 6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10c0-1.19-.22-2.33-.6-3.39l-1.61 1.61z"/></svg>',
+    notifications: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>',
+    bookmark: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>',
+    close: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>'
+  };
+
+  /* Material 3 Canonical Menu Items Presets */
+  const M3_MENU_PRESETS = {
+    fruits: [
+      { id: 'apple', label: 'Apple', icon: 'sparkle', shortcut: '' },
+      { id: 'banana', label: 'Banana', icon: 'favorite', shortcut: '' },
+      { id: 'orange', label: 'Orange', icon: 'sparkle', shortcut: '' },
+      { id: 'strawberry', label: 'Strawberry', icon: 'favorite', shortcut: '' },
+      { id: 'mango', label: 'Mango', icon: 'sparkle', shortcut: '' }
+    ],
+    account: [
+      { id: 'profile', label: 'My Profile', icon: 'person', shortcut: '⌘P' },
+      { id: 'settings', label: 'Account Settings', icon: 'settings', shortcut: '⌘,' },
+      { id: 'notifications', label: 'Notifications', icon: 'sparkle', shortcut: '' },
+      { divider: true },
+      { id: 'logout', label: 'Sign Out', icon: 'logout', shortcut: '⇧⌘Q', destructive: true }
+    ],
+    actions: [
+      { id: 'edit', label: 'Edit item', icon: 'edit', shortcut: '⌘E' },
+      { id: 'duplicate', label: 'Duplicate', icon: 'content_copy', shortcut: '⌘D' },
+      { id: 'share', label: 'Share link', icon: 'share', shortcut: '⌘S' },
+      { divider: true },
+      { id: 'delete', label: 'Delete item', icon: 'delete', shortcut: '⌫', destructive: true }
+    ]
+  };
+
+  /* Material 3 Canonical Speed Dial Action Presets */
+  const M3_FAB_MENU_PRESETS = {
+    create: [
+      { id: 'document', label: 'New document', icon: 'description' },
+      { id: 'photo', label: 'Take photo', icon: 'photo_camera' },
+      { id: 'audio', label: 'Record audio', icon: 'mic' },
+      { id: 'attachment', label: 'Attach file', icon: 'attach_file' }
+    ],
+    share: [
+      { id: 'email', label: 'Email report', icon: 'email' },
+      { id: 'copy', label: 'Copy link', icon: 'content_copy' },
+      { id: 'print', label: 'Print document', icon: 'print' },
+      { id: 'download', label: 'Download PDF', icon: 'download' }
+    ],
+    tasks: [
+      { id: 'task', label: 'Add task', icon: 'task_alt' },
+      { id: 'reminder', label: 'Set reminder', icon: 'notifications' },
+      { id: 'bookmark', label: 'Bookmark page', icon: 'bookmark' },
+      { id: 'member', label: 'Assign member', icon: 'person' }
+    ]
   };
 
   /* Material 3 Interactive Radial Ripple Handler for Preview */
@@ -307,7 +405,7 @@
     if (!el || el._hasM3Ripple) return;
     el._hasM3Ripple = true;
     el.addEventListener('pointerdown', function (e) {
-      if (el.disabled || el.classList.contains('m3-button--disabled') || el.classList.contains('m3-fab--disabled')) return;
+      if (el.disabled || el.classList.contains('m3-button--disabled') || el.classList.contains('m3-fab--disabled') || el.classList.contains('m3-dropdown--disabled')) return;
       const rect = el.getBoundingClientRect();
       const size = Math.max(rect.width, rect.height);
       const x = e.clientX - rect.left - size / 2;
@@ -2747,6 +2845,1435 @@
 
         return lines.join('\n');
       }
+    },
+
+    /* ------------------------------------------------------------------------
+       Component 6: Dropdown Menus (Exposed & Action Menus)
+       ------------------------------------------------------------------------ */
+    dropdown: {
+      name: 'Dropdown Menus',
+      category: 'Navigation & Selection',
+      description: 'Material 3 Exposed Dropdown Menus and Action Menus with surface elevation and interactive options',
+      referenceUrl: 'https://m3.material.io/components/menus/overview',
+
+      _wirePreviewEvents() {
+        const root = document.getElementById('preview-m3-dropdown');
+        if (!root || root._wiredEvents) return;
+        root._wiredEvents = true;
+
+        root.addEventListener('click', (e) => {
+          if (state.dropdownDisabled) return;
+
+          const item = e.target.closest('.m3-menu-item');
+          if (item) {
+            const val = item.dataset.value;
+            if (val) {
+              state.dropdownValue = val;
+              const valEl = root.querySelector('.m3-dropdown-value');
+              if (valEl) valEl.textContent = val;
+              const valInput = document.getElementById('dropdown-value-input');
+              if (valInput) valInput.value = val;
+
+              root.querySelectorAll('.m3-menu-item').forEach(mi => {
+                mi.classList.toggle('m3-menu-item--selected', mi.dataset.value === val);
+              });
+            }
+            state.dropdownOpen = false;
+            resetSegmentedButton('[data-dropdown-state]', 'collapsed');
+            root.classList.remove('m3-dropdown--open');
+            onStateChange();
+            return;
+          }
+
+          const trigger = e.target.closest('.m3-dropdown-field, .m3-dropdown-trigger--btn, .m3-dropdown-trigger--icon');
+          if (trigger) {
+            state.dropdownOpen = !state.dropdownOpen;
+            resetSegmentedButton('[data-dropdown-state]', state.dropdownOpen ? 'expanded' : 'collapsed');
+            root.classList.toggle('m3-dropdown--open', state.dropdownOpen);
+            onStateChange();
+          }
+        });
+      },
+
+      initPreview(container) {
+        container.innerHTML = [
+          '<div class="preview-dropdown-wrapper">',
+          '  <div id="preview-m3-dropdown" class="m3-dropdown">',
+          '  </div>',
+          '</div>'
+        ].join('\n');
+        this._wirePreviewEvents();
+      },
+
+      renderPreview(container, s) {
+        const root = document.getElementById('preview-m3-dropdown');
+        if (!root) return;
+
+        root.className = 'm3-dropdown';
+        root.classList.add('m3-dropdown--width-' + (s.dropdownWidth || 'anchor'));
+        if (s.dropdownOpen) root.classList.add('m3-dropdown--open');
+        if (s.dropdownDisabled) root.classList.add('m3-dropdown--disabled');
+        if (s.dropdownEngine === 'css') root.classList.add('m3-dropdown--css');
+
+        root.style.setProperty('--m3-dropdown-color', s.dropdownColor || '#6750A4');
+
+        const items = M3_MENU_PRESETS[s.dropdownPreset] || M3_MENU_PRESETS.fruits;
+        const type = s.dropdownType || 'filled';
+        const label = s.dropdownLabel || 'Select Option';
+        const value = s.dropdownValue || (items[0] ? items[0].label : 'Selected');
+        const helper = s.dropdownHelper || '';
+
+        const htmlParts = [];
+
+        // Build Trigger
+        if (type === 'filled' || type === 'outlined') {
+          htmlParts.push(
+            '<button type="button" class="m3-dropdown-field m3-dropdown-field--' + type + '" aria-haspopup="listbox" aria-expanded="' + s.dropdownOpen + '"' + (s.dropdownDisabled ? ' disabled' : '') + '>',
+            '  <div class="m3-dropdown-content">',
+            '    <span class="m3-dropdown-label">' + highlighter.escapeHtml(label) + '</span>',
+            '    <span class="m3-dropdown-value">' + highlighter.escapeHtml(value) + '</span>',
+            '  </div>',
+            '  <span class="m3-dropdown-trailing" aria-hidden="true">' + M3_ICONS.chevron_down + '</span>',
+            '</button>'
+          );
+        } else if (type === 'button') {
+          htmlParts.push(
+            '<button type="button" class="m3-dropdown-trigger--btn" aria-haspopup="true" aria-expanded="' + s.dropdownOpen + '"' + (s.dropdownDisabled ? ' disabled' : '') + '>',
+            '  <span>' + highlighter.escapeHtml(value || label) + '</span>',
+            '  <span class="m3-dropdown-trailing" aria-hidden="true" style="color: inherit;">' + M3_ICONS.chevron_down + '</span>',
+            '</button>'
+          );
+        } else if (type === 'icon') {
+          htmlParts.push(
+            '<button type="button" class="m3-dropdown-trigger--icon" aria-haspopup="true" aria-label="' + highlighter.escapeHtml(label) + '" aria-expanded="' + s.dropdownOpen + '"' + (s.dropdownDisabled ? ' disabled' : '') + '>',
+            '  ' + M3_ICONS.more_vert,
+            '</button>'
+          );
+        }
+
+        // Build Menu Popup
+        htmlParts.push(
+          '<div class="m3-menu' + (s.dropdownScrollable ? ' m3-menu--scrollable' : '') + '" role="menu" aria-label="' + highlighter.escapeHtml(label) + '">'
+        );
+
+        items.forEach(item => {
+          if (item.divider && s.dropdownShowDividers) {
+            htmlParts.push('  <div class="m3-menu-divider" role="separator"></div>');
+          } else if (!item.divider) {
+            const isSelected = item.label === value;
+            const destructiveClass = item.destructive ? ' m3-menu-item--destructive' : '';
+            const selectedClass = isSelected ? ' m3-menu-item--selected' : '';
+            htmlParts.push(
+              '  <button type="button" class="m3-menu-item' + destructiveClass + selectedClass + '" data-value="' + highlighter.escapeHtml(item.label) + '" role="menuitem">'
+            );
+            if (s.dropdownShowIcons && item.icon && M3_ICONS[item.icon]) {
+              htmlParts.push('    <span class="m3-menu-item__icon" aria-hidden="true">' + M3_ICONS[item.icon] + '</span>');
+            }
+            htmlParts.push('    <span class="m3-menu-item__text">' + highlighter.escapeHtml(item.label) + '</span>');
+            if (s.dropdownShowShortcuts && item.shortcut) {
+              htmlParts.push('    <span class="m3-menu-item__trailing">' + highlighter.escapeHtml(item.shortcut) + '</span>');
+            }
+            htmlParts.push('  </button>');
+          }
+        });
+
+        htmlParts.push('</div>');
+
+        if ((type === 'filled' || type === 'outlined') && helper) {
+          htmlParts.push('<div class="m3-dropdown-helper">' + highlighter.escapeHtml(helper) + '</div>');
+        }
+
+        root.innerHTML = htmlParts.join('\n');
+      },
+
+      generateHTML(s) {
+        const items = M3_MENU_PRESETS[s.dropdownPreset] || M3_MENU_PRESETS.fruits;
+        const type = s.dropdownType || 'filled';
+        const label = s.dropdownLabel || 'Select Option';
+        const value = s.dropdownValue || (items[0] ? items[0].label : 'Selected');
+        const helper = s.dropdownHelper || '';
+        const disabledAttr = s.dropdownDisabled ? ' disabled' : '';
+
+        const lines = [
+          '<!-- Material 3 Dropdown Menu (' + (type.charAt(0).toUpperCase() + type.slice(1)) + ') -->',
+          '<div class="m3-dropdown m3-dropdown--width-' + (s.dropdownWidth || 'anchor') + (s.dropdownEngine === 'css' ? ' m3-dropdown--css' : '') + (s.dropdownDisabled ? ' m3-dropdown--disabled' : '') + '">'
+        ];
+
+        if (type === 'filled' || type === 'outlined') {
+          lines.push(
+            '  <button type="button" class="m3-dropdown-field m3-dropdown-field--' + type + '" aria-haspopup="listbox" aria-expanded="false"' + disabledAttr + '>',
+            '    <div class="m3-dropdown-content">',
+            '      <span class="m3-dropdown-label">' + label + '</span>',
+            '      <span class="m3-dropdown-value">' + value + '</span>',
+            '    </div>',
+            '    <span class="m3-dropdown-trailing" aria-hidden="true">' + M3_ICONS.chevron_down + '</span>',
+            '  </button>'
+          );
+        } else if (type === 'button') {
+          lines.push(
+            '  <button type="button" class="m3-dropdown-trigger--btn" aria-haspopup="true" aria-expanded="false"' + disabledAttr + '>',
+            '    <span>' + (value || label) + '</span>',
+            '    <span class="m3-dropdown-trailing" aria-hidden="true">' + M3_ICONS.chevron_down + '</span>',
+            '  </button>'
+          );
+        } else if (type === 'icon') {
+          lines.push(
+            '  <button type="button" class="m3-dropdown-trigger--icon" aria-haspopup="true" aria-label="' + label + '" aria-expanded="false"' + disabledAttr + '>',
+            '    ' + M3_ICONS.more_vert,
+            '  </button>'
+          );
+        }
+
+        lines.push(
+          '  <div class="m3-menu' + (s.dropdownScrollable ? ' m3-menu--scrollable' : '') + '" role="menu" aria-label="' + label + '">'
+        );
+
+        items.forEach(item => {
+          if (item.divider && s.dropdownShowDividers) {
+            lines.push('    <div class="m3-menu-divider" role="separator"></div>');
+          } else if (!item.divider) {
+            const isSelected = item.label === value;
+            const destructive = item.destructive ? ' m3-menu-item--destructive' : '';
+            const selected = isSelected ? ' m3-menu-item--selected' : '';
+            lines.push('    <button type="button" class="m3-menu-item' + destructive + selected + '" data-value="' + item.label + '" role="menuitem">');
+            if (s.dropdownShowIcons && item.icon && M3_ICONS[item.icon]) {
+              lines.push('      <span class="m3-menu-item__icon" aria-hidden="true">' + M3_ICONS[item.icon] + '</span>');
+            }
+            lines.push('      <span class="m3-menu-item__text">' + item.label + '</span>');
+            if (s.dropdownShowShortcuts && item.shortcut) {
+              lines.push('      <span class="m3-menu-item__trailing">' + item.shortcut + '</span>');
+            }
+            lines.push('    </button>');
+          }
+        });
+
+        lines.push('  </div>');
+
+        if ((type === 'filled' || type === 'outlined') && helper) {
+          lines.push('  <div class="m3-dropdown-helper">' + helper + '</div>');
+        }
+
+        lines.push('</div>');
+
+        return lines.join('\n');
+      },
+
+      generateCSS(s) {
+        const isCssEngine = s.dropdownEngine === 'css';
+        const lines = [
+          '/*',
+          ' * Material 3 Dropdown & Menu Styles',
+          ' * https://m3.material.io/components/menus/overview',
+          ' */',
+          ':root {',
+          '  --m3-dropdown-color: ' + (s.dropdownColor || '#6750A4') + ';',
+          '  --m3-dropdown-bg: #ece6f0;',
+          '  --m3-dropdown-menu-bg: #f7f2fa;',
+          '  --m3-dropdown-text: #1d192b;',
+          '  --m3-dropdown-label-color: #49454f;',
+          '  --m3-dropdown-border: #79747e;',
+          '  --m3-dropdown-width: ' + (s.dropdownWidth === 'compact' ? '200px' : s.dropdownWidth === 'standard' ? '320px' : '280px') + ';',
+          '}',
+          '',
+          '/* Container */',
+          '.m3-dropdown {',
+          '  position: relative;',
+          '  display: inline-flex;',
+          '  flex-direction: column;',
+          '  width: var(--m3-dropdown-width);',
+          '  max-width: 100%;',
+          '  box-sizing: border-box;',
+          '  font-family: inherit;',
+          '  user-select: none;',
+          '}',
+          '',
+          '/* Exposed Text Field Triggers */',
+          '.m3-dropdown-field {',
+          '  position: relative;',
+          '  display: flex;',
+          '  align-items: center;',
+          '  justify-content: space-between;',
+          '  width: 100%;',
+          '  height: 56px;',
+          '  padding: 0 16px;',
+          '  box-sizing: border-box;',
+          '  cursor: pointer;',
+          '  background-color: var(--m3-dropdown-bg);',
+          '  border: none;',
+          '  transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;',
+          '  outline: none;',
+          '  text-align: left;',
+          '}',
+          '',
+          '.m3-dropdown-field--filled {',
+          '  border-radius: 4px 4px 0 0;',
+          '  border-bottom: 1px solid var(--m3-dropdown-label-color);',
+          '}',
+          '.m3-dropdown-field--filled:hover {',
+          '  background-color: #e6e0e9;',
+          '  border-bottom-color: var(--m3-dropdown-text);',
+          '}',
+          '.m3-dropdown--open .m3-dropdown-field--filled,',
+          '.m3-dropdown-field--filled:focus-visible {',
+          '  border-bottom: 2px solid var(--m3-dropdown-color);',
+          '  background-color: #e6e0e9;',
+          '}',
+          '',
+          '.m3-dropdown-field--outlined {',
+          '  background-color: transparent;',
+          '  border: 1px solid var(--m3-dropdown-border);',
+          '  border-radius: 4px;',
+          '}',
+          '.m3-dropdown-field--outlined:hover {',
+          '  border-color: var(--m3-dropdown-text);',
+          '}',
+          '.m3-dropdown--open .m3-dropdown-field--outlined,',
+          '.m3-dropdown-field--outlined:focus-visible {',
+          '  border: 2px solid var(--m3-dropdown-color);',
+          '}',
+          '',
+          '/* Button & Icon Triggers */',
+          '.m3-dropdown-trigger--btn {',
+          '  display: inline-flex;',
+          '  align-items: center;',
+          '  justify-content: center;',
+          '  gap: 8px;',
+          '  height: 40px;',
+          '  padding: 0 20px 0 24px;',
+          '  border-radius: 9999px;',
+          '  background-color: var(--m3-dropdown-color);',
+          '  color: #ffffff;',
+          '  border: none;',
+          '  font-family: inherit;',
+          '  font-size: 14px;',
+          '  font-weight: 500;',
+          '  cursor: pointer;',
+          '  transition: box-shadow 0.2s, background-color 0.2s;',
+          '  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);',
+          '}',
+          '.m3-dropdown-trigger--btn:hover {',
+          '  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);',
+          '}',
+          '',
+          '.m3-dropdown-trigger--icon {',
+          '  display: inline-flex;',
+          '  align-items: center;',
+          '  justify-content: center;',
+          '  width: 40px;',
+          '  height: 40px;',
+          '  border-radius: 50%;',
+          '  background-color: transparent;',
+          '  color: var(--m3-dropdown-color);',
+          '  border: none;',
+          '  cursor: pointer;',
+          '  transition: background-color 0.2s;',
+          '}',
+          '.m3-dropdown-trigger--icon:hover {',
+          '  background-color: rgba(103, 80, 164, 0.08);',
+          '}',
+          '',
+          '/* Field Text Content */',
+          '.m3-dropdown-content {',
+          '  display: flex;',
+          '  flex-direction: column;',
+          '  justify-content: center;',
+          '  flex: 1;',
+          '  min-width: 0;',
+          '  pointer-events: none;',
+          '}',
+          '.m3-dropdown-label {',
+          '  font-size: 12px;',
+          '  color: var(--m3-dropdown-label-color);',
+          '  line-height: 1.2;',
+          '}',
+          '.m3-dropdown-value {',
+          '  font-size: 16px;',
+          '  color: var(--m3-dropdown-text);',
+          '  line-height: 1.4;',
+          '}',
+          '',
+          '/* Trailing Chevron Icon */',
+          '.m3-dropdown-trailing {',
+          '  display: inline-flex;',
+          '  align-items: center;',
+          '  justify-content: center;',
+          '  width: 24px;',
+          '  height: 24px;',
+          '  color: var(--m3-dropdown-label-color);',
+          '  flex-shrink: 0;',
+          '  margin-left: 8px;',
+          '  transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), color 0.2s;',
+          '  pointer-events: none;',
+          '}',
+          '.m3-dropdown-trailing svg {',
+          '  width: 100%;',
+          '  height: 100%;',
+          '  fill: currentColor;',
+          '}',
+          '.m3-dropdown--open .m3-dropdown-trailing {',
+          '  transform: rotate(180deg);',
+          '  color: var(--m3-dropdown-color);',
+          '}',
+          '',
+          '/* Supporting Helper Text */',
+          '.m3-dropdown-helper {',
+          '  padding: 4px 16px 0;',
+          '  font-size: 12px;',
+          '  color: var(--m3-dropdown-label-color);',
+          '}',
+          '',
+          '/* Menu Popup (Elevation 2) */',
+          '.m3-menu {',
+          '  position: absolute;',
+          '  top: calc(100% + 4px);',
+          '  left: 0;',
+          '  width: 100%;',
+          '  min-width: 112px;',
+          '  background-color: var(--m3-dropdown-menu-bg);',
+          '  border-radius: 4px;',
+          '  padding: 8px 0;',
+          '  box-sizing: border-box;',
+          '  box-shadow: 0 2px 6px 2px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);',
+          '  z-index: 120;',
+          '  opacity: 0;',
+          '  visibility: hidden;',
+          '  transform: scaleY(0.85) translateY(-8px);',
+          '  transform-origin: top center;',
+          '  pointer-events: none;',
+          '  transition: opacity 0.18s cubic-bezier(0.2, 0, 0, 1), transform 0.18s cubic-bezier(0.2, 0, 0, 1), visibility 0.18s;',
+          '}',
+          (s.dropdownScrollable ? '.m3-menu--scrollable { max-height: 200px; overflow-y: auto; }\n' : ''),
+          '.m3-dropdown--open .m3-menu {',
+          '  opacity: 1;',
+          '  visibility: visible;',
+          '  transform: scaleY(1) translateY(0);',
+          '  pointer-events: auto;',
+          '}'
+        ];
+
+        if (isCssEngine) {
+          lines.push(
+            '',
+            '/* Pure CSS :focus-within Trigger */',
+            '.m3-dropdown--css:focus-within .m3-menu {',
+            '  opacity: 1;',
+            '  visibility: visible;',
+            '  transform: scaleY(1) translateY(0);',
+            '  pointer-events: auto;',
+            '}',
+            '.m3-dropdown--css:focus-within .m3-dropdown-trailing {',
+            '  transform: rotate(180deg);',
+            '  color: var(--m3-dropdown-color);',
+            '}',
+            '.m3-dropdown--css:focus-within .m3-dropdown-field--filled {',
+            '  border-bottom: 2px solid var(--m3-dropdown-color);',
+            '}',
+            '.m3-dropdown--css:focus-within .m3-dropdown-field--outlined {',
+            '  border: 2px solid var(--m3-dropdown-color);',
+            '}'
+          );
+        }
+
+        lines.push(
+          '',
+          '/* Menu Items */',
+          '.m3-menu-item {',
+          '  position: relative;',
+          '  display: flex;',
+          '  align-items: center;',
+          '  gap: 12px;',
+          '  width: 100%;',
+          '  height: 48px;',
+          '  padding: 0 16px;',
+          '  box-sizing: border-box;',
+          '  background-color: transparent;',
+          '  border: none;',
+          '  color: var(--m3-dropdown-text);',
+          '  font-family: inherit;',
+          '  font-size: 14px;',
+          '  font-weight: 500;',
+          '  text-align: left;',
+          '  cursor: pointer;',
+          '  user-select: none;',
+          '  transition: background-color 0.15s;',
+          '  outline: none;',
+          '}',
+          '.m3-menu-item:hover,',
+          '.m3-menu-item:focus-visible {',
+          '  background-color: rgba(29, 25, 43, 0.08);',
+          '}',
+          '.m3-menu-item:active {',
+          '  background-color: rgba(29, 25, 43, 0.12);',
+          '}',
+          '.m3-menu-item--selected {',
+          '  background-color: rgba(103, 80, 164, 0.12) !important;',
+          '  color: var(--m3-dropdown-color) !important;',
+          '  font-weight: 600;',
+          '}',
+          '.m3-menu-item--destructive {',
+          '  color: #b3261e !important;',
+          '}',
+          '.m3-menu-item__icon {',
+          '  display: inline-flex;',
+          '  align-items: center;',
+          '  justify-content: center;',
+          '  width: 24px;',
+          '  height: 24px;',
+          '  color: #49454f;',
+          '  flex-shrink: 0;',
+          '}',
+          '.m3-menu-item__icon svg { width: 20px; height: 20px; fill: currentColor; }',
+          '.m3-menu-item--selected .m3-menu-item__icon { color: var(--m3-dropdown-color); }',
+          '.m3-menu-item__text { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }',
+          '.m3-menu-item__trailing { font-size: 12px; color: #79747e; margin-left: auto; flex-shrink: 0; }',
+          '.m3-menu-divider { height: 1px; background-color: #cac4d0; margin: 6px 0; border: none; }',
+          '',
+          '/* Disabled */',
+          '.m3-dropdown--disabled { opacity: 0.38 !important; pointer-events: none !important; }',
+          '',
+          '/* Reduced Motion */',
+          '@media (prefers-reduced-motion: reduce) {',
+          '  .m3-menu, .m3-dropdown-trailing { transition: none !important; }',
+          '}'
+        );
+
+        return lines.join('\n');
+      },
+
+      generateJS(s) {
+        if (s.dropdownEngine !== 'js') {
+          return [
+            '/*',
+            ' * Pure CSS Dropdown: No JavaScript required.',
+            ' * The menu expands seamlessly via :focus-within.',
+            ' */'
+          ].join('\n');
+        }
+
+        return [
+          '/*',
+          ' * Material 3 Interactive Dropdown Controller',
+          ' * Handles open/close, click outside, item selection, and accessibility',
+          ' */',
+          'function createM3Dropdown(dropdownEl) {',
+          '  if (!dropdownEl || dropdownEl._hasM3Dropdown) return;',
+          '  dropdownEl._hasM3Dropdown = true;',
+          '',
+          '  const trigger = dropdownEl.querySelector(".m3-dropdown-field, .m3-dropdown-trigger--btn, .m3-dropdown-trigger--icon");',
+          '  const menu = dropdownEl.querySelector(".m3-menu");',
+          '  const valueEl = dropdownEl.querySelector(".m3-dropdown-value");',
+          '',
+          '  function open() {',
+          '    if (dropdownEl.classList.contains("m3-dropdown--disabled")) return;',
+          '    dropdownEl.classList.add("m3-dropdown--open");',
+          '    if (trigger) trigger.setAttribute("aria-expanded", "true");',
+          '  }',
+          '',
+          '  function close() {',
+          '    dropdownEl.classList.remove("m3-dropdown--open");',
+          '    if (trigger) trigger.setAttribute("aria-expanded", "false");',
+          '  }',
+          '',
+          '  function toggle() {',
+          '    dropdownEl.classList.contains("m3-dropdown--open") ? close() : open();',
+          '  }',
+          '',
+          '  if (trigger) {',
+          '    trigger.addEventListener("click", (e) => {',
+          '      e.stopPropagation();',
+          '      toggle();',
+          '    });',
+          '  }',
+          '',
+          '  dropdownEl.querySelectorAll(".m3-menu-item").forEach(item => {',
+          '    item.addEventListener("click", (e) => {',
+          '      e.stopPropagation();',
+          '      const val = item.dataset.value;',
+          '      if (val && valueEl) valueEl.textContent = val;',
+          '      dropdownEl.querySelectorAll(".m3-menu-item").forEach(mi => {',
+          '        mi.classList.toggle("m3-menu-item--selected", mi === item);',
+          '      });',
+          '      close();',
+          '      if (trigger) trigger.focus();',
+          '    });',
+          '  });',
+          '',
+          '  document.addEventListener("click", (e) => {',
+          '    if (!dropdownEl.contains(e.target)) close();',
+          '  });',
+          '',
+          '  document.addEventListener("keydown", (e) => {',
+          '    if (e.key === "Escape" && dropdownEl.classList.contains("m3-dropdown--open")) {',
+          '      close();',
+          '      if (trigger) trigger.focus();',
+          '    }',
+          '  });',
+          '',
+          '  return { open, close, toggle };',
+          '}',
+          '',
+          '// Initialize all M3 dropdowns on the page',
+          'document.querySelectorAll(".m3-dropdown").forEach(createM3Dropdown);'
+        ].join('\n');
+      },
+
+      generateFullDocument(s) {
+        const html = this.generateHTML(s);
+        const css = this.generateCSS(s);
+        const js = s.dropdownEngine === 'js' ? this.generateJS(s) : null;
+
+        const lines = [
+          '<!DOCTYPE html>',
+          '<html lang="en">',
+          '<head>',
+          '  <meta charset="UTF-8">',
+          '  <meta name="viewport" content="width=device-width, initial-scale=1.0">',
+          '  <title>Material 3 Dropdown Menu Demo</title>',
+          '  <style>',
+          css.split('\n').map(l => '    ' + l).join('\n'),
+          '  </style>',
+          '</head>',
+          '<body>',
+          '',
+          '  <!-- Material 3 Dropdown Demo Container -->',
+          '  <main style="display: flex; min-height: 100vh; align-items: flex-start; justify-content: center; background-color: #fef7ff; padding: 48px 24px;">',
+          html.split('\n').map(l => '    ' + l).join('\n'),
+          '  </main>'
+        ];
+
+        if (js) {
+          lines.push('');
+          lines.push('  <script>');
+          lines.push(js.split('\n').map(l => '    ' + l).join('\n'));
+          lines.push('  </script>');
+        }
+
+        lines.push('</body>');
+        lines.push('</html>');
+
+        return lines.join('\n');
+      }
+    },
+
+    fabMenu: {
+      name: 'FAB Menu (Speed Dial)',
+      category: 'Actions & Menus',
+      description: 'Material 3 Speed Dial Floating Action Button with animated staggered action items, pill labels, and backdrop scrim',
+      referenceUrl: 'https://m3.material.io/components/floating-action-button/overview',
+
+      _wirePreviewEvents(root) {
+        if (!root || root._wiredEvents) return;
+        root._wiredEvents = true;
+
+        const trigger = root.querySelector('.m3-fab-menu__trigger');
+        const scrim = root.querySelector('.m3-fab-menu__scrim');
+
+        if (trigger) {
+          trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (state.fabMenuDisabled) return;
+            state.fabMenuOpen = !state.fabMenuOpen;
+            root.classList.toggle('m3-fab-menu--open', state.fabMenuOpen);
+            trigger.setAttribute('aria-expanded', String(state.fabMenuOpen));
+
+            const segState = document.querySelectorAll('[data-fab-menu-state]');
+            segState.forEach(btn => {
+              const match = (btn.dataset.fabMenuState === 'expanded' && state.fabMenuOpen) ||
+                            (btn.dataset.fabMenuState === 'collapsed' && !state.fabMenuOpen);
+              btn.classList.toggle('active', match);
+              btn.setAttribute('aria-checked', String(match));
+            });
+            onStateChange();
+          });
+        }
+
+        if (scrim) {
+          scrim.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (state.fabMenuOpen) {
+              state.fabMenuOpen = false;
+              root.classList.remove('m3-fab-menu--open');
+              if (trigger) trigger.setAttribute('aria-expanded', 'false');
+              resetSegmentedButton('[data-fab-menu-state]', 'collapsed');
+              onStateChange();
+            }
+          });
+        }
+
+        root.addEventListener('click', (e) => {
+          const actionBtn = e.target.closest('.m3-fab-menu__action');
+          const labelEl = e.target.closest('.m3-fab-menu__label');
+          if (actionBtn || labelEl) {
+            e.stopPropagation();
+            if (state.fabMenuDisabled) return;
+            const item = (actionBtn || labelEl).closest('.m3-fab-menu__item');
+            const labelText = item ? (item.querySelector('.m3-fab-menu__label')?.textContent || item.querySelector('.m3-fab-menu__action')?.getAttribute('aria-label') || 'Action') : 'Action';
+            showSnackbar('Triggered: ' + labelText);
+            state.fabMenuOpen = false;
+            root.classList.remove('m3-fab-menu--open');
+            if (trigger) trigger.setAttribute('aria-expanded', 'false');
+            resetSegmentedButton('[data-fab-menu-state]', 'collapsed');
+            onStateChange();
+          }
+        });
+
+        const handleKeyDown = (e) => {
+          if (e.key === 'Escape' && state.fabMenuOpen && state.activeComponent === 'fabMenu') {
+            state.fabMenuOpen = false;
+            root.classList.remove('m3-fab-menu--open');
+            if (trigger) trigger.setAttribute('aria-expanded', 'false');
+            resetSegmentedButton('[data-fab-menu-state]', 'collapsed');
+            onStateChange();
+          }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+
+        const handleDocClick = (e) => {
+          if (state.fabMenuOpen && state.activeComponent === 'fabMenu' && !root.contains(e.target)) {
+            state.fabMenuOpen = false;
+            root.classList.remove('m3-fab-menu--open');
+            if (trigger) trigger.setAttribute('aria-expanded', 'false');
+            resetSegmentedButton('[data-fab-menu-state]', 'collapsed');
+            onStateChange();
+          }
+        };
+        document.addEventListener('click', handleDocClick);
+      },
+
+      initPreview(container) {
+        container.innerHTML = '';
+        const wrapper = document.createElement('div');
+        wrapper.className = 'preview-fab-menu-wrapper';
+        wrapper.id = 'preview-fab-menu-wrapper';
+        container.appendChild(wrapper);
+        this.renderPreview(wrapper);
+      },
+
+      renderPreview(container) {
+        let wrapper = container.classList.contains('preview-fab-menu-wrapper')
+          ? container
+          : container.querySelector('.preview-fab-menu-wrapper');
+        if (!wrapper) {
+          wrapper = document.createElement('div');
+          wrapper.className = 'preview-fab-menu-wrapper';
+          wrapper.id = 'preview-fab-menu-wrapper';
+          container.innerHTML = '';
+          container.appendChild(wrapper);
+        }
+
+        const presetList = M3_FAB_MENU_PRESETS[state.fabMenuPreset] || M3_FAB_MENU_PRESETS.create;
+        const items = presetList.slice(0, state.fabMenuItemCount);
+
+        let root = wrapper.querySelector('.m3-fab-menu');
+        if (!root) {
+          root = document.createElement('div');
+          root.id = 'preview-m3-fab-menu';
+          wrapper.appendChild(root);
+        }
+
+        const classes = ['m3-fab-menu', 'm3-fab-menu--' + state.fabMenuColorRole, 'm3-fab-menu--' + state.fabMenuDirection];
+        if (state.fabMenuOpen) classes.push('m3-fab-menu--open');
+        if (state.fabMenuDisabled) classes.push('m3-fab-menu--disabled');
+        if (state.fabMenuEngine === 'css') classes.push('m3-fab-menu--css-mode');
+        root.className = classes.join(' ');
+
+        if (state.fabMenuColor && state.fabMenuColor !== '#6750A4') {
+          root.style.setProperty('--m3-fab-menu-primary-bg', state.fabMenuColor);
+        } else {
+          root.style.removeProperty('--m3-fab-menu-primary-bg');
+        }
+
+        const animEasings = {
+          spring: 'cubic-bezier(0.34, 1.4, 0.64, 1)',
+          emphasized: 'cubic-bezier(0.05, 0.7, 0.1, 1.0)',
+          gentle: 'cubic-bezier(0.25, 1, 0.5, 1)'
+        };
+        const animEasing = animEasings[state.fabMenuAnimStyle] || animEasings.spring;
+
+        root.style.setProperty('--m3-fab-menu-duration', `${state.fabMenuAnimDuration}ms`);
+        root.style.setProperty('--m3-fab-menu-easing', animEasing);
+        root.style.setProperty('--m3-fab-menu-stagger', `${state.fabMenuAnimStagger}ms`);
+        root.style.setProperty('--m3-fab-menu-rotation', `${state.fabMenuAnimRotation}deg`);
+        root.style.setProperty('--m3-fab-item-init-rot', state.fabMenuAnimItemRotate ? '-12deg' : '0deg');
+        root.style.setProperty('--items-count', String(items.length));
+
+        const scrimHtml = state.fabMenuShowScrim
+          ? '<div class="m3-fab-menu__scrim" aria-hidden="true"></div>'
+          : '';
+
+        const itemsHtml = items.map((item, idx) => {
+          const reverseIdx = items.length - 1 - idx;
+          const icon = M3_ICONS[item.icon] || M3_ICONS.add;
+          const labelHtml = state.fabMenuLabelStyle === 'pill'
+            ? `<span class="m3-fab-menu__label" id="preview-fab-label-${idx}">${item.label}</span>`
+            : '';
+          const ariaLabelAttr = state.fabMenuLabelStyle === 'pill'
+            ? `aria-labelledby="preview-fab-label-${idx}" aria-label="${item.label}"`
+            : `aria-label="${item.label}" title="${item.label}"`;
+          return `
+            <li class="m3-fab-menu__item" role="none" style="--item-index: ${idx}; --item-reverse-index: ${reverseIdx};">
+              ${labelHtml}
+              <button class="m3-fab-menu__action" type="button" role="menuitem" ${ariaLabelAttr} ${state.fabMenuDisabled ? 'disabled' : ''}>
+                ${icon}
+              </button>
+            </li>
+          `;
+        }).join('');
+
+        root.innerHTML = `
+          ${scrimHtml}
+          <ul class="m3-fab-menu__items" role="menu" aria-label="Quick actions menu">
+            ${itemsHtml}
+          </ul>
+          <button class="m3-fab-menu__trigger" type="button" aria-haspopup="true" aria-expanded="${state.fabMenuOpen}" aria-label="Toggle speed dial actions" ${state.fabMenuDisabled ? 'disabled' : ''}>
+            <span class="m3-fab-menu__icon" aria-hidden="true">
+              ${M3_ICONS.add}
+            </span>
+          </button>
+        `;
+
+        root.querySelectorAll('.m3-fab-menu__trigger, .m3-fab-menu__action').forEach(el => {
+          attachM3Ripple(el);
+        });
+
+        root._wiredEvents = false;
+        this._wirePreviewEvents(root);
+      },
+
+      generateHTML(s) {
+        const presetList = M3_FAB_MENU_PRESETS[s.fabMenuPreset] || M3_FAB_MENU_PRESETS.create;
+        const items = presetList.slice(0, s.fabMenuItemCount);
+        const classes = ['m3-fab-menu', 'm3-fab-menu--' + s.fabMenuColorRole, 'm3-fab-menu--' + s.fabMenuDirection];
+        if (s.fabMenuEngine === 'css') classes.push('m3-fab-menu--css-mode');
+        if (s.fabMenuDisabled) classes.push('m3-fab-menu--disabled');
+
+        const styleAttr = (s.fabMenuColor && s.fabMenuColor !== '#6750A4')
+          ? ` style="--m3-fab-menu-primary-bg: ${s.fabMenuColor};"`
+          : '';
+
+        const lines = [
+          '<!-- Material 3 Speed Dial / Expandable FAB Menu -->',
+          `<div class="${classes.join(' ')}"${styleAttr} id="m3-speed-dial">`
+        ];
+
+        if (s.fabMenuShowScrim) {
+          lines.push('  <div class="m3-fab-menu__scrim" aria-hidden="true"></div>');
+        }
+
+        lines.push('  <ul class="m3-fab-menu__items" role="menu" aria-label="Quick actions menu">');
+
+        items.forEach((item, idx) => {
+          const reverseIdx = items.length - 1 - idx;
+          const icon = M3_ICONS[item.icon] || M3_ICONS.add;
+          const labelHtml = s.fabMenuLabelStyle === 'pill'
+            ? `\n      <span class="m3-fab-menu__label" id="fab-action-label-${idx}">${item.label}</span>`
+            : '';
+          const ariaLabelAttr = s.fabMenuLabelStyle === 'pill'
+            ? `aria-labelledby="fab-action-label-${idx}" aria-label="${item.label}"`
+            : `aria-label="${item.label}" title="${item.label}"`;
+
+          lines.push(`    <li class="m3-fab-menu__item" role="none" style="--item-index: ${idx}; --item-reverse-index: ${reverseIdx};">${labelHtml}`);
+          lines.push(`      <button class="m3-fab-menu__action" type="button" role="menuitem" ${ariaLabelAttr}${s.fabMenuDisabled ? ' disabled' : ''}>`);
+          lines.push(`        ${icon}`);
+          lines.push('      </button>');
+          lines.push('    </li>');
+        });
+
+        lines.push('  </ul>');
+        lines.push(`  <button class="m3-fab-menu__trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Toggle speed dial actions"${s.fabMenuDisabled ? ' disabled' : ''}>`);
+        lines.push('    <span class="m3-fab-menu__icon" aria-hidden="true">');
+        lines.push(`      ${M3_ICONS.add}`);
+        lines.push('    </span>');
+        lines.push('  </button>');
+        lines.push('</div>');
+
+        return lines.join('\n');
+      },
+
+      generateCSS(s) {
+        const isCustomColor = s.fabMenuColor && s.fabMenuColor !== '#6750A4';
+        const primaryBg = isCustomColor ? s.fabMenuColor : '#6750a4';
+
+        const animEasings = {
+          spring: 'cubic-bezier(0.34, 1.4, 0.64, 1)',
+          emphasized: 'cubic-bezier(0.05, 0.7, 0.1, 1.0)',
+          gentle: 'cubic-bezier(0.25, 1, 0.5, 1)'
+        };
+        const animEasing = animEasings[s.fabMenuAnimStyle] || animEasings.spring;
+        const durationMs = s.fabMenuAnimDuration != null ? s.fabMenuAnimDuration : 350;
+        const staggerMs = s.fabMenuAnimStagger != null ? s.fabMenuAnimStagger : 40;
+        const rotationDeg = s.fabMenuAnimRotation != null ? s.fabMenuAnimRotation : 45;
+        const initRot = s.fabMenuAnimItemRotate ? '-12deg' : '0deg';
+        const presetList = M3_FAB_MENU_PRESETS[s.fabMenuPreset] || M3_FAB_MENU_PRESETS.create;
+        const itemsCount = Math.min(s.fabMenuItemCount || 4, presetList.length);
+
+        const lines = [
+          '/* ==========================================================================',
+          '   Material 3 Speed Dial / Expandable Floating Action Button (FAB Menu)',
+          '   Smooth Motion Physics, Dual Stagger Cascades & Elevation System',
+          '   ========================================================================== */',
+          '',
+          ':root {',
+          '  --md-sys-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);',
+          '  --md-sys-motion-duration-short: 180ms;',
+          '  --md-sys-motion-duration-medium: 250ms;',
+          '}',
+          '',
+          '.m3-fab-menu {',
+          `  --m3-fab-menu-primary-bg: ${primaryBg};`,
+          '  --m3-fab-menu-primary-fg: #ffffff;',
+          '  --m3-fab-menu-action-bg: #ece6f0;',
+          '  --m3-fab-menu-action-fg: #49454f;',
+          '  --m3-fab-menu-label-bg: #f7f2fa;',
+          '  --m3-fab-menu-label-fg: #1d192b;',
+          '  --m3-fab-menu-scrim: rgba(0, 0, 0, 0.32);',
+          '',
+          '  /* Animation & Motion Tokens */',
+          `  --m3-fab-menu-duration: ${durationMs}ms;`,
+          `  --m3-fab-menu-easing: ${animEasing};`,
+          '  --m3-fab-menu-close-easing: cubic-bezier(0.4, 0, 0.2, 1);',
+          `  --m3-fab-menu-stagger: ${staggerMs}ms;`,
+          `  --m3-fab-menu-rotation: ${rotationDeg}deg;`,
+          `  --m3-fab-item-init-rot: ${initRot};`,
+          `  --items-count: ${itemsCount};`,
+          '',
+          '  position: relative;',
+          '  display: inline-flex;',
+          '  flex-direction: column;',
+          '  align-items: flex-end;',
+          '  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;',
+          '  user-select: none;',
+          '  z-index: 99;',
+          '}',
+          '',
+          '/* Scrim Backdrop Overlay with Blur */',
+          '.m3-fab-menu__scrim {',
+          '  position: fixed;',
+          '  inset: 0;',
+          '  background-color: var(--m3-fab-menu-scrim);',
+          '  backdrop-filter: blur(2px);',
+          '  -webkit-backdrop-filter: blur(2px);',
+          '  opacity: 0;',
+          '  pointer-events: none;',
+          '  transition: opacity calc(var(--m3-fab-menu-duration, 350ms) * 0.85) ease,',
+          '              backdrop-filter calc(var(--m3-fab-menu-duration, 350ms) * 0.85) ease;',
+          '  z-index: 1;',
+          '  will-change: opacity;',
+          '}',
+          '',
+          '.m3-fab-menu--open .m3-fab-menu__scrim {',
+          '  opacity: 1;',
+          '  pointer-events: auto;',
+          '}',
+          '',
+          '/* Color Role Variants */',
+          '.m3-fab-menu--primary {',
+          `  --m3-fab-menu-primary-bg: ${primaryBg};`,
+          '  --m3-fab-menu-primary-fg: #ffffff;',
+          '  --m3-fab-menu-action-bg: #e8def8;',
+          '  --m3-fab-menu-action-fg: #1d192b;',
+          '}',
+          '',
+          '.m3-fab-menu--secondary {',
+          '  --m3-fab-menu-primary-bg: #e8def8;',
+          '  --m3-fab-menu-primary-fg: #1d192b;',
+          '  --m3-fab-menu-action-bg: #f3edf7;',
+          '  --m3-fab-menu-action-fg: #49454f;',
+          '}',
+          '',
+          '.m3-fab-menu--tertiary {',
+          '  --m3-fab-menu-primary-bg: #ffd8e4;',
+          '  --m3-fab-menu-primary-fg: #31111d;',
+          '  --m3-fab-menu-action-bg: #fceee9;',
+          '  --m3-fab-menu-action-fg: #3b1812;',
+          '}',
+          '',
+          '.m3-fab-menu--surface {',
+          '  --m3-fab-menu-primary-bg: #ece6f0;',
+          '  --m3-fab-menu-primary-fg: #49454f;',
+          '  --m3-fab-menu-action-bg: #f7f2fa;',
+          '  --m3-fab-menu-action-fg: #1d192b;',
+          '}',
+          '',
+          '/* Primary Trigger FAB (56x56dp, 16dp corner radius morphing to 20dp) */',
+          '.m3-fab-menu__trigger {',
+          '  position: relative;',
+          '  display: inline-flex;',
+          '  align-items: center;',
+          '  justify-content: center;',
+          '  width: 56px;',
+          '  height: 56px;',
+          '  border-radius: 16px;',
+          '  border: none;',
+          '  background-color: var(--m3-fab-menu-primary-bg);',
+          '  color: var(--m3-fab-menu-primary-fg);',
+          '  cursor: pointer;',
+          '  box-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.3);',
+          '  transition: transform 220ms var(--m3-fab-menu-easing, cubic-bezier(0.34, 1.4, 0.64, 1)),',
+          '              box-shadow 220ms var(--md-sys-motion-easing-emphasized, cubic-bezier(0.2, 0, 0, 1)),',
+          '              background-color 200ms ease,',
+          '              border-radius 220ms ease;',
+          '  z-index: 5;',
+          '  outline: none;',
+          '  overflow: hidden;',
+          '  will-change: transform, box-shadow;',
+          '}',
+          '',
+          '.m3-fab-menu__trigger:hover {',
+          '  box-shadow: 0 6px 10px 4px rgba(0, 0, 0, 0.16), 0 2px 3px rgba(0, 0, 0, 0.3);',
+          '  transform: scale(1.05);',
+          '}',
+          '',
+          '.m3-fab-menu__trigger:active {',
+          '  box-shadow: 0 3px 6px 2px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.3);',
+          '  transform: scale(0.92);',
+          '}',
+          '',
+          '.m3-fab-menu--open .m3-fab-menu__trigger {',
+          '  border-radius: 20px;',
+          '  box-shadow: 0 6px 12px 4px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.3);',
+          '}',
+          '',
+          '.m3-fab-menu__trigger:focus-visible {',
+          '  outline: 2px solid var(--m3-fab-menu-primary-bg);',
+          '  outline-offset: 3px;',
+          '}',
+          '',
+          '/* Trigger Icon Smooth Spring Rotation */',
+          '.m3-fab-menu__icon {',
+          '  display: inline-flex;',
+          '  align-items: center;',
+          '  justify-content: center;',
+          '  width: 24px;',
+          '  height: 24px;',
+          '  transition: transform var(--m3-fab-menu-duration, 350ms) var(--m3-fab-menu-easing, cubic-bezier(0.34, 1.4, 0.64, 1));',
+          '  will-change: transform;',
+          '}',
+          '',
+          '.m3-fab-menu--open .m3-fab-menu__icon {',
+          '  transform: rotate(var(--m3-fab-menu-rotation, 45deg));',
+          '}',
+          '',
+          '/* Action Items Stack Container */',
+          '.m3-fab-menu__items {',
+          '  position: relative;',
+          '  display: flex;',
+          '  flex-direction: column-reverse;',
+          '  align-items: flex-end;',
+          '  gap: 16px;',
+          '  list-style: none;',
+          '  margin: 0;',
+          '  padding: 0 0 16px 0;',
+          '  pointer-events: none;',
+          '  z-index: 4;',
+          '}',
+          '',
+          '/* Horizontal Layout Option */',
+          '.m3-fab-menu--horizontal {',
+          '  flex-direction: row-reverse;',
+          '  align-items: center;',
+          '}',
+          '',
+          '.m3-fab-menu--horizontal .m3-fab-menu__items {',
+          '  flex-direction: row-reverse;',
+          '  align-items: center;',
+          '  padding: 0 16px 0 0;',
+          '}',
+          '',
+          '/* Action Item with Dual Staggered Cascading Animation & Spring Physics */',
+          '.m3-fab-menu__item {',
+          '  display: flex;',
+          '  align-items: center;',
+          '  gap: 12px;',
+          '  opacity: 0;',
+          '  transform: translateY(20px) scale(0.3) rotate(var(--m3-fab-item-init-rot, -12deg));',
+          '  pointer-events: none;',
+          '  transition: opacity calc(var(--m3-fab-menu-duration, 350ms) * 0.5) ease,',
+          '              transform calc(var(--m3-fab-menu-duration, 350ms) * 0.75) var(--m3-fab-menu-close-easing, cubic-bezier(0.4, 0, 0.2, 1));',
+          '  transition-delay: calc(var(--item-reverse-index, 0) * calc(var(--m3-fab-menu-stagger, 40ms) * 0.65));',
+          '  will-change: transform, opacity;',
+          '}',
+          '',
+          '.m3-fab-menu--horizontal .m3-fab-menu__item {',
+          '  transform: translateX(20px) scale(0.3) rotate(var(--m3-fab-item-init-rot, -12deg));',
+          '}',
+          '',
+          '.m3-fab-menu--open .m3-fab-menu__item {',
+          '  opacity: 1;',
+          '  transform: translateY(0) scale(1) rotate(0deg);',
+          '  pointer-events: auto;',
+          '  transition: opacity calc(var(--m3-fab-menu-duration, 350ms) * 0.8) ease,',
+          '              transform var(--m3-fab-menu-duration, 350ms) var(--m3-fab-menu-easing, cubic-bezier(0.34, 1.4, 0.64, 1));',
+          '  transition-delay: calc(var(--item-index, 0) * var(--m3-fab-menu-stagger, 40ms));',
+          '}',
+          '',
+          '.m3-fab-menu--open.m3-fab-menu--horizontal .m3-fab-menu__item {',
+          '  transform: translateX(0) scale(1) rotate(0deg);',
+          '}',
+          '',
+          '/* Mini FAB Action Button (40x40dp, 12dp corner radius) */',
+          '.m3-fab-menu__action {',
+          '  position: relative;',
+          '  display: inline-flex;',
+          '  align-items: center;',
+          '  justify-content: center;',
+          '  width: 40px;',
+          '  height: 40px;',
+          '  border-radius: 12px;',
+          '  border: none;',
+          '  background-color: var(--m3-fab-menu-action-bg);',
+          '  color: var(--m3-fab-menu-action-fg);',
+          '  cursor: pointer;',
+          '  box-shadow: 0 3px 6px 1px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);',
+          '  transition: transform 180ms var(--m3-fab-menu-easing, cubic-bezier(0.34, 1.4, 0.64, 1)),',
+          '              box-shadow 180ms ease,',
+          '              background-color 180ms ease;',
+          '  overflow: hidden;',
+          '  outline: none;',
+          '  flex-shrink: 0;',
+          '  will-change: transform, box-shadow;',
+          '}',
+          '',
+          '.m3-fab-menu__action:hover {',
+          '  box-shadow: 0 4px 10px 3px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.3);',
+          '  transform: scale(1.12);',
+          '}',
+          '',
+          '.m3-fab-menu__action:active {',
+          '  transform: scale(0.92);',
+          '}',
+          '',
+          '.m3-fab-menu__action:focus-visible {',
+          '  outline: 2px solid var(--m3-fab-menu-primary-bg);',
+          '  outline-offset: 2px;',
+          '}',
+          '',
+          '/* Action Label Pill Container with Slide & Fade Physics */',
+          '.m3-fab-menu__label {',
+          '  display: inline-block;',
+          '  padding: 6px 12px;',
+          '  border-radius: 8px;',
+          '  background-color: var(--m3-fab-menu-label-bg);',
+          '  color: var(--m3-fab-menu-label-fg);',
+          '  font-size: 13px;',
+          '  font-weight: 500;',
+          '  line-height: 1.25;',
+          '  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.3);',
+          '  white-space: nowrap;',
+          '  pointer-events: auto;',
+          '  cursor: pointer;',
+          '  opacity: 0;',
+          '  transform: translateX(8px) scale(0.92);',
+          '  transition: opacity calc(var(--m3-fab-menu-duration, 350ms) * 0.6) ease,',
+          '              transform calc(var(--m3-fab-menu-duration, 350ms) * 0.75) var(--m3-fab-menu-close-easing, cubic-bezier(0.4, 0, 0.2, 1)),',
+          '              box-shadow 180ms ease,',
+          '              background-color 180ms ease;',
+          '  transition-delay: calc(var(--item-reverse-index, 0) * calc(var(--m3-fab-menu-stagger, 40ms) * 0.65));',
+          '  will-change: transform, opacity;',
+          '}',
+          '',
+          '.m3-fab-menu--horizontal .m3-fab-menu__label {',
+          '  transform: translateY(8px) scale(0.92);',
+          '}',
+          '',
+          '.m3-fab-menu--open .m3-fab-menu__label {',
+          '  opacity: 1;',
+          '  transform: translateX(0) scale(1);',
+          '  transition: opacity calc(var(--m3-fab-menu-duration, 350ms) * 0.85) ease,',
+          '              transform var(--m3-fab-menu-duration, 350ms) var(--m3-fab-menu-easing, cubic-bezier(0.34, 1.4, 0.64, 1)),',
+          '              box-shadow 180ms ease,',
+          '              background-color 180ms ease;',
+          '  transition-delay: calc(var(--item-index, 0) * var(--m3-fab-menu-stagger, 40ms) + 25ms);',
+          '}',
+          '',
+          '.m3-fab-menu--open.m3-fab-menu--horizontal .m3-fab-menu__label {',
+          '  transform: translateY(0) scale(1);',
+          '}',
+          '',
+          '.m3-fab-menu__item:hover .m3-fab-menu__label {',
+          '  box-shadow: 0 2px 6px 2px rgba(0, 0, 0, 0.18), 0 1px 3px rgba(0, 0, 0, 0.3);',
+          '  transform: translateX(-2px) scale(1.02);',
+          '}',
+          '',
+          '/* Disabled State */',
+          '.m3-fab-menu--disabled {',
+          '  opacity: 0.38;',
+          '  pointer-events: none !important;',
+          '}',
+          '',
+          '.m3-fab-menu--disabled .m3-fab-menu__trigger,',
+          '.m3-fab-menu--disabled .m3-fab-menu__action {',
+          '  cursor: not-allowed;',
+          '  box-shadow: none;',
+          '}'
+        ];
+
+        if (s.fabMenuEngine === 'css') {
+          lines.push(
+            '',
+            '/* Pure CSS Focus-Within Mode */',
+            '.m3-fab-menu--css-mode:focus-within .m3-fab-menu__scrim {',
+            '  opacity: 1;',
+            '  pointer-events: auto;',
+            '}',
+            '',
+            '.m3-fab-menu--css-mode:focus-within .m3-fab-menu__icon {',
+            '  transform: rotate(var(--m3-fab-menu-rotation, 45deg));',
+            '}',
+            '',
+            '.m3-fab-menu--css-mode:focus-within .m3-fab-menu__item {',
+            '  opacity: 1;',
+            '  transform: translateY(0) scale(1) rotate(0deg);',
+            '  pointer-events: auto;',
+            '}',
+            '',
+            '.m3-fab-menu--css-mode:focus-within .m3-fab-menu__label {',
+            '  opacity: 1;',
+            '  transform: translateX(0) scale(1);',
+            '}',
+            '',
+            '.m3-fab-menu--css-mode.m3-fab-menu--horizontal:focus-within .m3-fab-menu__item {',
+            '  transform: translateX(0) scale(1) rotate(0deg);',
+            '}',
+            '',
+            '.m3-fab-menu--css-mode.m3-fab-menu--horizontal:focus-within .m3-fab-menu__label {',
+            '  transform: translateY(0) scale(1);',
+            '}'
+          );
+        }
+
+        lines.push(
+          '',
+          '/* Material 3 Radial Ripple Effect */',
+          '.m3-ripple-ink {',
+          '  position: absolute;',
+          '  border-radius: 50%;',
+          '  background: currentColor;',
+          '  opacity: 0.16;',
+          '  pointer-events: none;',
+          '  transform: scale(0);',
+          '  animation: m3-ripple 600ms cubic-bezier(0.2, 0, 0, 1) forwards;',
+          '}',
+          '',
+          '@keyframes m3-ripple {',
+          '  to {',
+          '    transform: scale(2.8);',
+          '    opacity: 0;',
+          '  }',
+          '}',
+          '',
+          '/* Accessibility: Reduced Motion */',
+          '@media (prefers-reduced-motion: reduce) {',
+          '  .m3-fab-menu__trigger,',
+          '  .m3-fab-menu__icon,',
+          '  .m3-fab-menu__action,',
+          '  .m3-fab-menu__item,',
+          '  .m3-fab-menu__label,',
+          '  .m3-fab-menu__scrim {',
+          '    transition: none !important;',
+          '    animation: none !important;',
+          '  }',
+          '}',
+          '',
+          '/* Dark Theme Tokens */',
+          '@media (prefers-color-scheme: dark) {',
+          '  .m3-fab-menu {',
+          '    --m3-fab-menu-action-bg: #36343b;',
+          '    --m3-fab-menu-action-fg: #e6e0e9;',
+          '    --m3-fab-menu-label-bg: #2b2930;',
+          '    --m3-fab-menu-label-fg: #e6e0e9;',
+          '    --m3-fab-menu-scrim: rgba(0, 0, 0, 0.5);',
+          '  }',
+          '  .m3-fab-menu--primary {',
+          '    --m3-fab-menu-primary-bg: #d0bcff;',
+          '    --m3-fab-menu-primary-fg: #381e72;',
+          '    --m3-fab-menu-action-bg: #4a4458;',
+          '    --m3-fab-menu-action-fg: #e8def8;',
+          '  }',
+          '  .m3-fab-menu--secondary {',
+          '    --m3-fab-menu-primary-bg: #ccc2dc;',
+          '    --m3-fab-menu-primary-fg: #332d41;',
+          '    --m3-fab-menu-action-bg: #4a4458;',
+          '    --m3-fab-menu-action-fg: #e8def8;',
+          '  }',
+          '  .m3-fab-menu--tertiary {',
+          '    --m3-fab-menu-primary-bg: #efb8c8;',
+          '    --m3-fab-menu-primary-fg: #492532;',
+          '    --m3-fab-menu-action-bg: #633b48;',
+          '    --m3-fab-menu-action-fg: #ffd8e4;',
+          '  }',
+          '  .m3-fab-menu--surface {',
+          '    --m3-fab-menu-primary-bg: #36343b;',
+          '    --m3-fab-menu-primary-fg: #e6e0e9;',
+          '    --m3-fab-menu-action-bg: #2b2930;',
+          '    --m3-fab-menu-action-fg: #cac4d0;',
+          '  }',
+          '}'
+        );
+
+        return lines.join('\n');
+      },
+
+      generateJS(s) {
+        if (s.fabMenuEngine === 'css') {
+          return [
+            '/**',
+            ' * Material 3 FAB Menu — Pure CSS Controller',
+            ' * No JavaScript runtime required.',
+            ' * Uses :focus-within to reveal speed dial actions on keyboard focus or touch.',
+            ' */'
+          ].join('\n');
+        }
+
+        return [
+          '/**',
+          ' * Material 3 Speed Dial / Expandable FAB Menu Controller',
+          ' * Features:',
+          ' * - Smooth 45° trigger rotation (+ to ×)',
+          ' * - Staggered cascade action item animations',
+          ' * - Scrim overlay click-to-dismiss',
+          ' * - Keyboard navigation (Esc key to close)',
+          ' * - Document click-outside dismissal',
+          ' * - Material 3 Radial Ripple interaction',
+          ' */',
+          '(function initM3SpeedDial() {',
+          '  const menu = document.getElementById("m3-speed-dial");',
+          '  if (!menu) return;',
+          '',
+          '  const trigger = menu.querySelector(".m3-fab-menu__trigger");',
+          '  const scrim = menu.querySelector(".m3-fab-menu__scrim");',
+          '',
+          '  function openMenu() {',
+          '    menu.classList.add("m3-fab-menu--open");',
+          '    if (trigger) trigger.setAttribute("aria-expanded", "true");',
+          '  }',
+          '',
+          '  function closeMenu() {',
+          '    menu.classList.remove("m3-fab-menu--open");',
+          '    if (trigger) trigger.setAttribute("aria-expanded", "false");',
+          '  }',
+          '',
+          '  function toggleMenu() {',
+          '    const isOpen = menu.classList.contains("m3-fab-menu--open");',
+          '    if (isOpen) {',
+          '      closeMenu();',
+          '    } else {',
+          '      openMenu();',
+          '    }',
+          '  }',
+          '',
+          '  // Toggle trigger',
+          '  if (trigger) {',
+          '    trigger.addEventListener("click", function (e) {',
+          '      e.stopPropagation();',
+          '      toggleMenu();',
+          '    });',
+          '  }',
+          '',
+          '  // Dismiss on scrim click',
+          '  if (scrim) {',
+          '    scrim.addEventListener("click", function (e) {',
+          '      e.stopPropagation();',
+          '      closeMenu();',
+          '    });',
+          '  }',
+          '',
+          '  // Action item click handlers',
+          '  menu.addEventListener("click", function (e) {',
+          '    const actionBtn = e.target.closest(".m3-fab-menu__action");',
+          '    const label = e.target.closest(".m3-fab-menu__label");',
+          '    if (actionBtn || label) {',
+          '      e.stopPropagation();',
+          '      const item = (actionBtn || label).closest(".m3-fab-menu__item");',
+          '      const actionName = (item && item.querySelector(".m3-fab-menu__label"))?.textContent ||',
+          '                         (item && item.querySelector(".m3-fab-menu__action"))?.getAttribute("aria-label") ||',
+          '                         "Action";',
+          '      console.log("[M3 FAB Menu] Action triggered:", actionName);',
+          '      closeMenu();',
+          '    }',
+          '  });',
+          '',
+          '  // Dismiss on Escape key',
+          '  window.addEventListener("keydown", function (e) {',
+          '    if (e.key === "Escape" && menu.classList.contains("m3-fab-menu--open")) {',
+          '      closeMenu();',
+          '      if (trigger) trigger.focus();',
+          '    }',
+          '  });',
+          '',
+          '  // Dismiss on click outside',
+          '  document.addEventListener("click", function (e) {',
+          '    if (!menu.contains(e.target) && menu.classList.contains("m3-fab-menu--open")) {',
+          '      closeMenu();',
+          '    }',
+          '  });',
+          '',
+          '  // Material 3 Radial Ripple ink',
+          '  function attachRipple(el) {',
+          '    el.addEventListener("pointerdown", function (e) {',
+          '      const rect = el.getBoundingClientRect();',
+          '      const size = Math.max(rect.width, rect.height);',
+          '      const x = e.clientX - rect.left - size / 2;',
+          '      const y = e.clientY - rect.top - size / 2;',
+          '      const ink = document.createElement("span");',
+          '      ink.className = "m3-ripple-ink";',
+          '      ink.style.width = size + "px";',
+          '      ink.style.height = size + "px";',
+          '      ink.style.left = x + "px";',
+          '      ink.style.top = y + "px";',
+          '      el.appendChild(ink);',
+          '      setTimeout(() => ink.remove(), 650);',
+          '    });',
+          '  }',
+          '',
+          '  menu.querySelectorAll(".m3-fab-menu__trigger, .m3-fab-menu__action").forEach(attachRipple);',
+          '',
+          '  return { open: openMenu, close: closeMenu, toggle: toggleMenu };',
+          '})();'
+        ].join('\n');
+      },
+
+      generateFullDocument(s) {
+        const html = this.generateHTML(s);
+        const css = this.generateCSS(s);
+        const js = s.fabMenuEngine === 'js' ? this.generateJS(s) : null;
+
+        const lines = [
+          '<!DOCTYPE html>',
+          '<html lang="en">',
+          '<head>',
+          '  <meta charset="UTF-8">',
+          '  <meta name="viewport" content="width=device-width, initial-scale=1.0">',
+          '  <title>Material 3 Speed Dial / FAB Menu Demo</title>',
+          '  <style>',
+          css.split('\n').map(l => '    ' + l).join('\n'),
+          '  </style>',
+          '</head>',
+          '<body>',
+          '',
+          '  <!-- Floating Anchor Container at bottom-right of viewport -->',
+          '  <main style="min-height: 100vh; background-color: #fef7ff; position: relative; padding: 24px; box-sizing: border-box;">',
+          '    <h1 style="font-family: Roboto, sans-serif; font-size: 20px; color: #1d192b; font-weight: 500;">Material 3 Speed Dial Demo</h1>',
+          '    <p style="font-family: Roboto, sans-serif; font-size: 14px; color: #49454f;">Tap the Floating Action Button below to reveal actions.</p>',
+          '',
+          '    <div style="position: fixed; right: 32px; bottom: 32px; z-index: 100;">',
+          html.split('\n').map(l => '      ' + l).join('\n'),
+          '    </div>',
+          '  </main>'
+        ];
+
+        if (js) {
+          lines.push('');
+          lines.push('  <script>');
+          lines.push(js.split('\n').map(l => '    ' + l).join('\n'));
+          lines.push('  </script>');
+        }
+
+        lines.push('</body>');
+        lines.push('</html>');
+
+        return lines.join('\n');
+      }
     }
   };
 
@@ -2915,9 +4442,15 @@
         eng = state.buttonEngine;
       } else if (state.activeComponent === 'fab') {
         eng = state.fabEngine;
+      } else if (state.activeComponent === 'dropdown') {
+        eng = state.dropdownEngine;
+      } else if (state.activeComponent === 'fabMenu') {
+        eng = state.fabMenuEngine;
       }
       if (state.activeComponent === 'button' || state.activeComponent === 'fab') {
         badgeEngine.textContent = eng === 'css' ? 'Pure CSS' : 'CSS + Ripple JS';
+      } else if (state.activeComponent === 'dropdown' || state.activeComponent === 'fabMenu') {
+        badgeEngine.textContent = eng === 'css' ? 'Pure CSS (:focus-within)' : 'Vanilla JS';
       } else {
         badgeEngine.textContent = eng === 'css' ? 'Pure CSS/SVG' : 'Vanilla JS';
       }
@@ -3034,6 +4567,10 @@
           filename = 'm3-button.html';
         } else if (state.activeComponent === 'fab') {
           filename = 'm3-fab.html';
+        } else if (state.activeComponent === 'dropdown') {
+          filename = 'm3-dropdown-menu.html';
+        } else if (state.activeComponent === 'fabMenu') {
+          filename = 'm3-fab-menu.html';
         }
         const a = document.createElement('a');
         a.href = url;
@@ -3999,6 +5536,466 @@
       });
     });
 
+    /* --- Dropdown Menus Controls --- */
+    // Dropdown Type
+    document.querySelectorAll('[data-dropdown-type]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-dropdown-type]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.dropdownType = btn.dataset.dropdownType;
+
+        const isField = state.dropdownType === 'filled' || state.dropdownType === 'outlined';
+        const labelRow = document.getElementById('dropdown-label-row');
+        const valueRow = document.getElementById('dropdown-value-row');
+        const helperRow = document.getElementById('dropdown-helper-row');
+        if (labelRow) labelRow.style.display = isField || state.dropdownType === 'icon' ? 'flex' : 'none';
+        if (valueRow) valueRow.style.display = isField || state.dropdownType === 'button' ? 'flex' : 'none';
+        if (helperRow) helperRow.style.display = isField ? 'flex' : 'none';
+
+        const desc = document.getElementById('dropdown-type-desc');
+        if (desc) {
+          const map = {
+            filled: 'Filled: Canonical M3 exposed dropdown with surface container and indicator line.',
+            outlined: 'Outlined: M3 exposed dropdown with 1px border stroke and floating label.',
+            button: 'Button: Action menu triggered by a high/medium-emphasis button.',
+            icon: 'Icon: Action menu triggered by a 3-dots icon button anchor.'
+          };
+          desc.textContent = map[state.dropdownType] || '';
+        }
+        onStateChange();
+      });
+    });
+
+    // Dropdown Label
+    const dropdownLabelInput = document.getElementById('dropdown-label-input');
+    if (dropdownLabelInput) {
+      dropdownLabelInput.addEventListener('input', (e) => {
+        state.dropdownLabel = e.target.value;
+        onStateChange();
+      });
+    }
+
+    // Dropdown Value
+    const dropdownValueInput = document.getElementById('dropdown-value-input');
+    if (dropdownValueInput) {
+      dropdownValueInput.addEventListener('input', (e) => {
+        state.dropdownValue = e.target.value;
+        onStateChange();
+      });
+    }
+
+    // Dropdown Helper
+    const dropdownHelperInput = document.getElementById('dropdown-helper-input');
+    if (dropdownHelperInput) {
+      dropdownHelperInput.addEventListener('input', (e) => {
+        state.dropdownHelper = e.target.value;
+        onStateChange();
+      });
+    }
+
+    // Dropdown Preset
+    document.querySelectorAll('[data-dropdown-preset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-dropdown-preset]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.dropdownPreset = btn.dataset.dropdownPreset;
+
+        const presetItems = M3_MENU_PRESETS[state.dropdownPreset] || [];
+        const firstItem = presetItems.find(i => !i.divider);
+        if (firstItem) {
+          state.dropdownValue = firstItem.label;
+          if (dropdownValueInput) dropdownValueInput.value = firstItem.label;
+        }
+
+        const desc = document.getElementById('dropdown-preset-desc');
+        if (desc) {
+          const map = {
+            fruits: 'Fruits: 5 selectable options with leading sparkle/favorite icons.',
+            account: 'Account: Profile, Settings, Notifications, and destructive Sign Out action.',
+            actions: 'Actions: Edit, Duplicate, Share link, and destructive Delete action.'
+          };
+          desc.textContent = map[state.dropdownPreset] || '';
+        }
+        onStateChange();
+      });
+    });
+
+    // Dropdown Icons switch
+    const dropdownIconsSwitch = document.getElementById('dropdown-icons-switch');
+    if (dropdownIconsSwitch) {
+      dropdownIconsSwitch.addEventListener('change', (e) => {
+        state.dropdownShowIcons = e.target.checked;
+        onStateChange();
+      });
+    }
+
+    // Dropdown Shortcuts switch
+    const dropdownShortcutsSwitch = document.getElementById('dropdown-shortcuts-switch');
+    if (dropdownShortcutsSwitch) {
+      dropdownShortcutsSwitch.addEventListener('change', (e) => {
+        state.dropdownShowShortcuts = e.target.checked;
+        onStateChange();
+      });
+    }
+
+    // Dropdown Dividers switch
+    const dropdownDividersSwitch = document.getElementById('dropdown-dividers-switch');
+    if (dropdownDividersSwitch) {
+      dropdownDividersSwitch.addEventListener('change', (e) => {
+        state.dropdownShowDividers = e.target.checked;
+        onStateChange();
+      });
+    }
+
+    // Dropdown Scrollable switch
+    const dropdownScrollSwitch = document.getElementById('dropdown-scrollable-switch');
+    if (dropdownScrollSwitch) {
+      dropdownScrollSwitch.addEventListener('change', (e) => {
+        state.dropdownScrollable = e.target.checked;
+        onStateChange();
+      });
+    }
+
+    // Dropdown State: Open vs Closed
+    document.querySelectorAll('[data-dropdown-state]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-dropdown-state]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.dropdownOpen = btn.dataset.dropdownState === 'expanded';
+        onStateChange();
+      });
+    });
+
+    // Dropdown Width
+    document.querySelectorAll('[data-dropdown-width]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-dropdown-width]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.dropdownWidth = btn.dataset.dropdownWidth;
+        onStateChange();
+      });
+    });
+
+    // Dropdown Disabled
+    const dropdownDisabledSwitch = document.getElementById('dropdown-disabled-switch');
+    if (dropdownDisabledSwitch) {
+      dropdownDisabledSwitch.addEventListener('change', (e) => {
+        state.dropdownDisabled = e.target.checked;
+        onStateChange();
+      });
+    }
+
+    // Dropdown Color
+    const dropdownColorPicker = document.getElementById('dropdown-color-picker');
+    const dropdownColorHex = document.getElementById('dropdown-color-hex');
+
+    document.querySelectorAll('.dropdown-color-swatch').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.dropdown-color-swatch').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.dropdownColor = btn.dataset.color;
+        if (dropdownColorPicker) dropdownColorPicker.value = state.dropdownColor;
+        if (dropdownColorHex) dropdownColorHex.value = state.dropdownColor.toUpperCase();
+        onStateChange();
+      });
+    });
+
+    if (dropdownColorPicker) {
+      dropdownColorPicker.addEventListener('input', (e) => {
+        state.dropdownColor = e.target.value;
+        if (dropdownColorHex) dropdownColorHex.value = state.dropdownColor.toUpperCase();
+        document.querySelectorAll('.dropdown-color-swatch').forEach(b => b.classList.remove('active'));
+        onStateChange();
+      });
+    }
+
+    if (dropdownColorHex) {
+      dropdownColorHex.addEventListener('input', (e) => {
+        const val = e.target.value;
+        if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+          state.dropdownColor = val;
+          if (dropdownColorPicker) dropdownColorPicker.value = val;
+          document.querySelectorAll('.dropdown-color-swatch').forEach(b => b.classList.remove('active'));
+          onStateChange();
+        }
+      });
+    }
+
+    // Dropdown Engine
+    document.querySelectorAll('[data-dropdown-engine]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-dropdown-engine]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.dropdownEngine = btn.dataset.dropdownEngine;
+        onStateChange();
+      });
+    });
+
+    // FAB Menu Direction
+    document.querySelectorAll('[data-fab-menu-direction]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-fab-menu-direction]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.fabMenuDirection = btn.dataset.fabMenuDirection;
+        const desc = document.getElementById('fab-menu-direction-desc');
+        if (desc) {
+          desc.textContent = state.fabMenuDirection === 'upwards'
+            ? 'Upwards: Canonical M3 speed dial stacking mini-FABs vertically above primary FAB.'
+            : 'Horizontal: Expand mini-FABs as a horizontal action row to the left.';
+        }
+        onStateChange();
+      });
+    });
+
+    // FAB Menu Label Style
+    document.querySelectorAll('[data-fab-menu-label-style]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-fab-menu-label-style]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.fabMenuLabelStyle = btn.dataset.fabMenuLabelStyle;
+        onStateChange();
+      });
+    });
+
+    // FAB Menu Scrim Switch
+    const fabMenuScrimSwitch = document.getElementById('fab-menu-scrim-switch');
+    if (fabMenuScrimSwitch) {
+      fabMenuScrimSwitch.addEventListener('change', (e) => {
+        state.fabMenuShowScrim = e.target.checked;
+        onStateChange();
+      });
+    }
+
+    // FAB Menu Preset
+    document.querySelectorAll('[data-fab-menu-preset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-fab-menu-preset]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.fabMenuPreset = btn.dataset.fabMenuPreset;
+        const desc = document.getElementById('fab-menu-preset-desc');
+        if (desc) {
+          const map = {
+            create: 'Create: New document, Take photo, Record audio, and Attach file.',
+            share: 'Share: Email report, Copy link, Print document, and Download PDF.',
+            tasks: 'Tasks: Add task, Set reminder, Bookmark page, and Assign member.'
+          };
+          desc.textContent = map[state.fabMenuPreset] || '';
+        }
+        onStateChange();
+      });
+    });
+
+    // FAB Menu Item Count
+    document.querySelectorAll('[data-fab-menu-item-count]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-fab-menu-item-count]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.fabMenuItemCount = parseInt(btn.dataset.fabMenuItemCount, 10);
+        onStateChange();
+      });
+    });
+
+    // FAB Menu State (Expanded vs Collapsed)
+    document.querySelectorAll('[data-fab-menu-state]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-fab-menu-state]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.fabMenuOpen = btn.dataset.fabMenuState === 'expanded';
+        onStateChange();
+      });
+    });
+
+    // FAB Menu Color Role
+    document.querySelectorAll('[data-fab-menu-color-role]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-fab-menu-color-role]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.fabMenuColorRole = btn.dataset.fabMenuColorRole;
+        const desc = document.getElementById('fab-menu-color-desc');
+        if (desc) {
+          const map = {
+            primary: 'Primary: High-emphasis primary tonal role for the main trigger FAB.',
+            secondary: 'Secondary: Less prominent secondary tonal container role.',
+            tertiary: 'Tertiary: Contrasting accent role for special or distinct context.',
+            surface: 'Surface: Default tonal surface elevation container role.'
+          };
+          desc.textContent = map[state.fabMenuColorRole] || '';
+        }
+        onStateChange();
+      });
+    });
+
+    // FAB Menu Color Presets & Picker
+    const fabMenuColorPicker = document.getElementById('fab-menu-color-picker');
+    const fabMenuColorHex = document.getElementById('fab-menu-color-hex');
+
+    document.querySelectorAll('.fab-menu-color-swatch').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.fab-menu-color-swatch').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.fabMenuColor = btn.dataset.color;
+        if (fabMenuColorPicker) fabMenuColorPicker.value = state.fabMenuColor;
+        if (fabMenuColorHex) fabMenuColorHex.value = state.fabMenuColor.toUpperCase();
+        onStateChange();
+      });
+    });
+
+    if (fabMenuColorPicker) {
+      fabMenuColorPicker.addEventListener('input', (e) => {
+        state.fabMenuColor = e.target.value;
+        if (fabMenuColorHex) fabMenuColorHex.value = state.fabMenuColor.toUpperCase();
+        document.querySelectorAll('.fab-menu-color-swatch').forEach(b => b.classList.remove('active'));
+        onStateChange();
+      });
+    }
+
+    if (fabMenuColorHex) {
+      fabMenuColorHex.addEventListener('input', (e) => {
+        const val = e.target.value;
+        if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+          state.fabMenuColor = val;
+          if (fabMenuColorPicker) fabMenuColorPicker.value = val;
+          document.querySelectorAll('.fab-menu-color-swatch').forEach(b => b.classList.remove('active'));
+          onStateChange();
+        }
+      });
+    }
+
+    // FAB Menu Disabled Switch
+    const fabMenuDisabledSwitch = document.getElementById('fab-menu-disabled-switch');
+    if (fabMenuDisabledSwitch) {
+      fabMenuDisabledSwitch.addEventListener('change', (e) => {
+        state.fabMenuDisabled = e.target.checked;
+        onStateChange();
+      });
+    }
+
+    // FAB Menu Animation Physics / Easing
+    document.querySelectorAll('[data-fab-menu-anim-style]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-fab-menu-anim-style]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.fabMenuAnimStyle = btn.dataset.fabMenuAnimStyle;
+        const desc = document.getElementById('fab-menu-anim-style-desc');
+        if (desc) {
+          const map = {
+            spring: 'Spring: Expressive Material 3 elastic spring with natural overshoot bounce.',
+            emphasized: 'Emphasized: Material 3 Emphasized deceleration curve for snappy responsiveness.',
+            gentle: 'Gentle: Smooth cinematic glide with subtle momentum.'
+          };
+          desc.textContent = map[state.fabMenuAnimStyle] || '';
+        }
+        onStateChange();
+      });
+    });
+
+    // FAB Menu Animation Duration Slider
+    const fabMenuDurationInput = document.getElementById('fab-menu-duration-input');
+    const fabMenuDurationBadge = document.getElementById('fab-menu-duration-badge');
+    if (fabMenuDurationInput) {
+      fabMenuDurationInput.addEventListener('input', (e) => {
+        state.fabMenuAnimDuration = parseInt(e.target.value, 10);
+        if (fabMenuDurationBadge) fabMenuDurationBadge.textContent = state.fabMenuAnimDuration + 'ms';
+        onStateChange();
+      });
+    }
+
+    // FAB Menu Stagger Cascade Slider
+    const fabMenuStaggerInput = document.getElementById('fab-menu-stagger-input');
+    const fabMenuStaggerBadge = document.getElementById('fab-menu-stagger-badge');
+    if (fabMenuStaggerInput) {
+      fabMenuStaggerInput.addEventListener('input', (e) => {
+        state.fabMenuAnimStagger = parseInt(e.target.value, 10);
+        if (fabMenuStaggerBadge) fabMenuStaggerBadge.textContent = state.fabMenuAnimStagger + 'ms';
+        onStateChange();
+      });
+    }
+
+    // FAB Menu Trigger Rotation Option
+    document.querySelectorAll('[data-fab-menu-rotation]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-fab-menu-rotation]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.fabMenuAnimRotation = parseInt(btn.dataset.fabMenuRotation, 10);
+        onStateChange();
+      });
+    });
+
+    // FAB Menu Micro-Rotation Switch
+    const fabMenuItemRotateSwitch = document.getElementById('fab-menu-item-rotate-switch');
+    if (fabMenuItemRotateSwitch) {
+      fabMenuItemRotateSwitch.addEventListener('change', (e) => {
+        state.fabMenuAnimItemRotate = e.target.checked;
+        onStateChange();
+      });
+    }
+
+    // FAB Menu Engine
+    document.querySelectorAll('[data-fab-menu-engine]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-fab-menu-engine]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.fabMenuEngine = btn.dataset.fabMenuEngine;
+        onStateChange();
+      });
+    });
+
     /* --- Toolbar controls --- */
     document.querySelectorAll('[data-bg]').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -4261,6 +6258,127 @@
           if (fabVarDesc) fabVarDesc.textContent = 'Standard FAB: Canonical 56dp primary floating action trigger.';
           const fabColDesc = document.getElementById('fab-color-desc');
           if (fabColDesc) fabColDesc.textContent = 'Surface FAB: Default tonal surface elevation container.';
+        } else if (state.activeComponent === 'dropdown') {
+          // Reset Dropdown
+          state.dropdownType = 'filled';
+          state.dropdownLabel = 'Favorite Fruit';
+          state.dropdownValue = 'Apple';
+          state.dropdownHelper = 'Select your preferred fruit option';
+          state.dropdownPreset = 'fruits';
+          state.dropdownShowIcons = true;
+          state.dropdownShowShortcuts = false;
+          state.dropdownShowDividers = true;
+          state.dropdownOpen = true;
+          state.dropdownWidth = 'anchor';
+          state.dropdownScrollable = false;
+          state.dropdownDisabled = false;
+          state.dropdownColor = '#6750A4';
+          state.dropdownEngine = 'js';
+
+          const dLblIn = document.getElementById('dropdown-label-input');
+          if (dLblIn) dLblIn.value = 'Favorite Fruit';
+          const dValIn = document.getElementById('dropdown-value-input');
+          if (dValIn) dValIn.value = 'Apple';
+          const dHlpIn = document.getElementById('dropdown-helper-input');
+          if (dHlpIn) dHlpIn.value = 'Select your preferred fruit option';
+          const dIcnSw = document.getElementById('dropdown-icons-switch');
+          if (dIcnSw) dIcnSw.checked = true;
+          const dScSw = document.getElementById('dropdown-shortcuts-switch');
+          if (dScSw) dScSw.checked = false;
+          const dDivSw = document.getElementById('dropdown-dividers-switch');
+          if (dDivSw) dDivSw.checked = true;
+          const dScrSw = document.getElementById('dropdown-scrollable-switch');
+          if (dScrSw) dScrSw.checked = false;
+          const dDisSw = document.getElementById('dropdown-disabled-switch');
+          if (dDisSw) dDisSw.checked = false;
+          const dColPk = document.getElementById('dropdown-color-picker');
+          const dColHex = document.getElementById('dropdown-color-hex');
+          if (dColPk) dColPk.value = '#6750A4';
+          if (dColHex) dColHex.value = '#6750A4';
+
+          document.querySelectorAll('.dropdown-color-swatch').forEach(b => {
+            b.classList.toggle('active', b.dataset.color === '#6750A4');
+          });
+
+          resetSegmentedButton('[data-dropdown-type]', 'filled');
+          resetSegmentedButton('[data-dropdown-preset]', 'fruits');
+          resetSegmentedButton('[data-dropdown-state]', 'expanded');
+          resetSegmentedButton('[data-dropdown-width]', 'anchor');
+          resetSegmentedButton('[data-dropdown-engine]', 'js');
+
+          const dLblRow = document.getElementById('dropdown-label-row');
+          const dValRow = document.getElementById('dropdown-value-row');
+          const dHlpRow = document.getElementById('dropdown-helper-row');
+          if (dLblRow) dLblRow.style.display = 'flex';
+          if (dValRow) dValRow.style.display = 'flex';
+          if (dHlpRow) dHlpRow.style.display = 'flex';
+
+          const dTypeDesc = document.getElementById('dropdown-type-desc');
+          if (dTypeDesc) dTypeDesc.textContent = 'Filled: Canonical M3 exposed dropdown with surface container and indicator line.';
+          const dPrsDesc = document.getElementById('dropdown-preset-desc');
+          if (dPrsDesc) dPrsDesc.textContent = 'Fruits: 5 selectable options with leading sparkle/favorite icons.';
+        } else if (state.activeComponent === 'fabMenu') {
+          // Reset FAB Menu
+          state.fabMenuDirection = 'upwards';
+          state.fabMenuLabelStyle = 'pill';
+          state.fabMenuShowScrim = true;
+          state.fabMenuPreset = 'create';
+          state.fabMenuItemCount = 4;
+          state.fabMenuOpen = true;
+          state.fabMenuColorRole = 'primary';
+          state.fabMenuColor = '#6750A4';
+          state.fabMenuDisabled = false;
+          state.fabMenuEngine = 'js';
+          state.fabMenuAnimStyle = 'spring';
+          state.fabMenuAnimDuration = 350;
+          state.fabMenuAnimStagger = 40;
+          state.fabMenuAnimRotation = 45;
+          state.fabMenuAnimItemRotate = true;
+
+          const fmScSw = document.getElementById('fab-menu-scrim-switch');
+          if (fmScSw) fmScSw.checked = true;
+          const fmDisSw = document.getElementById('fab-menu-disabled-switch');
+          if (fmDisSw) fmDisSw.checked = false;
+          const fmColPk = document.getElementById('fab-menu-color-picker');
+          const fmColHex = document.getElementById('fab-menu-color-hex');
+          if (fmColPk) fmColPk.value = '#6750A4';
+          if (fmColHex) fmColHex.value = '#6750A4';
+
+          const fmDurIn = document.getElementById('fab-menu-duration-input');
+          const fmDurBd = document.getElementById('fab-menu-duration-badge');
+          if (fmDurIn) fmDurIn.value = '350';
+          if (fmDurBd) fmDurBd.textContent = '350ms';
+
+          const fmStgIn = document.getElementById('fab-menu-stagger-input');
+          const fmStgBd = document.getElementById('fab-menu-stagger-badge');
+          if (fmStgIn) fmStgIn.value = '40';
+          if (fmStgBd) fmStgBd.textContent = '40ms';
+
+          const fmItmRotSw = document.getElementById('fab-menu-item-rotate-switch');
+          if (fmItmRotSw) fmItmRotSw.checked = true;
+
+          document.querySelectorAll('.fab-menu-color-swatch').forEach(b => {
+            b.classList.toggle('active', b.dataset.color === '#6750A4');
+          });
+
+          resetSegmentedButton('[data-fab-menu-direction]', 'upwards');
+          resetSegmentedButton('[data-fab-menu-label-style]', 'pill');
+          resetSegmentedButton('[data-fab-menu-preset]', 'create');
+          resetSegmentedButton('[data-fab-menu-item-count]', '4');
+          resetSegmentedButton('[data-fab-menu-state]', 'expanded');
+          resetSegmentedButton('[data-fab-menu-color-role]', 'primary');
+          resetSegmentedButton('[data-fab-menu-anim-style]', 'spring');
+          resetSegmentedButton('[data-fab-menu-rotation]', '45');
+          resetSegmentedButton('[data-fab-menu-engine]', 'js');
+
+          const fmDirDesc = document.getElementById('fab-menu-direction-desc');
+          if (fmDirDesc) fmDirDesc.textContent = 'Upwards: Canonical M3 speed dial stacking mini-FABs vertically above primary FAB.';
+          const fmPrsDesc = document.getElementById('fab-menu-preset-desc');
+          if (fmPrsDesc) fmPrsDesc.textContent = 'Create: New document, Take photo, Record audio, and Attach file.';
+          const fmColDesc = document.getElementById('fab-menu-color-desc');
+          if (fmColDesc) fmColDesc.textContent = 'Primary: High-emphasis primary tonal role for the main trigger FAB.';
+          const fmAnimDesc = document.getElementById('fab-menu-anim-style-desc');
+          if (fmAnimDesc) fmAnimDesc.textContent = 'Spring: Expressive Material 3 elastic spring with natural overshoot bounce.';
         }
 
         updatePlayBtnIcon();
@@ -4306,7 +6424,21 @@
                     (btn.dataset.fabVariant === value) ||
                     (btn.dataset.fabColorRole === value) ||
                     (btn.dataset.fabElevation === value) ||
-                    (btn.dataset.fabEngine === value);
+                    (btn.dataset.fabEngine === value) ||
+                    (btn.dataset.dropdownType === value) ||
+                    (btn.dataset.dropdownPreset === value) ||
+                    (btn.dataset.dropdownState === value) ||
+                    (btn.dataset.dropdownWidth === value) ||
+                    (btn.dataset.dropdownEngine === value) ||
+                    (btn.dataset.fabMenuDirection === value) ||
+                    (btn.dataset.fabMenuLabelStyle === value) ||
+                    (btn.dataset.fabMenuPreset === value) ||
+                    (btn.dataset.fabMenuItemCount === value) ||
+                    (btn.dataset.fabMenuState === value) ||
+                    (btn.dataset.fabMenuColorRole === value) ||
+                    (btn.dataset.fabMenuAnimStyle === value) ||
+                    (btn.dataset.fabMenuRotation === value) ||
+                    (btn.dataset.fabMenuEngine === value);
       if (match) {
         btn.classList.add('active');
         btn.setAttribute('aria-checked', 'true');
@@ -4324,7 +6456,7 @@
     const iconPlay = playBtn.querySelector('.icon-play');
     const btnText = playBtn.querySelector('.btn-text');
 
-    if (state.activeComponent === 'button' || state.activeComponent === 'fab') {
+    if (state.activeComponent === 'button' || state.activeComponent === 'fab' || state.activeComponent === 'dropdown' || state.activeComponent === 'fabMenu') {
       playBtn.style.opacity = '0.5';
       playBtn.style.pointerEvents = 'none';
       if (btnText) btnText.textContent = 'Interactive';
