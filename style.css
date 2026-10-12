@@ -1258,11 +1258,23 @@ body {
 /* --------------------------------------------------------------------------
    Component-Specific Controls Visibility
    -------------------------------------------------------------------------- */
-body[data-active-component="loadingIndicator"] [data-for-component="linearProgress"] {
+body:not([data-active-component="loadingIndicator"]) [data-for-component="loadingIndicator"] {
   display: none !important;
 }
 
-body[data-active-component="linearProgress"] [data-for-component="loadingIndicator"] {
+body:not([data-active-component="linearProgress"]) [data-for-component="linearProgress"] {
+  display: none !important;
+}
+
+body:not([data-active-component="circularProgress"]) [data-for-component="circularProgress"] {
+  display: none !important;
+}
+
+body:not([data-active-component="button"]) [data-for-component="button"] {
+  display: none !important;
+}
+
+body:not([data-active-component="fab"]) [data-for-component="fab"] {
   display: none !important;
 }
 
@@ -1501,6 +1513,583 @@ body[data-active-component="linearProgress"] [data-for-component="loadingIndicat
   animation-name: m3-wavy-scroll;
   animation-duration: var(--m3-linear-speed, 2s);
   animation-iteration-count: infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Material 3 Circular Progress Indicator Styles
+   -------------------------------------------------------------------------- */
+.preview-circular-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 40px 24px;
+  box-sizing: border-box;
+}
+
+.m3-circular-progress {
+  display: inline-flex;
+  position: relative;
+  width: var(--m3-circular-size, 112px);
+  height: var(--m3-circular-size, 112px);
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.m3-circular-progress__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+  transform: rotate(-90deg);
+  transform-origin: center center;
+}
+
+.m3-circular-progress__track {
+  fill: none;
+  stroke: var(--m3-circular-track, #e6e0e9);
+  stroke-width: var(--m3-circular-stroke, 7px);
+  transition: stroke 0.2s ease;
+}
+
+.m3-circular-progress__indicator {
+  fill: none;
+  stroke: var(--m3-circular-color, #6750a4);
+  stroke-width: var(--m3-circular-stroke, 7px);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.35s cubic-bezier(0.2, 0, 0, 1), stroke 0.2s ease;
+}
+
+.m3-circular-progress--indeterminate .m3-circular-progress__svg {
+  animation: m3-circular-rotate var(--m3-circular-speed, 1.4s) linear infinite;
+}
+
+.m3-circular-progress--indeterminate .m3-circular-progress__indicator {
+  animation: m3-circular-dash var(--m3-circular-speed, 1.4s) ease-in-out infinite;
+}
+
+@keyframes m3-circular-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes m3-circular-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124;
+  }
+}
+
+/* Wavy Expressive Variant */
+.m3-circular-progress--wavy {
+  overflow: visible;
+}
+
+.m3-circular-progress--wavy .m3-circular-progress__svg {
+  transform: none;
+}
+
+.m3-circular-progress--wavy.m3-circular-progress--indeterminate .m3-circular-progress__svg {
+  animation: m3-circular-wavy-rotate calc(var(--m3-circular-speed, 1.4s) * 1.5) linear infinite;
+}
+
+.m3-circular-progress--wavy.m3-circular-progress--indeterminate .m3-circular-progress__wavy-active {
+  stroke-dasharray: 6 100;
+  stroke-dashoffset: 0;
+  animation: m3-circular-wavy-dash var(--m3-circular-speed, 1.4s) cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* In the live preview, the 60 FPS rAF loop precisely coordinates the M3 breathing wave math */
+.live-indicator-wrapper .m3-circular-progress--wavy.m3-circular-progress--indeterminate .m3-circular-progress__svg,
+.live-indicator-wrapper .m3-circular-progress--wavy.m3-circular-progress--indeterminate .m3-circular-progress__wavy-active {
+  animation: none !important;
+}
+
+@keyframes m3-circular-wavy-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes m3-circular-wavy-dash {
+  0% {
+    stroke-dasharray: 4 100;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 75 100;
+    stroke-dashoffset: -20;
+  }
+  100% {
+    stroke-dasharray: 4 100;
+    stroke-dashoffset: -100;
+  }
+}
+
+.m3-circular-progress__wavy-track {
+  fill: none;
+  stroke: var(--m3-circular-track, #e6e0e9);
+  stroke-width: var(--m3-circular-stroke, 7px);
+  stroke-linecap: round;
+  transition: stroke 0.2s ease;
+}
+
+.m3-circular-progress__wavy-active {
+  fill: none;
+  stroke: var(--m3-circular-color, #6750a4);
+  stroke-width: var(--m3-circular-stroke, 7px);
+  stroke-linecap: round;
+  transition: stroke 0.2s ease;
+}
+
+/* Paused State */
+.m3-circular-progress--paused .m3-circular-progress__svg,
+.m3-circular-progress--paused .m3-circular-progress__indicator,
+.m3-circular-progress--paused .m3-circular-progress__wavy-active {
+  animation-play-state: paused !important;
+}
+
+/* Four-Color Cycle for Circular */
+@keyframes m3-circular-four-color {
+  0%, 15% { stroke: #6750a4; }
+  25%, 40% { stroke: #006a6a; }
+  50%, 65% { stroke: #7d5260; }
+  75%, 90% { stroke: #b3261e; }
+  100% { stroke: #6750a4; }
+}
+
+.m3-circular-progress--four-color .m3-circular-progress__indicator,
+.m3-circular-progress--four-color .m3-circular-progress__wavy-active {
+  animation-name: m3-circular-dash, m3-circular-four-color;
+  animation-duration: var(--m3-circular-speed, 1.4s), calc(var(--m3-circular-speed, 1.4s) * 4);
+  animation-iteration-count: infinite, infinite;
+}
+
+.m3-circular-progress--wavy.m3-circular-progress--four-color .m3-circular-progress__wavy-active {
+  animation: m3-circular-four-color calc(var(--m3-circular-speed, 1.4s) * 4) linear infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Material 3 Common Buttons Styles
+   -------------------------------------------------------------------------- */
+.preview-button-wrapper,
+.preview-fab-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 48px 24px;
+  box-sizing: border-box;
+}
+
+/* Base M3 Button */
+.m3-button {
+  --m3-btn-height: 40px;
+  --m3-btn-padding-h: 24px;
+  --m3-btn-font-size: 14px;
+  --m3-btn-radius: 9999px;
+  --m3-btn-color: #6750a4;
+  --m3-btn-bg: var(--m3-btn-color);
+  --m3-btn-text: #ffffff;
+  --m3-btn-border: transparent;
+  --m3-btn-shadow: none;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: var(--m3-btn-height);
+  padding: 0 var(--m3-btn-padding-h);
+  border: 1px solid var(--m3-btn-border);
+  border-radius: var(--m3-btn-radius);
+  background-color: var(--m3-btn-bg);
+  color: var(--m3-btn-text);
+  box-shadow: var(--m3-btn-shadow);
+  font-family: inherit;
+  font-size: var(--m3-btn-font-size);
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+  box-sizing: border-box;
+  vertical-align: middle;
+  transition: box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1),
+              background-color 0.2s cubic-bezier(0.2, 0, 0, 1),
+              color 0.2s cubic-bezier(0.2, 0, 0, 1),
+              border-color 0.2s cubic-bezier(0.2, 0, 0, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* State Layer overlay */
+.m3-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: currentColor;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.m3-button:hover::before {
+  opacity: 0.08;
+}
+
+.m3-button:focus-visible::before {
+  opacity: 0.12;
+}
+
+.m3-button:active::before {
+  opacity: 0.12;
+}
+
+.m3-button:focus-visible {
+  outline: 2px solid var(--m3-btn-color);
+  outline-offset: 2px;
+}
+
+/* Button Variants */
+.m3-button--filled {
+  --m3-btn-bg: var(--m3-btn-color, #6750a4);
+  --m3-btn-text: #ffffff;
+  --m3-btn-border: transparent;
+  --m3-btn-shadow: none;
+}
+.m3-button--filled:hover {
+  --m3-btn-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);
+}
+
+.m3-button--elevated {
+  --m3-btn-bg: #f7f2fa;
+  --m3-btn-text: var(--m3-btn-color, #6750a4);
+  --m3-btn-border: transparent;
+  --m3-btn-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);
+}
+.m3-button--elevated:hover {
+  --m3-btn-shadow: 0 2px 6px 2px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);
+}
+
+.m3-button--tonal {
+  --m3-btn-bg: #e8def8;
+  --m3-btn-text: #1d192b;
+  --m3-btn-border: transparent;
+  --m3-btn-shadow: none;
+}
+.m3-button--tonal:hover {
+  --m3-btn-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);
+}
+
+.m3-button--outlined {
+  --m3-btn-bg: transparent;
+  --m3-btn-text: var(--m3-btn-color, #6750a4);
+  --m3-btn-border: #79747e;
+  --m3-btn-shadow: none;
+}
+.m3-button--outlined:hover {
+  --m3-btn-border: var(--m3-btn-color, #6750a4);
+}
+
+.m3-button--text {
+  --m3-btn-bg: transparent;
+  --m3-btn-text: var(--m3-btn-color, #6750a4);
+  --m3-btn-border: transparent;
+  --m3-btn-shadow: none;
+  --m3-btn-padding-h: 12px;
+}
+
+/* Button Sizes */
+.m3-button--small {
+  --m3-btn-height: 32px;
+  --m3-btn-padding-h: 16px;
+  --m3-btn-font-size: 13px;
+}
+.m3-button--large {
+  --m3-btn-height: 48px;
+  --m3-btn-padding-h: 28px;
+  --m3-btn-font-size: 16px;
+}
+
+/* Button Corners */
+.m3-button--corner-full {
+  --m3-btn-radius: 9999px;
+}
+.m3-button--corner-rounded {
+  --m3-btn-radius: 12px;
+}
+.m3-button--corner-sharp {
+  --m3-btn-radius: 4px;
+}
+
+/* Full Width */
+.m3-button--full-width {
+  width: 100%;
+}
+
+/* Disabled Button */
+.m3-button--disabled,
+.m3-button:disabled {
+  pointer-events: none !important;
+  cursor: default !important;
+  box-shadow: none !important;
+  background-color: rgba(29, 25, 43, 0.12) !important;
+  color: rgba(29, 25, 43, 0.38) !important;
+  border-color: transparent !important;
+}
+.m3-button--outlined.m3-button--disabled,
+.m3-button--outlined:disabled {
+  background-color: transparent !important;
+  border-color: rgba(29, 25, 43, 0.12) !important;
+}
+.m3-button--text.m3-button--disabled,
+.m3-button--text:disabled {
+  background-color: transparent !important;
+}
+
+/* Button Icon */
+.m3-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.m3-button__icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+.m3-button--small .m3-button__icon {
+  width: 16px;
+  height: 16px;
+}
+.m3-button--large .m3-button__icon {
+  width: 22px;
+  height: 22px;
+}
+
+.m3-button__label {
+  display: inline-block;
+  line-height: inherit;
+}
+
+/* --------------------------------------------------------------------------
+   Material 3 Floating Action Button (FAB) Styles
+   -------------------------------------------------------------------------- */
+.m3-fab {
+  --m3-fab-size: 56px;
+  --m3-fab-radius: 16px;
+  --m3-fab-icon-size: 24px;
+  --m3-fab-bg: #ece6f0;
+  --m3-fab-color: #6750a4;
+  --m3-fab-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.15), 0 1px 3px 0 rgba(0, 0, 0, 0.30);
+  --m3-fab-shadow-hover: 0 6px 10px 4px rgba(0, 0, 0, 0.15), 0 2px 3px 0 rgba(0, 0, 0, 0.30);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--m3-fab-size);
+  height: var(--m3-fab-size);
+  border: none;
+  border-radius: var(--m3-fab-radius);
+  background-color: var(--m3-fab-bg);
+  color: var(--m3-fab-color);
+  box-shadow: var(--m3-fab-shadow);
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+  box-sizing: border-box;
+  vertical-align: middle;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  line-height: 1;
+  transition: box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1),
+              background-color 0.2s cubic-bezier(0.2, 0, 0, 1),
+              color 0.2s cubic-bezier(0.2, 0, 0, 1),
+              transform 0.15s cubic-bezier(0.2, 0, 0, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.m3-fab::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: currentColor;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.m3-fab:hover {
+  box-shadow: var(--m3-fab-shadow-hover);
+}
+.m3-fab:hover::before {
+  opacity: 0.08;
+}
+
+.m3-fab:focus-visible {
+  outline: 2px solid var(--m3-fab-color);
+  outline-offset: 2px;
+}
+.m3-fab:focus-visible::before {
+  opacity: 0.12;
+}
+
+.m3-fab:active {
+  box-shadow: var(--m3-fab-shadow);
+}
+.m3-fab:active::before {
+  opacity: 0.12;
+}
+
+/* FAB Sizes / Styles */
+.m3-fab--small {
+  --m3-fab-size: 40px;
+  --m3-fab-radius: 12px;
+  --m3-fab-icon-size: 24px;
+}
+
+.m3-fab--large {
+  --m3-fab-size: 96px;
+  --m3-fab-radius: 28px;
+  --m3-fab-icon-size: 36px;
+}
+
+.m3-fab--extended {
+  width: auto;
+  min-width: 80px;
+  height: 56px;
+  padding: 0 20px;
+  gap: 12px;
+  border-radius: 16px;
+}
+
+/* FAB Color Roles */
+.m3-fab--surface {
+  --m3-fab-bg: #ece6f0;
+  --m3-fab-color: #6750a4;
+}
+
+.m3-fab--primary {
+  --m3-fab-bg: #eaddff;
+  --m3-fab-color: #21005d;
+}
+
+.m3-fab--secondary {
+  --m3-fab-bg: #e8def8;
+  --m3-fab-color: #1d192b;
+}
+
+.m3-fab--tertiary {
+  --m3-fab-bg: #ffd8e4;
+  --m3-fab-color: #31111d;
+}
+
+/* Lowered Elevation */
+.m3-fab--lowered {
+  --m3-fab-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);
+  --m3-fab-shadow-hover: 0 2px 6px 2px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);
+}
+
+/* Disabled FAB */
+.m3-fab--disabled,
+.m3-fab:disabled {
+  pointer-events: none !important;
+  cursor: default !important;
+  box-shadow: none !important;
+  background-color: rgba(29, 25, 43, 0.12) !important;
+  color: rgba(29, 25, 43, 0.38) !important;
+}
+
+.m3-fab__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--m3-fab-icon-size);
+  height: var(--m3-fab-icon-size);
+  flex-shrink: 0;
+}
+.m3-fab__icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.m3-fab__label {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Interactive Ripple Effect */
+.m3-ripple-ink {
+  position: absolute;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0.22;
+  transform: scale(0);
+  animation: m3-ripple-anim 0.6s cubic-bezier(0.2, 0, 0, 1) forwards;
+  pointer-events: none;
+}
+@keyframes m3-ripple-anim {
+  to {
+    transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+/* Dark Theme Adjustments */
+[data-theme="dark"] .m3-button--elevated {
+  --m3-btn-bg: #211f26;
+}
+[data-theme="dark"] .m3-button--tonal {
+  --m3-btn-bg: #4a4458;
+  --m3-btn-text: #e8def8;
+}
+[data-theme="dark"] .m3-button--outlined {
+  --m3-btn-border: #938f99;
+}
+[data-theme="dark"] .m3-button--disabled,
+[data-theme="dark"] .m3-button:disabled {
+  background-color: rgba(230, 224, 233, 0.12) !important;
+  color: rgba(230, 224, 233, 0.38) !important;
+}
+[data-theme="dark"] .m3-fab--surface {
+  --m3-fab-bg: #2b2930;
+  --m3-fab-color: #d0bcff;
+}
+[data-theme="dark"] .m3-fab--primary {
+  --m3-fab-bg: #4f378b;
+  --m3-fab-color: #eaddff;
+}
+[data-theme="dark"] .m3-fab--secondary {
+  --m3-fab-bg: #4a4458;
+  --m3-fab-color: #e8def8;
+}
+[data-theme="dark"] .m3-fab--tertiary {
+  --m3-fab-bg: #633b48;
+  --m3-fab-color: #ffd8e4;
+}
+[data-theme="dark"] .m3-fab--disabled,
+[data-theme="dark"] .m3-fab:disabled {
+  background-color: rgba(230, 224, 233, 0.12) !important;
+  color: rgba(230, 224, 233, 0.38) !important;
 }
 
 /* --------------------------------------------------------------------------

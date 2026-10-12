@@ -85,11 +85,8 @@
           </button>
         </li>
 
-        <li class="component-divider" role="separator" aria-hidden="true"></li>
-        <li class="component-group-label">Planned for Future</li>
-
         <li class="component-item">
-          <button class="component-button disabled" type="button" disabled title="Coming in future release">
+          <button class="component-button" type="button" data-component="circularProgress">
             <span class="component-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
@@ -97,7 +94,55 @@
             </span>
             <div class="component-meta">
               <span class="component-name">Circular Progress</span>
-              <span class="component-desc">Standard spinner</span>
+              <span class="component-desc">Spinner / Wavy</span>
+            </div>
+            <span class="badge badge-active" style="display: none;">Active</span>
+          </button>
+        </li>
+
+        <li class="component-item">
+          <button class="component-button" type="button" data-component="button">
+            <span class="component-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M19 7H5c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm0 8H5V9h14v6z"/>
+              </svg>
+            </span>
+            <div class="component-meta">
+              <span class="component-name">Common Buttons</span>
+              <span class="component-desc">Filled / Elevated / Tonal</span>
+            </div>
+            <span class="badge badge-active" style="display: none;">Active</span>
+          </button>
+        </li>
+
+        <li class="component-item">
+          <button class="component-button" type="button" data-component="fab">
+            <span class="component-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+              </svg>
+            </span>
+            <div class="component-meta">
+              <span class="component-name">Floating Action Button</span>
+              <span class="component-desc">Standard / Small / Large / Extended</span>
+            </div>
+            <span class="badge badge-active" style="display: none;">Active</span>
+          </button>
+        </li>
+
+        <li class="component-divider" role="separator" aria-hidden="true"></li>
+        <li class="component-group-label">Planned for Future</li>
+
+        <li class="component-item">
+          <button class="component-button disabled" type="button" disabled title="Coming in future release">
+            <span class="component-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+              </svg>
+            </span>
+            <div class="component-meta">
+              <span class="component-name">Cards</span>
+              <span class="component-desc">Elevated / Filled / Outlined</span>
             </div>
             <span class="badge badge-planned">Soon</span>
           </button>
@@ -107,12 +152,102 @@
           <button class="component-button disabled" type="button" disabled title="Coming in future release">
             <span class="component-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
               </svg>
             </span>
             <div class="component-meta">
-              <span class="component-name">Button & FAB</span>
-              <span class="component-desc">Filled / Elevated / Tonal</span>
+              <span class="component-name">Chips</span>
+              <span class="component-desc">Assist / Filter / Input</span>
+            </div>
+            <span class="badge badge-planned">Soon</span>
+          </button>
+        </li>
+
+        <li class="component-item">
+          <button class="component-button disabled" type="button" disabled title="Coming in future release">
+            <span class="component-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z"/>
+              </svg>
+            </span>
+            <div class="component-meta">
+              <span class="component-name">Text Fields</span>
+              <span class="component-desc">Filled / Outlined inputs</span>
+            </div>
+            <span class="badge badge-planned">Soon</span>
+          </button>
+        </li>
+
+        <li class="component-item">
+          <button class="component-button disabled" type="button" disabled title="Coming in future release">
+            <span class="component-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M19 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h4l3 3 3-3h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 16h-4.83l-.59.59L12 20.17l-1.59-1.59-.58-.58H5V4h14v14z"/>
+              </svg>
+            </span>
+            <div class="component-meta">
+              <span class="component-name">Dialogs</span>
+              <span class="component-desc">Alert & Confirmation</span>
+            </div>
+            <span class="badge badge-planned">Soon</span>
+          </button>
+        </li>
+
+        <li class="component-item">
+          <button class="component-button disabled" type="button" disabled title="Coming in future release">
+            <span class="component-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M17 7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5s-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
+              </svg>
+            </span>
+            <div class="component-meta">
+              <span class="component-name">Switch & Checkbox</span>
+              <span class="component-desc">Selection Controls</span>
+            </div>
+            <span class="badge badge-planned">Soon</span>
+          </button>
+        </li>
+
+        <li class="component-item">
+          <button class="component-button disabled" type="button" disabled title="Coming in future release">
+            <span class="component-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              </svg>
+            </span>
+            <div class="component-meta">
+              <span class="component-name">Navigation Bar</span>
+              <span class="component-desc">Bottom Bar & Rail</span>
+            </div>
+            <span class="badge badge-planned">Soon</span>
+          </button>
+        </li>
+
+        <li class="component-item">
+          <button class="component-button disabled" type="button" disabled title="Coming in future release">
+            <span class="component-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M19 13H5v-2h14v2z"/>
+              </svg>
+            </span>
+            <div class="component-meta">
+              <span class="component-name">Sliders</span>
+              <span class="component-desc">Continuous & Discrete</span>
+            </div>
+            <span class="badge badge-planned">Soon</span>
+          </button>
+        </li>
+
+        <li class="component-item">
+          <button class="component-button disabled" type="button" disabled title="Coming in future release">
+            <span class="component-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+              </svg>
+            </span>
+            <div class="component-meta">
+              <span class="component-name">Badges & Tooltips</span>
+              <span class="component-desc">Status & Help overlays</span>
             </div>
             <span class="badge badge-planned">Soon</span>
           </button>
@@ -629,6 +764,513 @@
               </button>
             </div>
             <p class="prop-hint">Pure CSS/SVG runs entirely without JavaScript. Vanilla JS provides an imperative API (.setProgress(val)).</p>
+          </div>
+        </fieldset>
+
+        <!-- ================= CIRCULAR PROGRESS PROPERTIES ================= -->
+        <!-- CP Section 1: Mode & Variant -->
+        <fieldset class="prop-group" data-for-component="circularProgress">
+          <legend class="prop-legend">Mode & Variant</legend>
+
+          <!-- Mode: Indeterminate vs Determinate -->
+          <div class="prop-item">
+            <label class="prop-label">Progress Mode</label>
+            <div class="segmented-control" role="radiogroup" aria-label="Progress mode">
+              <button type="button" class="segment-btn active" data-circular-mode="indeterminate" role="radio" aria-checked="true">
+                Indeterminate
+              </button>
+              <button type="button" class="segment-btn" data-circular-mode="determinate" role="radio" aria-checked="false">
+                Determinate
+              </button>
+            </div>
+            <p class="prop-hint">Indeterminate spins continuously; Determinate displays exact completion progress.</p>
+          </div>
+
+          <!-- Progress Value Slider (shown only if Determinate) -->
+          <div id="circular-val-row" class="prop-item" style="display: none;">
+            <div class="prop-label-row">
+              <label for="circular-progress-slider" class="prop-label">Progress Value</label>
+              <span id="circular-progress-val" class="prop-value-badge">65%</span>
+            </div>
+            <input type="range" id="circular-progress-slider" class="md-slider" min="0" max="100" step="1" value="65" aria-valuemin="0" aria-valuemax="100" aria-valuenow="65" aria-label="Circular progress percentage">
+            <div class="slider-ticks">
+              <span>0%</span>
+              <span>50%</span>
+              <span>100%</span>
+            </div>
+          </div>
+
+          <!-- Variant: Standard vs Wavy -->
+          <div class="prop-item">
+            <label class="prop-label">Visual Variant</label>
+            <div class="segmented-control" role="radiogroup" aria-label="Circular variant">
+              <button type="button" class="segment-btn" data-circular-variant="standard" role="radio" aria-checked="false">
+                Standard Circular
+              </button>
+              <button type="button" class="segment-btn active" data-circular-variant="wavy" role="radio" aria-checked="true">
+                Wavy Expressive
+              </button>
+            </div>
+            <p class="prop-hint">Material 3 Expressive introduces sinusoidal wavy circular paths.</p>
+          </div>
+
+          <!-- Track Shape: Wavy vs Circular (shown if Wavy) -->
+          <div id="circular-track-shape-row" class="prop-item">
+            <label class="prop-label">Background Track Shape</label>
+            <div class="segmented-control" role="radiogroup" aria-label="Circular track shape">
+              <button type="button" class="segment-btn active" data-circular-track-shape="wavy" role="radio" aria-checked="true">
+                Wavy Track
+              </button>
+              <button type="button" class="segment-btn" data-circular-track-shape="circular" role="radio" aria-checked="false">
+                Smooth Track
+              </button>
+            </div>
+            <p class="prop-hint">Wavy track outlines the full wave path; Smooth track provides a subtle circular baseline.</p>
+          </div>
+        </fieldset>
+
+        <!-- CP Section 2: Dimensions & Timing -->
+        <fieldset class="prop-group" data-for-component="circularProgress">
+          <legend class="prop-legend">Dimensions & Speed</legend>
+
+          <!-- Diameter / Size slider -->
+          <div class="prop-item">
+            <div class="prop-label-row">
+              <label for="circular-size-slider" class="prop-label">Indicator Size (Diameter)</label>
+              <span id="circular-size-val" class="prop-value-badge">112px</span>
+            </div>
+            <input type="range" id="circular-size-slider" class="md-slider" min="24" max="120" step="4" value="112" aria-valuemin="24" aria-valuemax="120" aria-valuenow="112" aria-label="Circular size in pixels">
+            <div class="slider-ticks">
+              <span>24px (Small)</span>
+              <span>48px (Default)</span>
+              <span>120px (Hero)</span>
+            </div>
+          </div>
+
+          <!-- Stroke Thickness slider -->
+          <div class="prop-item">
+            <div class="prop-label-row">
+              <label for="circular-stroke-slider" class="prop-label">Stroke Thickness</label>
+              <span id="circular-stroke-val" class="prop-value-badge">7px</span>
+            </div>
+            <input type="range" id="circular-stroke-slider" class="md-slider" min="2" max="12" step="1" value="7" aria-valuemin="2" aria-valuemax="12" aria-valuenow="7" aria-label="Stroke thickness in pixels">
+            <div class="slider-ticks">
+              <span>2px (Thin)</span>
+              <span>4px (Standard)</span>
+              <span>12px (Bold)</span>
+            </div>
+          </div>
+
+          <!-- Wave Amplitude slider (shown if Wavy) -->
+          <div id="circular-amplitude-row" class="prop-item">
+            <div class="prop-label-row">
+              <label for="circular-amplitude-slider" class="prop-label">Wave Amplitude</label>
+              <span id="circular-amplitude-val" class="prop-value-badge">6px</span>
+            </div>
+            <input type="range" id="circular-amplitude-slider" class="md-slider" min="2" max="10" step="1" value="6" aria-valuemin="2" aria-valuemax="10" aria-valuenow="6" aria-label="Circular wave amplitude">
+            <div class="slider-ticks">
+              <span>2px (Subtle)</span>
+              <span>4px (Balanced)</span>
+              <span>10px (Expressive)</span>
+            </div>
+          </div>
+
+          <!-- Wave Petals/Cycles slider (shown if Wavy) -->
+          <div id="circular-waves-row" class="prop-item">
+            <div class="prop-label-row">
+              <label for="circular-waves-slider" class="prop-label">Wave Cycles (Petals)</label>
+              <span id="circular-waves-val" class="prop-value-badge">12</span>
+            </div>
+            <input type="range" id="circular-waves-slider" class="md-slider" min="3" max="12" step="1" value="12" aria-valuemin="3" aria-valuemax="12" aria-valuenow="12" aria-label="Number of wave cycles">
+            <div class="slider-ticks">
+              <span>3</span>
+              <span>6 (Default)</span>
+              <span>12</span>
+            </div>
+          </div>
+
+          <!-- Speed slider -->
+          <div class="prop-item">
+            <div class="prop-label-row">
+              <label for="circular-speed-slider" class="prop-label">Animation Cycle Speed</label>
+              <span id="circular-speed-val" class="prop-value-badge">1.4s</span>
+            </div>
+            <input type="range" id="circular-speed-slider" class="md-slider" min="0.5" max="4.0" step="0.1" value="1.4" aria-valuemin="0.5" aria-valuemax="4.0" aria-valuenow="1.4" aria-label="Circular animation speed">
+            <div class="slider-ticks">
+              <span>0.5s (Fast)</span>
+              <span>1.4s (Standard)</span>
+              <span>4.0s (Slow)</span>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- CP Section 3: Motion & Multi-Color -->
+        <fieldset class="prop-group" data-for-component="circularProgress">
+          <legend class="prop-legend">Motion & Effects</legend>
+
+          <!-- Animate toggle -->
+          <div class="prop-toggle-row">
+            <div class="toggle-text">
+              <label for="circular-animated-switch" class="toggle-label">Animate</label>
+              <span class="toggle-desc">Enable spinner rotation & arc motion</span>
+            </div>
+            <label class="md-switch">
+              <input type="checkbox" id="circular-animated-switch" checked aria-label="Toggle circular animation">
+              <span class="switch-track">
+                <span class="switch-thumb"></span>
+              </span>
+            </label>
+          </div>
+
+          <!-- 4-Color Cycle toggle (indeterminate only) -->
+          <div id="circular-four-color-row" class="prop-toggle-row">
+            <div class="toggle-text">
+              <label for="circular-four-color-switch" class="toggle-label">Four-Color Cycling</label>
+              <span class="toggle-desc">M3 expressive primary/teal/tertiary/error cycle</span>
+            </div>
+            <label class="md-switch">
+              <input type="checkbox" id="circular-four-color-switch" aria-label="Toggle four-color cycle">
+              <span class="switch-track">
+                <span class="switch-thumb"></span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- CP Section 4: Colors -->
+        <fieldset class="prop-group" data-for-component="circularProgress">
+          <legend class="prop-legend">Colors</legend>
+
+          <!-- Active Indicator Color -->
+          <div class="prop-item">
+            <label class="prop-label">Active Indicator Color</label>
+            <div class="color-presets" role="radiogroup" aria-label="Circular Color Presets">
+              <button type="button" class="color-swatch circular-color-swatch active" data-color="#6750A4" style="--swatch-color: #6750A4" title="Primary (#6750A4)" aria-label="Primary #6750A4"></button>
+              <button type="button" class="color-swatch circular-color-swatch" data-color="#006A6A" style="--swatch-color: #006A6A" title="Teal Primary (#006A6A)" aria-label="Teal #006A6A"></button>
+              <button type="button" class="color-swatch circular-color-swatch" data-color="#984061" style="--swatch-color: #984061" title="Tertiary (#984061)" aria-label="Tertiary #984061"></button>
+              <button type="button" class="color-swatch circular-color-swatch" data-color="#B3261E" style="--swatch-color: #B3261E" title="Error (#B3261E)" aria-label="Error #B3261E"></button>
+              <button type="button" class="color-swatch circular-color-swatch" data-color="#386A20" style="--swatch-color: #386A20" title="Green (#386A20)" aria-label="Green #386A20"></button>
+              <button type="button" class="color-swatch circular-color-swatch" data-color="#825500" style="--swatch-color: #825500" title="Amber (#825500)" aria-label="Amber #825500"></button>
+              <button type="button" class="color-swatch circular-color-swatch" data-color="#D0BCFF" style="--swatch-color: #D0BCFF" title="Dark Theme Primary (#D0BCFF)" aria-label="Light Purple #D0BCFF"></button>
+            </div>
+            <div class="custom-color-row">
+              <div class="color-input-preview-box">
+                <input type="color" id="circular-color-picker" value="#6750A4" aria-label="Choose custom circular color">
+              </div>
+              <input type="text" id="circular-color-hex" class="md-text-input" value="#6750A4" maxlength="7" pattern="^#[0-9A-Fa-f]{6}$" aria-label="Hex color code">
+            </div>
+          </div>
+
+          <!-- Track Color -->
+          <div class="prop-item">
+            <label class="prop-label">Track Background Color</label>
+            <div class="color-presets" role="radiogroup" aria-label="Circular Track Presets">
+              <button type="button" class="color-swatch circular-track-swatch active" data-track-color="#E6E0E9" style="--swatch-color: #E6E0E9" title="Surface Container Highest (#E6E0E9)" aria-label="Track Highest #E6E0E9"></button>
+              <button type="button" class="color-swatch circular-track-swatch" data-track-color="#E8DEF8" style="--swatch-color: #E8DEF8" title="Secondary Container (#E8DEF8)" aria-label="Secondary #E8DEF8"></button>
+              <button type="button" class="color-swatch circular-track-swatch" data-track-color="#CCE8E7" style="--swatch-color: #CCE8E7" title="Teal Container (#CCE8E7)" aria-label="Teal #CCE8E7"></button>
+              <button type="button" class="color-swatch circular-track-swatch" data-track-color="#F3EDF7" style="--swatch-color: #F3EDF7" title="Surface Container (#F3EDF7)" aria-label="Surface #F3EDF7"></button>
+              <button type="button" class="color-swatch circular-track-swatch" data-track-color="#49454F" style="--swatch-color: #49454F" title="Dark Track (#49454F)" aria-label="Dark Track #49454F"></button>
+            </div>
+            <div class="custom-color-row">
+              <div class="color-input-preview-box">
+                <input type="color" id="circular-track-picker" value="#E6E0E9" aria-label="Choose custom track color">
+              </div>
+              <input type="text" id="circular-track-hex" class="md-text-input" value="#E6E0E9" maxlength="7" pattern="^#[0-9A-Fa-f]{6}$" aria-label="Track hex color code">
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- CP Section 5: Output Engine -->
+        <fieldset class="prop-group" data-for-component="circularProgress">
+          <legend class="prop-legend">Output Implementation</legend>
+          <div class="prop-item">
+            <label class="prop-label">Code Format</label>
+            <div class="segmented-control" role="radiogroup" aria-label="Circular code output engine">
+              <button type="button" class="segment-btn active" data-circular-engine="css" role="radio" aria-checked="true" title="Pure HTML/SVG and CSS without any JavaScript">
+                Pure CSS / SVG
+              </button>
+              <button type="button" class="segment-btn" data-circular-engine="js" role="radio" aria-checked="false" title="Vanilla JS helper class for programmatic control">
+                Vanilla JS
+              </button>
+            </div>
+            <p class="prop-hint">Pure CSS/SVG runs entirely without JavaScript. Vanilla JS provides an imperative API (.setProgress(val)).</p>
+          </div>
+        </fieldset>
+
+        <!-- ================= COMMON BUTTONS PROPERTIES ================= -->
+        <!-- Button Section 1: Variant & Hierarchy -->
+        <fieldset class="prop-group" data-for-component="button">
+          <legend class="prop-legend">Button Style & Hierarchy</legend>
+          <div class="prop-item">
+            <label class="prop-label">Button Variant</label>
+            <div class="segmented-control" role="radiogroup" aria-label="Button variant">
+              <button type="button" class="segment-btn active" data-button-variant="filled" role="radio" aria-checked="true">
+                Filled
+              </button>
+              <button type="button" class="segment-btn" data-button-variant="elevated" role="radio" aria-checked="false">
+                Elevated
+              </button>
+              <button type="button" class="segment-btn" data-button-variant="tonal" role="radio" aria-checked="false">
+                Tonal
+              </button>
+              <button type="button" class="segment-btn" data-button-variant="outlined" role="radio" aria-checked="false">
+                Outlined
+              </button>
+              <button type="button" class="segment-btn" data-button-variant="text" role="radio" aria-checked="false">
+                Text
+              </button>
+            </div>
+            <p id="button-variant-desc" class="prop-hint">Filled: High emphasis primary action container.</p>
+          </div>
+
+          <!-- Label text input -->
+          <div class="prop-item">
+            <label for="button-label-input" class="prop-label">Button Label</label>
+            <input type="text" id="button-label-input" class="md-text-input" value="Explore Material 3" placeholder="Button text" maxlength="32" aria-label="Button label text">
+          </div>
+        </fieldset>
+
+        <!-- Button Section 2: Icon & Layout -->
+        <fieldset class="prop-group" data-for-component="button">
+          <legend class="prop-legend">Icon & Layout</legend>
+
+          <!-- Icon Placement -->
+          <div class="prop-item">
+            <label class="prop-label">Icon Placement</label>
+            <div class="segmented-control" role="radiogroup" aria-label="Icon placement">
+              <button type="button" class="segment-btn" data-button-icon-placement="none" role="radio" aria-checked="false">
+                None
+              </button>
+              <button type="button" class="segment-btn active" data-button-icon-placement="leading" role="radio" aria-checked="true">
+                Leading
+              </button>
+              <button type="button" class="segment-btn" data-button-icon-placement="trailing" role="radio" aria-checked="false">
+                Trailing
+              </button>
+            </div>
+          </div>
+
+          <!-- Icon Choice -->
+          <div id="button-icon-select-row" class="prop-item">
+            <label for="button-icon-select" class="prop-label">Icon Symbol</label>
+            <select id="button-icon-select" class="md-select" aria-label="Choose icon">
+              <option value="sparkle" selected>✨ Sparkle / Explore</option>
+              <option value="favorite">❤️ Favorite / Heart</option>
+              <option value="add">➕ Add / Plus</option>
+              <option value="send">✉️ Send / Arrow</option>
+              <option value="download">📥 Download</option>
+            </select>
+          </div>
+
+          <!-- Size / Height -->
+          <div class="prop-item">
+            <label class="prop-label">Size / Density</label>
+            <div class="segmented-control" role="radiogroup" aria-label="Button density">
+              <button type="button" class="segment-btn" data-button-size="small" role="radio" aria-checked="false">
+                Small (32dp)
+              </button>
+              <button type="button" class="segment-btn active" data-button-size="medium" role="radio" aria-checked="true">
+                Medium (40dp)
+              </button>
+              <button type="button" class="segment-btn" data-button-size="large" role="radio" aria-checked="false">
+                Large (48dp)
+              </button>
+            </div>
+          </div>
+
+          <!-- Corner Radius -->
+          <div class="prop-item">
+            <label class="prop-label">Corner Radius</label>
+            <div class="segmented-control" role="radiogroup" aria-label="Corner radius">
+              <button type="button" class="segment-btn active" data-button-corner="full" role="radio" aria-checked="true">
+                Full Pill
+              </button>
+              <button type="button" class="segment-btn" data-button-corner="rounded" role="radio" aria-checked="false">
+                Rounded (12dp)
+              </button>
+              <button type="button" class="segment-btn" data-button-corner="sharp" role="radio" aria-checked="false">
+                Subtle (4dp)
+              </button>
+            </div>
+          </div>
+
+          <!-- Full Width toggle -->
+          <div class="prop-toggle-row">
+            <div class="toggle-text">
+              <label for="button-full-width-switch" class="toggle-label">Full Width</label>
+              <span class="toggle-desc">Expand button to fit 100% of container width</span>
+            </div>
+            <label class="md-switch">
+              <input type="checkbox" id="button-full-width-switch" aria-label="Toggle full width">
+              <span class="switch-track">
+                <span class="switch-thumb"></span>
+              </span>
+            </label>
+          </div>
+
+          <!-- Disabled toggle -->
+          <div class="prop-toggle-row">
+            <div class="toggle-text">
+              <label for="button-disabled-switch" class="toggle-label">Disabled State</label>
+              <span class="toggle-desc">Apply M3 disabled state opacity & block interactions</span>
+            </div>
+            <label class="md-switch">
+              <input type="checkbox" id="button-disabled-switch" aria-label="Toggle disabled state">
+              <span class="switch-track">
+                <span class="switch-thumb"></span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Button Section 3: Color Customization -->
+        <fieldset class="prop-group" data-for-component="button">
+          <legend class="prop-legend">Theme & Color</legend>
+          <div class="prop-item">
+            <label class="prop-label">Primary Color Theme</label>
+            <div class="color-presets" role="radiogroup" aria-label="Button Color Presets">
+              <button type="button" class="color-swatch button-color-swatch active" data-color="#6750A4" style="--swatch-color: #6750A4" title="Primary Purple (#6750A4)" aria-label="Primary Purple"></button>
+              <button type="button" class="color-swatch button-color-swatch" data-color="#006A6A" style="--swatch-color: #006A6A" title="Teal (#006A6A)" aria-label="Teal"></button>
+              <button type="button" class="color-swatch button-color-swatch" data-color="#00639B" style="--swatch-color: #00639B" title="Blue (#00639B)" aria-label="Blue"></button>
+              <button type="button" class="color-swatch button-color-swatch" data-color="#386A20" style="--swatch-color: #386A20" title="Green (#386A20)" aria-label="Green"></button>
+              <button type="button" class="color-swatch button-color-swatch" data-color="#984061" style="--swatch-color: #984061" title="Rose (#984061)" aria-label="Rose"></button>
+              <button type="button" class="color-swatch button-color-swatch" data-color="#B3261E" style="--swatch-color: #B3261E" title="Error Red (#B3261E)" aria-label="Red"></button>
+            </div>
+            <div class="custom-color-row">
+              <div class="color-input-preview-box">
+                <input type="color" id="button-color-picker" value="#6750A4" aria-label="Choose custom button color">
+              </div>
+              <input type="text" id="button-color-hex" class="md-text-input" value="#6750A4" maxlength="7" pattern="^#[0-9A-Fa-f]{6}$" aria-label="Button hex color code">
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Button Section 4: Output Engine -->
+        <fieldset class="prop-group" data-for-component="button">
+          <legend class="prop-legend">Output Implementation</legend>
+          <div class="prop-item">
+            <label class="prop-label">Code Format</label>
+            <div class="segmented-control" role="radiogroup" aria-label="Button code output engine">
+              <button type="button" class="segment-btn active" data-button-engine="css" role="radio" aria-checked="true" title="Pure HTML & CSS state layers">
+                Pure CSS
+              </button>
+              <button type="button" class="segment-btn" data-button-engine="js" role="radio" aria-checked="false" title="Vanilla JS interactive radial ripple controller">
+                Vanilla JS (Ripple)
+              </button>
+            </div>
+            <p class="prop-hint">Pure CSS uses ::before state layer. Vanilla JS includes interactive radial click ripple.</p>
+          </div>
+        </fieldset>
+
+        <!-- ================= FLOATING ACTION BUTTON PROPERTIES ================= -->
+        <!-- FAB Section 1: Variant & Size -->
+        <fieldset class="prop-group" data-for-component="fab">
+          <legend class="prop-legend">FAB Variant & Size</legend>
+          <div class="prop-item">
+            <label class="prop-label">FAB Size / Variant</label>
+            <div class="segmented-control" role="radiogroup" aria-label="FAB variant">
+              <button type="button" class="segment-btn active" data-fab-variant="standard" role="radio" aria-checked="true">
+                Standard (56dp)
+              </button>
+              <button type="button" class="segment-btn" data-fab-variant="small" role="radio" aria-checked="false">
+                Small (40dp)
+              </button>
+              <button type="button" class="segment-btn" data-fab-variant="large" role="radio" aria-checked="false">
+                Large (96dp)
+              </button>
+              <button type="button" class="segment-btn" data-fab-variant="extended" role="radio" aria-checked="false">
+                Extended
+              </button>
+            </div>
+            <p id="fab-variant-desc" class="prop-hint">Standard FAB: Canonical 56dp primary floating action trigger.</p>
+          </div>
+
+          <!-- Extended Label (shown only when Extended) -->
+          <div id="fab-label-row" class="prop-item" style="display: none;">
+            <label for="fab-label-input" class="prop-label">Extended Label</label>
+            <input type="text" id="fab-label-input" class="md-text-input" value="Compose" placeholder="Action label" maxlength="24" aria-label="Extended FAB label">
+          </div>
+        </fieldset>
+
+        <!-- FAB Section 2: Color Role & Icon -->
+        <fieldset class="prop-group" data-for-component="fab">
+          <legend class="prop-legend">Color Role & Icon</legend>
+
+          <!-- Color Role -->
+          <div class="prop-item">
+            <label class="prop-label">Color Role Container</label>
+            <div class="segmented-control" role="radiogroup" aria-label="FAB color role">
+              <button type="button" class="segment-btn active" data-fab-color-role="surface" role="radio" aria-checked="true">
+                Surface
+              </button>
+              <button type="button" class="segment-btn" data-fab-color-role="primary" role="radio" aria-checked="false">
+                Primary
+              </button>
+              <button type="button" class="segment-btn" data-fab-color-role="secondary" role="radio" aria-checked="false">
+                Secondary
+              </button>
+              <button type="button" class="segment-btn" data-fab-color-role="tertiary" role="radio" aria-checked="false">
+                Tertiary
+              </button>
+            </div>
+            <p id="fab-color-desc" class="prop-hint">Surface FAB: Default tonal surface elevation container.</p>
+          </div>
+
+          <!-- Icon Choice -->
+          <div class="prop-item">
+            <label for="fab-icon-select" class="prop-label">FAB Icon</label>
+            <select id="fab-icon-select" class="md-select" aria-label="Choose FAB icon">
+              <option value="add" selected>➕ Add / Create</option>
+              <option value="edit">✏️ Edit / Pencil</option>
+              <option value="favorite">❤️ Favorite / Heart</option>
+              <option value="share">🔗 Share / Hub</option>
+              <option value="navigation">🧭 Navigation</option>
+            </select>
+          </div>
+
+          <!-- Elevation Mode -->
+          <div class="prop-item">
+            <label class="prop-label">Elevation Level</label>
+            <div class="segmented-control" role="radiogroup" aria-label="FAB elevation">
+              <button type="button" class="segment-btn active" data-fab-elevation="standard" role="radio" aria-checked="true">
+                Standard (Level 3)
+              </button>
+              <button type="button" class="segment-btn" data-fab-elevation="lowered" role="radio" aria-checked="false">
+                Lowered (Level 1)
+              </button>
+            </div>
+            <p class="prop-hint">Standard: 6dp rest elevation. Lowered: 1dp rest elevation for dense screens.</p>
+          </div>
+
+          <!-- Disabled toggle -->
+          <div class="prop-toggle-row">
+            <div class="toggle-text">
+              <label for="fab-disabled-switch" class="toggle-label">Disabled State</label>
+              <span class="toggle-desc">Flat resting elevation & dimmed container</span>
+            </div>
+            <label class="md-switch">
+              <input type="checkbox" id="fab-disabled-switch" aria-label="Toggle FAB disabled state">
+              <span class="switch-track">
+                <span class="switch-thumb"></span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- FAB Section 3: Output Engine -->
+        <fieldset class="prop-group" data-for-component="fab">
+          <legend class="prop-legend">Output Implementation</legend>
+          <div class="prop-item">
+            <label class="prop-label">Code Format</label>
+            <div class="segmented-control" role="radiogroup" aria-label="FAB code output engine">
+              <button type="button" class="segment-btn active" data-fab-engine="css" role="radio" aria-checked="true" title="Pure HTML & CSS state layers">
+                Pure CSS
+              </button>
+              <button type="button" class="segment-btn" data-fab-engine="js" role="radio" aria-checked="false" title="Vanilla JS interactive radial ripple controller">
+                Vanilla JS (Ripple)
+              </button>
+            </div>
+            <p class="prop-hint">Pure CSS uses box-shadow transitions. Vanilla JS adds radial click ripple animation.</p>
           </div>
         </fieldset>
       </form>

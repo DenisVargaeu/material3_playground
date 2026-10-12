@@ -81,6 +81,43 @@
     linearAnimated: true,
     linearEngine: 'css', // 'css' | 'js'
 
+    // Circular Progress properties
+    circularMode: 'indeterminate', // 'indeterminate' | 'determinate'
+    circularProgress: 65, // 0 to 100
+    circularVariant: 'wavy', // 'standard' | 'wavy'
+    circularSize: 112, // 24px to 120px
+    circularStroke: 7, // 2px to 12px
+    circularAmplitude: 6, // 2px to 10px
+    circularWaves: 12, // 3 to 12
+    circularTrackShape: 'wavy', // 'wavy' | 'circular'
+    circularColor: '#6750A4',
+    circularTrackColor: '#E6E0E9',
+    circularFourColor: false,
+    circularSpeed: 1.4, // seconds
+    circularAnimated: true,
+    circularEngine: 'css', // 'css' | 'js'
+
+    // Button properties
+    buttonVariant: 'filled', // 'filled' | 'elevated' | 'tonal' | 'outlined' | 'text'
+    buttonLabel: 'Explore Material 3',
+    buttonIconPlacement: 'leading', // 'none' | 'leading' | 'trailing'
+    buttonIcon: 'sparkle', // 'sparkle' | 'favorite' | 'add' | 'send' | 'download'
+    buttonSize: 'medium', // 'small' | 'medium' | 'large'
+    buttonCorner: 'full', // 'full' | 'rounded' | 'sharp'
+    buttonFullWidth: false,
+    buttonDisabled: false,
+    buttonColor: '#6750A4',
+    buttonEngine: 'css', // 'css' | 'js'
+
+    // FAB properties
+    fabVariant: 'standard', // 'standard' | 'small' | 'large' | 'extended'
+    fabColorRole: 'surface', // 'surface' | 'primary' | 'secondary' | 'tertiary'
+    fabLabel: 'Compose',
+    fabIcon: 'add', // 'add' | 'edit' | 'favorite' | 'share' | 'navigation'
+    fabElevation: 'standard', // 'standard' | 'lowered'
+    fabDisabled: false,
+    fabEngine: 'css', // 'css' | 'js'
+
     // Playground UI state
     activeTab: 'html', // 'html' | 'css' | 'js' | 'full'
     previewBg: 'surface', // 'surface' | 'light' | 'dark' | 'checker'
@@ -171,6 +208,75 @@
     return d || ('M 0 ' + centerY + ' L 0 ' + centerY);
   }
 
+  // Material 3 Expressive Circular Wavy Path Generator
+  // Supports continuous closed loops, dynamic sub-arcs with start and end angles,
+  // traveling sinusoidal phase, and authentic Material 3 amplitude tapering at rounded tips.
+  function generateCircularWavyPath(cx, cy, baseRadius, amplitude, waves, phase = 0, startAngle = -Math.PI / 2, endAngle = null, taperStart = true, taperEnd = true) {
+    if (endAngle === null) {
+      endAngle = startAngle + 2 * Math.PI;
+    }
+    const span = endAngle - startAngle;
+    if (span <= 0.001) {
+      return 'M ' + (cx + baseRadius * Math.cos(startAngle)).toFixed(2) + ' ' + (cy + baseRadius * Math.sin(startAngle)).toFixed(2);
+    }
+
+    const isFullClosed = span >= (2 * Math.PI - 0.005);
+    const rampSpan = Math.min(span * 0.25, (2 * Math.PI) / (waves * 2));
+    const stepCount = Math.max(36, Math.ceil((span / (2 * Math.PI)) * waves * 36));
+
+    let d = '';
+    for (let i = 0; i <= stepCount; i++) {
+      const t = i / stepCount;
+      const theta = startAngle + t * span;
+
+      let curAmp = amplitude;
+      if (!isFullClosed) {
+        if (taperStart && theta < startAngle + rampSpan) {
+          const u = (theta - startAngle) / rampSpan;
+          curAmp = amplitude * Math.sin(Math.max(0, u) * Math.PI / 2);
+        }
+        if (taperEnd && theta > endAngle - rampSpan) {
+          const u = (endAngle - theta) / rampSpan;
+          curAmp = amplitude * Math.sin(Math.max(0, u) * Math.PI / 2);
+        }
+      }
+
+      const r = baseRadius + curAmp * Math.sin(waves * theta + phase);
+      const x = (cx + r * Math.cos(theta)).toFixed(2);
+      const y = (cy + r * Math.sin(theta)).toFixed(2);
+
+      if (i === 0) {
+        d = 'M ' + x + ' ' + y;
+      } else {
+        d += ' L ' + x + ' ' + y;
+      }
+    }
+
+    if (isFullClosed) {
+      d += ' Z';
+    }
+    return d || ('M ' + cx + ' ' + cy);
+  }
+
+  // Material 3 Clean Circular Arc Generator (for Smooth Track option)
+  function generateCircularArcPath(cx, cy, radius, startAngle, endAngle) {
+    const span = endAngle - startAngle;
+    if (span <= 0.001) {
+      return 'M ' + (cx + radius * Math.cos(startAngle)).toFixed(2) + ' ' + (cy + radius * Math.sin(startAngle)).toFixed(2);
+    }
+    if (span >= (2 * Math.PI - 0.005)) {
+      return 'M ' + (cx + radius).toFixed(2) + ' ' + cy.toFixed(2) +
+             ' A ' + radius.toFixed(2) + ' ' + radius.toFixed(2) + ' 0 1 0 ' + (cx - radius).toFixed(2) + ' ' + cy.toFixed(2) +
+             ' A ' + radius.toFixed(2) + ' ' + radius.toFixed(2) + ' 0 1 0 ' + (cx + radius).toFixed(2) + ' ' + cy.toFixed(2) + ' Z';
+    }
+    const x1 = (cx + radius * Math.cos(startAngle)).toFixed(2);
+    const y1 = (cy + radius * Math.sin(startAngle)).toFixed(2);
+    const x2 = (cx + radius * Math.cos(endAngle)).toFixed(2);
+    const y2 = (cy + radius * Math.sin(endAngle)).toFixed(2);
+    const largeArc = span > Math.PI ? 1 : 0;
+    return 'M ' + x1 + ' ' + y1 + ' A ' + radius.toFixed(2) + ' ' + radius.toFixed(2) + ' 0 ' + largeArc + ' 1 ' + x2 + ' ' + y2;
+  }
+
   function interpolateHexColor(color1, color2, factor) {
     const r1 = parseInt(color1.slice(1, 3), 16);
     const g1 = parseInt(color1.slice(3, 5), 16);
@@ -182,6 +288,43 @@
     const g = Math.round(g1 + factor * (g2 - g1));
     const b = Math.round(b1 + factor * (b2 - b1));
     return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  }
+
+  /* Material 3 Canonical SVG Icons */
+  const M3_ICONS = {
+    sparkle: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2l2.4 7.2L21.6 12l-7.2 2.4L12 21.6l-2.4-7.2L2.4 12l7.2-2.4z"/></svg>',
+    favorite: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>',
+    add: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>',
+    send: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>',
+    download: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>',
+    edit: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>',
+    share: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>',
+    navigation: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>'
+  };
+
+  /* Material 3 Interactive Radial Ripple Handler for Preview */
+  function attachM3Ripple(el) {
+    if (!el || el._hasM3Ripple) return;
+    el._hasM3Ripple = true;
+    el.addEventListener('pointerdown', function (e) {
+      if (el.disabled || el.classList.contains('m3-button--disabled') || el.classList.contains('m3-fab--disabled')) return;
+      const rect = el.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+
+      const ink = document.createElement('span');
+      ink.className = 'm3-ripple-ink';
+      ink.style.width = size + 'px';
+      ink.style.height = size + 'px';
+      ink.style.left = x + 'px';
+      ink.style.top = y + 'px';
+      el.appendChild(ink);
+
+      setTimeout(() => {
+        ink.remove();
+      }, 650);
+    });
   }
 
   /* ==========================================================================
@@ -581,8 +724,12 @@
             wrap.innerHTML = [
               '<div class="m3-linear-progress m3-linear-progress--indeterminate" role="progressbar" aria-label="Loading in progress">',
               '  <div class="m3-linear-progress__track">',
-              '    <div class="m3-linear-progress__bar m3-linear-progress__bar--primary"></div>',
-              '    <div class="m3-linear-progress__bar m3-linear-progress__bar--secondary"></div>',
+              '    <div class="m3-linear-progress__bar m3-linear-progress__bar--primary">',
+              '      <div class="m3-linear-progress__bar-inner"></div>',
+              '    </div>',
+              '    <div class="m3-linear-progress__bar m3-linear-progress__bar--secondary">',
+              '      <div class="m3-linear-progress__bar-inner"></div>',
+              '    </div>',
               '  </div>',
               '</div>'
             ].join('\n');
@@ -598,7 +745,7 @@
           }
         } else {
           const width = s.linearWidth || 320;
-          const height = 32;
+          const height = 36;
           wrap.innerHTML = [
             '<div class="m3-linear-progress m3-linear-progress--wavy" role="progressbar" aria-label="Loading in progress">',
             '  <div class="m3-linear-progress__wavy-wrap">',
@@ -635,6 +782,8 @@
         el.style.setProperty('--m3-linear-track', s.linearTrackColor);
         el.style.setProperty('--m3-linear-height', s.linearHeight + 'px');
         el.style.setProperty('--m3-linear-width', s.linearWidth + 'px');
+        el.style.setProperty('--m3-linear-amplitude', (s.linearAmplitude || 6) + 'px');
+        el.style.setProperty('--m3-linear-wavelength', (s.linearWavelength || 32) + 'px');
         el.style.setProperty('--m3-linear-speed', s.linearSpeed + 's');
 
         // Play/Pause state
@@ -647,6 +796,7 @@
         if (!isWavy) {
           // Standard Linear
           if (!isIndeterminate) {
+            el.setAttribute('aria-valuenow', s.linearProgress);
             const indicator = el.querySelector('.m3-linear-progress__indicator');
             if (indicator) indicator.style.width = s.linearProgress + '%';
             const stop = el.querySelector('.m3-linear-progress__stop');
@@ -660,7 +810,7 @@
           const svg = el.querySelector('.m3-linear-progress__wavy-svg');
 
           const width = s.linearWidth || 320;
-          const height = 32;
+          const height = 36;
           const wavelength = s.linearWavelength || 32;
           const amplitude = s.linearAmplitude || 6;
           const strokeWidth = s.linearHeight || 4;
@@ -736,14 +886,14 @@
         const statusText = document.getElementById('preview-status-text');
         if (statusText) {
           statusText.textContent = isIndeterminate ?
-            ('Indeterminate • ' + (isWavy ? 'Wavy Expressive (Sinusoidal Fluid)' : 'Standard Linear (Dual Bar)') + ' • ' + (s.linearAnimated ? '60 FPS Active' : 'Paused')) :
-            ('Determinate: ' + s.linearProgress + '% • ' + (isWavy ? 'Wavy Expressive (Continuous Flow)' : 'Standard Linear'));
+            ('Indeterminate • ' + (isWavy ? 'Wavy Expressive (Sinusoidal Fluid)' : 'Standard Linear (Dual-Bar Keyframes)') + ' • ' + (s.linearAnimated ? '60 FPS Active' : 'Paused')) :
+            ('Determinate: ' + s.linearProgress + '% • ' + (isWavy ? 'Wavy Expressive (Continuous Flow)' : 'Standard Linear with Stop Dot'));
         }
 
         const metrics = document.getElementById('preview-metrics');
         if (metrics) {
           metrics.textContent = (isIndeterminate ? 'Indeterminate' : (s.linearProgress + '%')) +
-            ' • ' + s.linearHeight + 'px • ' + (isWavy ? ('Amp: ' + (s.linearAmplitude || 6) + 'px • ') : '') + s.linearColor.toUpperCase();
+            ' • ' + s.linearHeight + 'px' + (isWavy ? (' • Amp: ' + (s.linearAmplitude || 6) + 'px') : '') + ' • ' + s.linearColor.toUpperCase();
         }
       },
 
@@ -753,7 +903,7 @@
         const fourColor = s.linearFourColor && isIndeterminate;
         const fourColorClass = fourColor ? ' m3-linear-progress--four-color' : '';
         const width = s.linearWidth || 320;
-        const height = 32;
+        const height = 36;
         const wavelength = s.linearWavelength || 32;
         const amplitude = s.linearAmplitude || 6;
 
@@ -763,8 +913,12 @@
               '<!-- Material 3 Linear Progress (Indeterminate) -->',
               '<div class="m3-linear-progress m3-linear-progress--indeterminate' + fourColorClass + '" role="progressbar" aria-label="Loading in progress">',
               '  <div class="m3-linear-progress__track">',
-              '    <div class="m3-linear-progress__bar m3-linear-progress__bar--primary"></div>',
-              '    <div class="m3-linear-progress__bar m3-linear-progress__bar--secondary"></div>',
+              '    <div class="m3-linear-progress__bar m3-linear-progress__bar--primary">',
+              '      <div class="m3-linear-progress__bar-inner"></div>',
+              '    </div>',
+              '    <div class="m3-linear-progress__bar m3-linear-progress__bar--secondary">',
+              '      <div class="m3-linear-progress__bar-inner"></div>',
+              '    </div>',
               '  </div>',
               '</div>'
             ].join('\n');
@@ -828,6 +982,7 @@
           '  --m3-linear-height: ' + s.linearHeight + 'px;',
           '  --m3-linear-width: ' + s.linearWidth + 'px;',
           '  --m3-linear-speed: ' + s.linearSpeed + 's;',
+          '  --m3-linear-wavelength: ' + wavelength + 'px;',
           '}',
           '',
           '.m3-linear-progress {',
@@ -859,12 +1014,19 @@
             lines.push('  height: 100%;');
             lines.push('  background-color: var(--m3-linear-color);');
             lines.push('  border-radius: 9999px;');
-            lines.push('  transition: width 0.3s cubic-bezier(0.2, 0, 0, 1);');
+            lines.push('  transition: width 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s ease;');
+            lines.push('  max-width: calc(100% - var(--m3-linear-height) - 4px);');
+            lines.push('}');
+            lines.push('');
+            lines.push('.m3-linear-progress[aria-valuenow="100"] .m3-linear-progress__indicator {');
+            lines.push('  max-width: 100%;');
             lines.push('}');
             lines.push('');
             lines.push('.m3-linear-progress__stop {');
             lines.push('  position: absolute;');
             lines.push('  right: 0;');
+            lines.push('  top: 50%;');
+            lines.push('  transform: translateY(-50%);');
             lines.push('  width: var(--m3-linear-height);');
             lines.push('  height: var(--m3-linear-height);');
             lines.push('  border-radius: 50%;');
@@ -876,30 +1038,67 @@
             lines.push('  position: absolute;');
             lines.push('  top: 0;');
             lines.push('  bottom: 0;');
+            lines.push('  width: 100%;');
+            lines.push('  transform-origin: left center;');
+            lines.push('  will-change: transform;');
+            lines.push('}');
+            lines.push('');
+            lines.push('.m3-linear-progress__bar-inner {');
+            lines.push('  position: absolute;');
+            lines.push('  top: 0;');
+            lines.push('  bottom: 0;');
+            lines.push('  left: 0;');
+            lines.push('  right: 0;');
             lines.push('  background-color: var(--m3-linear-color);');
             lines.push('  border-radius: 9999px;');
-            lines.push('  will-change: left, right;');
+            lines.push('  transform-origin: left center;');
+            lines.push('  will-change: transform;');
             lines.push('}');
             lines.push('');
             lines.push('.m3-linear-progress__bar--primary {');
-            lines.push('  animation: m3-linear-primary var(--m3-linear-speed) cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;');
+            lines.push('  inset-inline-start: -145.167%;');
+            lines.push('  animation: m3-primary-indeterminate-translate var(--m3-linear-speed) linear infinite;');
+            lines.push('}');
+            lines.push('');
+            lines.push('.m3-linear-progress__bar--primary > .m3-linear-progress__bar-inner {');
+            lines.push('  animation: m3-primary-indeterminate-scale var(--m3-linear-speed) linear infinite;');
             lines.push('}');
             lines.push('');
             lines.push('.m3-linear-progress__bar--secondary {');
-            lines.push('  animation: m3-linear-secondary var(--m3-linear-speed) cubic-bezier(0.165, 0.84, 0.44, 1) infinite;');
-            lines.push('  animation-delay: calc(var(--m3-linear-speed) * 0.4);');
+            lines.push('  inset-inline-start: -54.8889%;');
+            lines.push('  animation: m3-secondary-indeterminate-translate var(--m3-linear-speed) linear infinite;');
             lines.push('}');
             lines.push('');
-            lines.push('@keyframes m3-linear-primary {');
-            lines.push('  0% { left: -35%; right: 100%; }');
-            lines.push('  60% { left: 100%; right: -90%; }');
-            lines.push('  100% { left: 100%; right: -90%; }');
+            lines.push('.m3-linear-progress__bar--secondary > .m3-linear-progress__bar-inner {');
+            lines.push('  animation: m3-secondary-indeterminate-scale var(--m3-linear-speed) linear infinite;');
             lines.push('}');
             lines.push('');
-            lines.push('@keyframes m3-linear-secondary {');
-            lines.push('  0% { left: -200%; right: 100%; }');
-            lines.push('  60% { left: 107%; right: -8%; }');
-            lines.push('  100% { left: 107%; right: -8%; }');
+            lines.push('@keyframes m3-primary-indeterminate-scale {');
+            lines.push('  0% { transform: scaleX(0.08); }');
+            lines.push('  36.65% { animation-timing-function: cubic-bezier(0.334731, 0.12482, 0.785844, 1); transform: scaleX(0.08); }');
+            lines.push('  69.15% { animation-timing-function: cubic-bezier(0.06, 0.11, 0.6, 1); transform: scaleX(0.661479); }');
+            lines.push('  100% { transform: scaleX(0.08); }');
+            lines.push('}');
+            lines.push('');
+            lines.push('@keyframes m3-secondary-indeterminate-scale {');
+            lines.push('  0% { animation-timing-function: cubic-bezier(0.205028, 0.057051, 0.57661, 0.453971); transform: scaleX(0.08); }');
+            lines.push('  19.15% { animation-timing-function: cubic-bezier(0.152313, 0.196432, 0.648374, 1.00432); transform: scaleX(0.457104); }');
+            lines.push('  44.15% { animation-timing-function: cubic-bezier(0.257759, -0.003163, 0.211762, 1.38179); transform: scaleX(0.72796); }');
+            lines.push('  100% { transform: scaleX(0.08); }');
+            lines.push('}');
+            lines.push('');
+            lines.push('@keyframes m3-primary-indeterminate-translate {');
+            lines.push('  0% { transform: translateX(0px); }');
+            lines.push('  20% { animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819); transform: translateX(0px); }');
+            lines.push('  59.15% { animation-timing-function: cubic-bezier(0.302435, 0.381352, 0.55, 0.956352); transform: translateX(83.6714%); }');
+            lines.push('  100% { transform: translateX(200.611%); }');
+            lines.push('}');
+            lines.push('');
+            lines.push('@keyframes m3-secondary-indeterminate-translate {');
+            lines.push('  0% { animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685); transform: translateX(0px); }');
+            lines.push('  25% { animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712); transform: translateX(37.6519%); }');
+            lines.push('  48.35% { animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026); transform: translateX(84.3862%); }');
+            lines.push('  100% { transform: translateX(160.278%); }');
             lines.push('}');
           }
         } else {
@@ -952,13 +1151,14 @@
             lines.push('');
             lines.push('@keyframes m3-wavy-scroll {');
             lines.push('  from { transform: translateX(0); }');
-            lines.push('  to { transform: translateX(-' + wavelength + 'px); }');
+            lines.push('  to { transform: translateX(calc(-1 * var(--m3-linear-wavelength))); }');
             lines.push('}');
           }
         }
 
         lines.push('');
         lines.push('.m3-linear-progress--paused .m3-linear-progress__bar,');
+        lines.push('.m3-linear-progress--paused .m3-linear-progress__bar-inner,');
         lines.push('.m3-linear-progress--paused .m3-linear-progress__wavy-svg {');
         lines.push('  animation-play-state: paused !important;');
         lines.push('}');
@@ -966,18 +1166,25 @@
         if (fourColor) {
           lines.push('');
           lines.push('/* Material 3 Four-Color Cycle */');
-          lines.push('@keyframes m3-four-color {');
-          lines.push('  0%, 100% { background-color: #6750a4; stroke: #6750a4; }');
-          lines.push('  25% { background-color: #006a6a; stroke: #006a6a; }');
-          lines.push('  50% { background-color: #7d5260; stroke: #7d5260; }');
-          lines.push('  75% { background-color: #b3261e; stroke: #b3261e; }');
+          lines.push('@keyframes m3-linear-four-color {');
+          lines.push('  0%, 15% { background-color: #6750a4; stroke: #6750a4; fill: #6750a4; }');
+          lines.push('  25%, 40% { background-color: #006a6a; stroke: #006a6a; fill: #006a6a; }');
+          lines.push('  50%, 65% { background-color: #7d5260; stroke: #7d5260; fill: #7d5260; }');
+          lines.push('  75%, 90% { background-color: #b3261e; stroke: #b3261e; fill: #b3261e; }');
+          lines.push('  100% { background-color: #6750a4; stroke: #6750a4; fill: #6750a4; }');
           lines.push('}');
-          lines.push('.m3-linear-progress--four-color .m3-linear-progress__bar--primary,');
-          lines.push('.m3-linear-progress--four-color .m3-linear-progress__bar--secondary,');
-          lines.push('.m3-linear-progress--four-color .m3-linear-progress__wavy-active {');
-          lines.push('  animation-name: m3-linear-primary, m3-four-color;');
-          lines.push('  animation-duration: var(--m3-linear-speed), calc(var(--m3-linear-speed) * 4);');
-          lines.push('  animation-iteration-count: infinite, infinite;');
+          lines.push('.m3-linear-progress--four-color .m3-linear-progress__bar--primary > .m3-linear-progress__bar-inner {');
+          lines.push('  animation: m3-primary-indeterminate-scale var(--m3-linear-speed) linear infinite,');
+          lines.push('             m3-linear-four-color calc(var(--m3-linear-speed) * 4) linear infinite;');
+          lines.push('}');
+          lines.push('.m3-linear-progress--four-color .m3-linear-progress__bar--secondary > .m3-linear-progress__bar-inner {');
+          lines.push('  animation: m3-secondary-indeterminate-scale var(--m3-linear-speed) linear infinite,');
+          lines.push('             m3-linear-four-color calc(var(--m3-linear-speed) * 4) linear infinite;');
+          lines.push('}');
+          lines.push('.m3-linear-progress--four-color.m3-linear-progress--wavy-anim .m3-linear-progress__wavy-svg {');
+          lines.push('  animation-name: m3-wavy-scroll;');
+          lines.push('  animation-duration: var(--m3-linear-speed);');
+          lines.push('  animation-iteration-count: infinite;');
           lines.push('}');
         }
 
@@ -985,6 +1192,7 @@
         lines.push('/* Respect motion preferences */');
         lines.push('@media (prefers-reduced-motion: reduce) {');
         lines.push('  .m3-linear-progress__bar,');
+        lines.push('  .m3-linear-progress__bar-inner,');
         lines.push('  .m3-linear-progress__wavy-svg {');
         lines.push('    animation: none !important;');
         lines.push('  }');
@@ -1063,6 +1271,1465 @@
           '<body>',
           '',
           '  <!-- Material 3 Linear Progress Demo Container -->',
+          '  <main style="display: flex; min-height: 100vh; align-items: center; justify-content: center; background-color: #fef7ff; padding: 24px;">',
+          html.split('\n').map(l => '    ' + l).join('\n'),
+          '  </main>'
+        ];
+
+        if (js) {
+          lines.push('');
+          lines.push('  <script>');
+          lines.push(js.split('\n').map(l => '    ' + l).join('\n'));
+          lines.push('  </script>');
+        }
+
+        lines.push('</body>');
+        lines.push('</html>');
+
+        return lines.join('\n');
+      }
+    },
+
+    /* ------------------------------------------------------------------------
+       Component 3: Circular Progress Indicator
+       ------------------------------------------------------------------------ */
+    circularProgress: {
+      name: 'Circular Progress',
+      category: 'Progress & Activity',
+      description: 'Material 3 Circular Progress Indicator (Determinate, Indeterminate & Wavy Expressive)',
+      referenceUrl: 'https://m3.material.io/components/progress-indicators/overview',
+
+      _renderedVariant: null,
+      _renderedMode: null,
+
+      initPreview(container) {
+        container.innerHTML = '<div id="preview-circular-wrap" class="preview-circular-wrapper"></div>';
+        this._renderedVariant = null;
+        this._renderedMode = null;
+      },
+
+      _buildDOM(wrap, s) {
+        const isWavy = s.circularVariant === 'wavy';
+        const isIndeterminate = s.circularMode === 'indeterminate';
+        const size = s.circularSize || 112;
+        const stroke = s.circularStroke || 7;
+
+        if (!isWavy) {
+          // Standard Circular
+          const r = Math.max(1, (size - stroke) / 2);
+          const circumference = 2 * Math.PI * r;
+          const strokeDashoffset = circumference * (1 - (s.circularProgress / 100));
+
+          wrap.innerHTML = [
+            '<div class="m3-circular-progress' + (isIndeterminate ? ' m3-circular-progress--indeterminate' : '') + '" role="progressbar" aria-valuenow="' + (isIndeterminate ? '' : s.circularProgress) + '" aria-valuemin="0" aria-valuemax="100" aria-label="' + (isIndeterminate ? 'Loading in progress' : 'Loading progress') + '">',
+            '  <svg class="m3-circular-progress__svg" viewBox="0 0 ' + size + ' ' + size + '">',
+            '    <circle class="m3-circular-progress__track" cx="' + (size / 2) + '" cy="' + (size / 2) + '" r="' + r + '" />',
+            '    <circle class="m3-circular-progress__indicator" cx="' + (size / 2) + '" cy="' + (size / 2) + '" r="' + r + '" style="stroke-dasharray: ' + circumference.toFixed(2) + '; stroke-dashoffset: ' + (isIndeterminate ? '' : strokeDashoffset.toFixed(2)) + ';" />',
+            '  </svg>',
+            '</div>'
+          ].join('\n');
+        } else {
+          // Wavy Expressive Circular
+          wrap.innerHTML = [
+            '<div class="m3-circular-progress m3-circular-progress--wavy' + (isIndeterminate ? ' m3-circular-progress--indeterminate' : '') + '" role="progressbar" aria-valuenow="' + (isIndeterminate ? '' : s.circularProgress) + '" aria-valuemin="0" aria-valuemax="100" aria-label="' + (isIndeterminate ? 'Loading in progress' : 'Loading progress') + '">',
+            '  <svg class="m3-circular-progress__svg" viewBox="0 0 ' + size + ' ' + size + '">',
+            '    <path class="m3-circular-progress__wavy-track" fill="none" stroke-linecap="round" />',
+            '    <path class="m3-circular-progress__wavy-active" fill="none" stroke-linecap="round" />',
+            '  </svg>',
+            '</div>'
+          ].join('\n');
+        }
+      },
+
+      renderPreview(container, s, elapsed) {
+        const wrap = document.getElementById('preview-circular-wrap');
+        if (!wrap) return;
+
+        const isWavy = s.circularVariant === 'wavy';
+        const isIndeterminate = s.circularMode === 'indeterminate';
+
+        if (this._renderedVariant !== s.circularVariant || this._renderedMode !== s.circularMode) {
+          this._renderedVariant = s.circularVariant;
+          this._renderedMode = s.circularMode;
+          this._buildDOM(wrap, s);
+        }
+
+        const el = wrap.querySelector('.m3-circular-progress');
+        if (!el) return;
+
+        const size = s.circularSize || 112;
+        const stroke = s.circularStroke || 7;
+        const speed = s.circularSpeed || 1.4;
+
+        el.style.setProperty('--m3-circular-size', size + 'px');
+        el.style.setProperty('--m3-circular-stroke', stroke + 'px');
+        el.style.setProperty('--m3-circular-color', s.circularColor);
+        el.style.setProperty('--m3-circular-track', s.circularTrackColor);
+        el.style.setProperty('--m3-circular-speed', speed + 's');
+
+        // Play/Pause
+        el.classList.toggle('m3-circular-progress--paused', !s.circularAnimated);
+
+        // Four-Color
+        const fourColor = s.circularFourColor && isIndeterminate;
+        el.classList.toggle('m3-circular-progress--four-color', fourColor);
+
+        // Color cycling calculation if fourColor in animated mode
+        let activeColor = s.circularColor;
+        if (fourColor && s.circularAnimated) {
+          const colors = ['#6750A4', '#006A6A', '#7D5260', '#B3261E'];
+          const colorCycleMs = speed * 1000 * 4;
+          const cProgress = (elapsed % colorCycleMs) / colorCycleMs;
+          const cIndex = Math.floor(cProgress * 4);
+          const nextIndex = (cIndex + 1) % 4;
+          const blendT = (cProgress * 4) - cIndex;
+          activeColor = interpolateHexColor(colors[cIndex], colors[nextIndex], blendT);
+        }
+
+        const svg = el.querySelector('.m3-circular-progress__svg');
+        if (svg) {
+          svg.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
+        }
+
+        if (!isWavy) {
+          // Standard Circular
+          const r = Math.max(1, (size - stroke) / 2);
+          const circumference = 2 * Math.PI * r;
+          const track = el.querySelector('.m3-circular-progress__track');
+          const indicator = el.querySelector('.m3-circular-progress__indicator');
+
+          if (track) {
+            track.setAttribute('cx', (size / 2).toFixed(1));
+            track.setAttribute('cy', (size / 2).toFixed(1));
+            track.setAttribute('r', r.toFixed(1));
+            track.setAttribute('stroke', s.circularTrackColor);
+            track.setAttribute('stroke-width', stroke);
+          }
+
+          if (indicator) {
+            indicator.setAttribute('cx', (size / 2).toFixed(1));
+            indicator.setAttribute('cy', (size / 2).toFixed(1));
+            indicator.setAttribute('r', r.toFixed(1));
+            indicator.setAttribute('stroke', activeColor);
+            indicator.setAttribute('stroke-width', stroke);
+
+            if (!isIndeterminate) {
+              const offset = circumference * (1 - (s.circularProgress / 100));
+              indicator.style.strokeDasharray = circumference.toFixed(2);
+              indicator.style.strokeDashoffset = offset.toFixed(2);
+              el.setAttribute('aria-valuenow', s.circularProgress);
+            }
+          }
+        } else {
+          // Wavy Expressive Circular
+          const activePath = el.querySelector('.m3-circular-progress__wavy-active');
+          const trackPath = el.querySelector('.m3-circular-progress__wavy-track');
+          const amplitude = Math.min(size / 4, s.circularAmplitude || 6);
+          const waves = s.circularWaves || 12;
+          const baseRadius = Math.max(2, (size / 2) - amplitude - (stroke / 2) - 1);
+          const cx = size / 2;
+          const cy = size / 2;
+
+          let activeD = '';
+          let trackD = '';
+
+          if (isIndeterminate) {
+            if (s.circularAnimated) {
+              const cycleMs = speed * 1000;
+              const u = (elapsed % cycleMs) / cycleMs;
+              const minSpan = 0.08 * 2 * Math.PI; // ~28.8 deg
+              const maxSpan = 0.78 * 2 * Math.PI; // ~280.8 deg
+              const span = minSpan + (maxSpan - minSpan) * Math.pow(Math.sin(Math.PI * u), 1.15);
+              const orbitAngle = (elapsed / 1000) * (2 * Math.PI / (speed * 1.5));
+              const surge = 0.35 * Math.sin(2 * Math.PI * u);
+              const centerAngle = -Math.PI / 2 + orbitAngle + surge;
+              const startAngle = centerAngle - span / 2;
+              const endAngle = centerAngle + span / 2;
+              const phase = (elapsed / 1000) * (2 * Math.PI / speed);
+
+              activeD = generateCircularWavyPath(cx, cy, baseRadius, amplitude, waves, phase, startAngle, endAngle, true, true);
+              trackD = (s.circularTrackShape === 'circular') ?
+                generateCircularArcPath(cx, cy, baseRadius, 0, 2 * Math.PI) :
+                generateCircularWavyPath(cx, cy, baseRadius, amplitude * 0.85, waves, phase, 0, 2 * Math.PI);
+            } else {
+              activeD = generateCircularWavyPath(cx, cy, baseRadius, amplitude, waves, 0, -Math.PI / 2, -Math.PI / 2 + Math.PI * 1.3, true, true);
+              trackD = (s.circularTrackShape === 'circular') ?
+                generateCircularArcPath(cx, cy, baseRadius, 0, 2 * Math.PI) :
+                generateCircularWavyPath(cx, cy, baseRadius, amplitude * 0.85, waves, 0, 0, 2 * Math.PI);
+            }
+          } else {
+            // Determinate Progress with authentic M3 gap and amplitude taper
+            const p = Math.max(0, Math.min(100, s.circularProgress)) / 100;
+            const phase = s.circularAnimated ? (elapsed / 1000) * (2 * Math.PI / speed) : 0;
+            const theta0 = -Math.PI / 2;
+            const gapAngle = 4 / baseRadius;
+
+            if (p >= 0.999) {
+              activeD = generateCircularWavyPath(cx, cy, baseRadius, amplitude, waves, phase, theta0, theta0 + 2 * Math.PI);
+              trackD = '';
+            } else if (p <= 0.001) {
+              activeD = '';
+              trackD = (s.circularTrackShape === 'circular') ?
+                generateCircularArcPath(cx, cy, baseRadius, 0, 2 * Math.PI) :
+                generateCircularWavyPath(cx, cy, baseRadius, amplitude * 0.85, waves, phase, 0, 2 * Math.PI);
+            } else {
+              const activeEnd = theta0 + Math.max(0.01, p * 2 * Math.PI - gapAngle / 2);
+              const trackStart = theta0 + p * 2 * Math.PI + gapAngle / 2;
+              const trackEnd = theta0 + 2 * Math.PI - gapAngle / 2;
+
+              activeD = generateCircularWavyPath(cx, cy, baseRadius, amplitude, waves, phase, theta0, activeEnd, false, true);
+              trackD = (s.circularTrackShape === 'circular') ?
+                generateCircularArcPath(cx, cy, baseRadius, trackStart, trackEnd) :
+                generateCircularWavyPath(cx, cy, baseRadius, amplitude * 0.85, waves, phase, trackStart, trackEnd, true, true);
+            }
+          }
+
+          if (trackPath) {
+            trackPath.setAttribute('d', trackD);
+            trackPath.setAttribute('stroke', s.circularTrackColor);
+            trackPath.setAttribute('stroke-width', stroke);
+          }
+
+          if (activePath) {
+            activePath.setAttribute('d', activeD);
+            activePath.setAttribute('stroke', activeColor);
+            activePath.setAttribute('stroke-width', stroke);
+          }
+        }
+
+        const statusText = document.getElementById('preview-status-text');
+        if (statusText) {
+          statusText.textContent = isIndeterminate ?
+            ('Indeterminate • ' + (isWavy ? 'Wavy Expressive Circular' : 'Standard Circular Spinner') + ' • ' + (s.circularAnimated ? '60 FPS Active' : 'Paused')) :
+            ('Determinate: ' + s.circularProgress + '% • ' + (isWavy ? 'Wavy Expressive Circular' : 'Standard Circular Arc'));
+        }
+
+        const metrics = document.getElementById('preview-metrics');
+        if (metrics) {
+          metrics.textContent = (isIndeterminate ? 'Indeterminate' : (s.circularProgress + '%')) +
+            ' • ' + size + 'px • ' + stroke + 'px stroke • ' + s.circularColor.toUpperCase();
+        }
+      },
+
+      generateHTML(s) {
+        const isIndeterminate = s.circularMode === 'indeterminate';
+        const isWavy = s.circularVariant === 'wavy';
+        const fourColor = s.circularFourColor && isIndeterminate;
+        const fourColorClass = fourColor ? ' m3-circular-progress--four-color' : '';
+        const size = s.circularSize || 112;
+        const stroke = s.circularStroke || 7;
+
+        if (!isWavy) {
+          const r = Math.max(1, (size - stroke) / 2);
+          const circumference = 2 * Math.PI * r;
+          const strokeDashoffset = circumference * (1 - (s.circularProgress / 100));
+
+          if (isIndeterminate) {
+            return [
+              '<!-- Material 3 Circular Progress (Indeterminate) -->',
+              '<div class="m3-circular-progress m3-circular-progress--indeterminate' + fourColorClass + '" role="progressbar" aria-label="Loading in progress">',
+              '  <svg class="m3-circular-progress__svg" viewBox="0 0 ' + size + ' ' + size + '">',
+              '    <circle class="m3-circular-progress__track" cx="' + (size / 2) + '" cy="' + (size / 2) + '" r="' + r + '" />',
+              '    <circle class="m3-circular-progress__indicator" cx="' + (size / 2) + '" cy="' + (size / 2) + '" r="' + r + '" />',
+              '  </svg>',
+              '</div>'
+            ].join('\n');
+          } else {
+            return [
+              '<!-- Material 3 Circular Progress (Determinate) -->',
+              '<div class="m3-circular-progress" role="progressbar" aria-valuenow="' + s.circularProgress + '" aria-valuemin="0" aria-valuemax="100" aria-label="Loading progress">',
+              '  <svg class="m3-circular-progress__svg" viewBox="0 0 ' + size + ' ' + size + '">',
+              '    <circle class="m3-circular-progress__track" cx="' + (size / 2) + '" cy="' + (size / 2) + '" r="' + r + '" />',
+              '    <circle class="m3-circular-progress__indicator" cx="' + (size / 2) + '" cy="' + (size / 2) + '" r="' + r + '" style="stroke-dasharray: ' + circumference.toFixed(2) + '; stroke-dashoffset: ' + strokeDashoffset.toFixed(2) + ';" />',
+              '  </svg>',
+              '</div>'
+            ].join('\n');
+          }
+        } else {
+          // Wavy Expressive Circular
+          const amplitude = Math.min(size / 4, s.circularAmplitude || 6);
+          const waves = s.circularWaves || 12;
+          const baseRadius = Math.max(2, (size / 2) - amplitude - (stroke / 2) - 1);
+          const cx = size / 2;
+          const cy = size / 2;
+
+          if (isIndeterminate) {
+            const trackD = (s.circularTrackShape === 'circular') ?
+              generateCircularArcPath(cx, cy, baseRadius, 0, 2 * Math.PI) :
+              generateCircularWavyPath(cx, cy, baseRadius, amplitude * 0.85, waves, 0, 0, 2 * Math.PI);
+            const closedActiveD = generateCircularWavyPath(cx, cy, baseRadius, amplitude, waves, 0, -Math.PI / 2, -Math.PI / 2 + 2 * Math.PI);
+
+            return [
+              '<!-- Material 3 Expressive Wavy Circular Progress (Indeterminate) -->',
+              '<div class="m3-circular-progress m3-circular-progress--wavy m3-circular-progress--indeterminate' + fourColorClass + '" role="progressbar" aria-label="Loading in progress">',
+              '  <svg class="m3-circular-progress__svg" viewBox="0 0 ' + size + ' ' + size + '">',
+              '    <path class="m3-circular-progress__wavy-track" d="' + trackD + '" fill="none" stroke-linecap="round" />',
+              '    <path class="m3-circular-progress__wavy-active" pathLength="100" d="' + closedActiveD + '" fill="none" stroke-linecap="round" />',
+              '  </svg>',
+              '</div>'
+            ].join('\n');
+          } else {
+            const p = Math.max(0, Math.min(100, s.circularProgress)) / 100;
+            const theta0 = -Math.PI / 2;
+            const gapAngle = 4 / baseRadius;
+
+            let activeD = '';
+            let trackD = '';
+            if (p >= 0.999) {
+              activeD = generateCircularWavyPath(cx, cy, baseRadius, amplitude, waves, 0, theta0, theta0 + 2 * Math.PI);
+            } else if (p <= 0.001) {
+              trackD = (s.circularTrackShape === 'circular') ?
+                generateCircularArcPath(cx, cy, baseRadius, 0, 2 * Math.PI) :
+                generateCircularWavyPath(cx, cy, baseRadius, amplitude * 0.85, waves, 0, 0, 2 * Math.PI);
+            } else {
+              const activeEnd = theta0 + Math.max(0.01, p * 2 * Math.PI - gapAngle / 2);
+              const trackStart = theta0 + p * 2 * Math.PI + gapAngle / 2;
+              const trackEnd = theta0 + 2 * Math.PI - gapAngle / 2;
+              activeD = generateCircularWavyPath(cx, cy, baseRadius, amplitude, waves, 0, theta0, activeEnd, false, true);
+              trackD = (s.circularTrackShape === 'circular') ?
+                generateCircularArcPath(cx, cy, baseRadius, trackStart, trackEnd) :
+                generateCircularWavyPath(cx, cy, baseRadius, amplitude * 0.85, waves, 0, trackStart, trackEnd, true, true);
+            }
+
+            const htmlLines = [
+              '<!-- Material 3 Expressive Wavy Circular Progress (Determinate) -->',
+              '<div class="m3-circular-progress m3-circular-progress--wavy" role="progressbar" aria-valuenow="' + s.circularProgress + '" aria-valuemin="0" aria-valuemax="100" aria-label="Loading progress">',
+              '  <svg class="m3-circular-progress__svg" viewBox="0 0 ' + size + ' ' + size + '">'
+            ];
+            if (trackD) {
+              htmlLines.push('    <path class="m3-circular-progress__wavy-track" d="' + trackD + '" fill="none" stroke-linecap="round" />');
+            }
+            if (activeD) {
+              htmlLines.push('    <path class="m3-circular-progress__wavy-active" d="' + activeD + '" fill="none" stroke-linecap="round" />');
+            }
+            htmlLines.push('  </svg>');
+            htmlLines.push('</div>');
+            return htmlLines.join('\n');
+          }
+        }
+      },
+
+      generateCSS(s) {
+        const isIndeterminate = s.circularMode === 'indeterminate';
+        const isWavy = s.circularVariant === 'wavy';
+        const fourColor = s.circularFourColor && isIndeterminate;
+        const size = s.circularSize || 112;
+        const stroke = s.circularStroke || 7;
+        const speed = s.circularSpeed || 1.4;
+
+        const lines = [
+          '/* Material 3 Circular Progress Indicator Styles */',
+          ':root {',
+          '  --m3-circular-size: ' + size + 'px;',
+          '  --m3-circular-stroke: ' + stroke + 'px;',
+          '  --m3-circular-color: ' + s.circularColor + ';',
+          '  --m3-circular-track: ' + s.circularTrackColor + ';',
+          '  --m3-circular-speed: ' + speed + 's;',
+          '}',
+          '',
+          '.m3-circular-progress {',
+          '  display: inline-flex;',
+          '  position: relative;',
+          '  width: var(--m3-circular-size);',
+          '  height: var(--m3-circular-size);',
+          '  align-items: center;',
+          '  justify-content: center;',
+          '  box-sizing: border-box;',
+          '}',
+          '',
+          '.m3-circular-progress__svg {',
+          '  width: 100%;',
+          '  height: 100%;',
+          '  display: block;',
+          '  overflow: visible;',
+          '  transform: rotate(-90deg);',
+          '  transform-origin: center center;',
+          '}',
+          '',
+          '.m3-circular-progress__track {',
+          '  fill: none;',
+          '  stroke: var(--m3-circular-track);',
+          '  stroke-width: var(--m3-circular-stroke);',
+          '  transition: stroke 0.2s ease;',
+          '}',
+          '',
+          '.m3-circular-progress__indicator {',
+          '  fill: none;',
+          '  stroke: var(--m3-circular-color);',
+          '  stroke-width: var(--m3-circular-stroke);',
+          '  stroke-linecap: round;',
+          '  transition: stroke-dashoffset 0.35s cubic-bezier(0.2, 0, 0, 1), stroke 0.2s ease;',
+          '}'
+        ];
+
+        if (isIndeterminate) {
+          lines.push('');
+          lines.push('.m3-circular-progress--indeterminate .m3-circular-progress__svg {');
+          lines.push('  animation: m3-circular-rotate var(--m3-circular-speed) linear infinite;');
+          lines.push('}');
+          lines.push('');
+          lines.push('.m3-circular-progress--indeterminate .m3-circular-progress__indicator {');
+          lines.push('  animation: m3-circular-dash var(--m3-circular-speed) ease-in-out infinite;');
+          lines.push('}');
+          lines.push('');
+          lines.push('@keyframes m3-circular-rotate {');
+          lines.push('  0% { transform: rotate(0deg); }');
+          lines.push('  100% { transform: rotate(360deg); }');
+          lines.push('}');
+          lines.push('');
+          lines.push('@keyframes m3-circular-dash {');
+          lines.push('  0% { stroke-dasharray: 1, 200; stroke-dashoffset: 0; }');
+          lines.push('  50% { stroke-dasharray: 89, 200; stroke-dashoffset: -35; }');
+          lines.push('  100% { stroke-dasharray: 89, 200; stroke-dashoffset: -124; }');
+          lines.push('}');
+        }
+
+        if (isWavy) {
+          lines.push('');
+          lines.push('.m3-circular-progress--wavy {');
+          lines.push('  overflow: visible;');
+          lines.push('}');
+          lines.push('');
+          lines.push('.m3-circular-progress--wavy .m3-circular-progress__svg {');
+          lines.push('  transform: none;');
+          lines.push('}');
+          lines.push('');
+          lines.push('.m3-circular-progress--wavy.m3-circular-progress--indeterminate .m3-circular-progress__svg {');
+          lines.push('  animation: m3-circular-wavy-rotate calc(var(--m3-circular-speed) * 1.5) linear infinite;');
+          lines.push('}');
+          lines.push('');
+          lines.push('.m3-circular-progress--wavy.m3-circular-progress--indeterminate .m3-circular-progress__wavy-active {');
+          lines.push('  stroke-dasharray: 6 100;');
+          lines.push('  stroke-dashoffset: 0;');
+          lines.push('  animation: m3-circular-wavy-dash var(--m3-circular-speed) cubic-bezier(0.4, 0, 0.2, 1) infinite;');
+          lines.push('}');
+          lines.push('');
+          lines.push('@keyframes m3-circular-wavy-rotate {');
+          lines.push('  0% { transform: rotate(0deg); }');
+          lines.push('  100% { transform: rotate(360deg); }');
+          lines.push('}');
+          lines.push('');
+          lines.push('@keyframes m3-circular-wavy-dash {');
+          lines.push('  0% { stroke-dasharray: 4 100; stroke-dashoffset: 0; }');
+          lines.push('  50% { stroke-dasharray: 75 100; stroke-dashoffset: -20; }');
+          lines.push('  100% { stroke-dasharray: 4 100; stroke-dashoffset: -100; }');
+          lines.push('}');
+          lines.push('');
+          lines.push('.m3-circular-progress__wavy-track {');
+          lines.push('  fill: none;', '  stroke: var(--m3-circular-track);', '  stroke-width: var(--m3-circular-stroke);', '  stroke-linecap: round;');
+          lines.push('}');
+          lines.push('');
+          lines.push('.m3-circular-progress__wavy-active {');
+          lines.push('  fill: none;', '  stroke: var(--m3-circular-color);', '  stroke-width: var(--m3-circular-stroke);', '  stroke-linecap: round;');
+          lines.push('}');
+        }
+
+        lines.push('');
+        lines.push('.m3-circular-progress--paused .m3-circular-progress__svg,');
+        lines.push('.m3-circular-progress--paused .m3-circular-progress__indicator,');
+        lines.push('.m3-circular-progress--paused .m3-circular-progress__wavy-active {');
+        lines.push('  animation-play-state: paused !important;');
+        lines.push('}');
+
+        if (fourColor) {
+          lines.push('');
+          lines.push('/* Four-Color Cycle */');
+          lines.push('@keyframes m3-circular-four-color {');
+          lines.push('  0%, 15% { stroke: #6750a4; }');
+          lines.push('  25%, 40% { stroke: #006a6a; }');
+          lines.push('  50%, 65% { stroke: #7d5260; }');
+          lines.push('  75%, 90% { stroke: #b3261e; }');
+          lines.push('  100% { stroke: #6750a4; }');
+          lines.push('}');
+          lines.push('.m3-circular-progress--four-color .m3-circular-progress__indicator,');
+          lines.push('.m3-circular-progress--four-color .m3-circular-progress__wavy-active {');
+          lines.push('  animation-name: ' + (isWavy ? 'm3-circular-wavy-dash' : 'm3-circular-dash') + ', m3-circular-four-color;');
+          lines.push('  animation-duration: var(--m3-circular-speed), calc(var(--m3-circular-speed) * 4);');
+          lines.push('  animation-iteration-count: infinite, infinite;');
+          lines.push('}');
+        }
+
+        lines.push('');
+        lines.push('/* Respect motion preferences */');
+        lines.push('@media (prefers-reduced-motion: reduce) {');
+        lines.push('  .m3-circular-progress__svg,');
+        lines.push('  .m3-circular-progress__indicator,');
+        lines.push('  .m3-circular-progress__wavy-active {');
+        lines.push('    animation: none !important;');
+        lines.push('  }');
+        lines.push('}');
+
+        return lines.join('\n');
+      },
+
+      generateJS(s) {
+        if (s.circularEngine === 'css') {
+          return [
+            '/*',
+            ' * Material 3 Circular Progress — Pure CSS',
+            ' * =======================================',
+            ' * No JavaScript required!',
+            ' * The circular indicator is fully driven by native SVG & CSS.',
+            ' */'
+          ].join('\n');
+        }
+
+        const size = s.circularSize || 112;
+        const stroke = s.circularStroke || 7;
+        const isWavy = s.circularVariant === 'wavy';
+
+        if (!isWavy) {
+          const r = Math.max(1, (size - stroke) / 2);
+          const circumference = (2 * Math.PI * r).toFixed(2);
+
+          return [
+            '/**',
+            ' * Material 3 Circular Progress Controller (Vanilla JS)',
+            ' */',
+            'function createM3CircularProgress(elementOrSelector, options = {}) {',
+            '  const el = typeof elementOrSelector === "string" ?',
+            '    document.querySelector(elementOrSelector) : elementOrSelector;',
+            '  if (!el) return null;',
+            '',
+            '  let currentProgress = options.progress ?? ' + s.circularProgress + ';',
+            '  let isIndeterminate = options.indeterminate ?? ' + (s.circularMode === 'indeterminate') + ';',
+            '  const circumference = ' + circumference + ';',
+            '  const indicator = el.querySelector(".m3-circular-progress__indicator");',
+            '',
+            '  function setProgress(percent) {',
+            '    currentProgress = Math.max(0, Math.min(100, percent));',
+            '    el.setAttribute("aria-valuenow", currentProgress);',
+            '    if (indicator) {',
+            '      const offset = circumference * (1 - (currentProgress / 100));',
+            '      indicator.style.strokeDashoffset = offset.toFixed(2);',
+            '    }',
+            '  }',
+            '',
+            '  function setIndeterminate(val) {',
+            '    isIndeterminate = !!val;',
+            '    el.classList.toggle("m3-circular-progress--indeterminate", isIndeterminate);',
+            '  }',
+            '',
+            '  if (!isIndeterminate) setProgress(currentProgress);',
+            '  return { setProgress, setIndeterminate, getProgress: () => currentProgress };',
+            '}'
+          ].join('\n');
+        } else {
+          // Wavy Expressive Controller
+          return [
+            '/**',
+            ' * Material 3 Expressive Wavy Circular Progress Controller (Vanilla JS)',
+            ' * 60 FPS mathematical sinusoidal wave dynamics with breathing expanding arc',
+            ' */',
+            'function createM3CircularProgress(elementOrSelector, options = {}) {',
+            '  const el = typeof elementOrSelector === "string" ?',
+            '    document.querySelector(elementOrSelector) : elementOrSelector;',
+            '  if (!el) return null;',
+            '',
+            '  const size = options.size ?? ' + size + ';',
+            '  const stroke = options.stroke ?? ' + stroke + ';',
+            '  const amplitude = options.amplitude ?? ' + (s.circularAmplitude || 6) + ';',
+            '  const waves = options.waves ?? ' + (s.circularWaves || 12) + ';',
+            '  const speed = options.speed ?? ' + (s.circularSpeed || 1.4) + ';',
+            '  const trackShape = options.trackShape ?? "' + s.circularTrackShape + '";',
+            '  const cx = size / 2, cy = size / 2;',
+            '  const baseRadius = Math.max(2, (size / 2) - amplitude - (stroke / 2) - 1);',
+            '',
+            '  const activePath = el.querySelector(".m3-circular-progress__wavy-active");',
+            '  const trackPath = el.querySelector(".m3-circular-progress__wavy-track");',
+            '  let currentProgress = options.progress ?? ' + s.circularProgress + ';',
+            '  let isIndeterminate = options.indeterminate ?? ' + (s.circularMode === 'indeterminate') + ';',
+            '  let isAnimated = options.animated ?? true;',
+            '  let rafId = null, startTime = null;',
+            '',
+            '  function generateWavyPath(startAngle, endAngle, phase, taperStart = true, taperEnd = true) {',
+            '    const span = endAngle - startAngle;',
+            '    if (span <= 0.001) return "";',
+            '    const isFullClosed = span >= (2 * Math.PI - 0.005);',
+            '    const rampSpan = Math.min(span * 0.25, (2 * Math.PI) / (waves * 2));',
+            '    const stepCount = Math.max(36, Math.ceil((span / (2 * Math.PI)) * waves * 36));',
+            '    let d = "";',
+            '    for (let i = 0; i <= stepCount; i++) {',
+            '      const t = i / stepCount;',
+            '      const theta = startAngle + t * span;',
+            '      let curAmp = amplitude;',
+            '      if (!isFullClosed) {',
+            '        if (taperStart && theta < startAngle + rampSpan) curAmp *= Math.sin(Math.max(0, (theta - startAngle) / rampSpan) * Math.PI / 2);',
+            '        if (taperEnd && theta > endAngle - rampSpan) curAmp *= Math.sin(Math.max(0, (endAngle - theta) / rampSpan) * Math.PI / 2);',
+            '      }',
+            '      const r = baseRadius + curAmp * Math.sin(waves * theta + phase);',
+            '      const x = (cx + r * Math.cos(theta)).toFixed(2);',
+            '      const y = (cy + r * Math.sin(theta)).toFixed(2);',
+            '      d += (i === 0 ? "M " : " L ") + x + " " + y;',
+            '    }',
+            '    return isFullClosed ? d + " Z" : d;',
+            '  }',
+            '',
+            '  function generateArcPath(startAngle, endAngle) {',
+            '    const span = endAngle - startAngle;',
+            '    if (span <= 0.001) return "";',
+            '    const isFullClosed = span >= (2 * Math.PI - 0.005);',
+            '    const x0 = (cx + baseRadius * Math.cos(startAngle)).toFixed(2);',
+            '    const y0 = (cy + baseRadius * Math.sin(startAngle)).toFixed(2);',
+            '    const x1 = (cx + baseRadius * Math.cos(endAngle)).toFixed(2);',
+            '    const y1 = (cy + baseRadius * Math.sin(endAngle)).toFixed(2);',
+            '    const largeArc = span > Math.PI ? 1 : 0;',
+            '    if (isFullClosed) {',
+            '      const xm = (cx + baseRadius * Math.cos(startAngle + Math.PI)).toFixed(2);',
+            '      const ym = (cy + baseRadius * Math.sin(startAngle + Math.PI)).toFixed(2);',
+            '      return "M " + x0 + " " + y0 + " A " + baseRadius + " " + baseRadius + " 0 1 1 " + xm + " " + ym + " A " + baseRadius + " " + baseRadius + " 0 1 1 " + x0 + " " + y0 + " Z";',
+            '    }',
+            '    return "M " + x0 + " " + y0 + " A " + baseRadius + " " + baseRadius + " 0 " + largeArc + " 1 " + x1 + " " + y1;',
+            '  }',
+            '',
+            '  function update(timestamp) {',
+            '    if (!startTime) startTime = timestamp;',
+            '    const elapsed = timestamp - startTime;',
+            '    const phase = isAnimated ? (elapsed / 1000) * (2 * Math.PI / speed) : 0;',
+            '',
+            '    if (isIndeterminate) {',
+            '      if (isAnimated) {',
+            '        const cycleMs = speed * 1000;',
+            '        const u = (elapsed % cycleMs) / cycleMs;',
+            '        const minSpan = 0.08 * 2 * Math.PI;',
+            '        const maxSpan = 0.78 * 2 * Math.PI;',
+            '        const span = minSpan + (maxSpan - minSpan) * Math.pow(Math.sin(Math.PI * u), 1.15);',
+            '        const orbitAngle = (elapsed / 1000) * (2 * Math.PI / (speed * 1.5));',
+            '        const centerAngle = -Math.PI / 2 + orbitAngle + 0.35 * Math.sin(2 * Math.PI * u);',
+            '        if (activePath) activePath.setAttribute("d", generateWavyPath(centerAngle - span / 2, centerAngle + span / 2, phase));',
+            '      } else {',
+            '        if (activePath) activePath.setAttribute("d", generateWavyPath(-Math.PI / 2, -Math.PI / 2 + Math.PI * 1.3, 0));',
+            '      }',
+            '      if (trackPath) {',
+            '        trackPath.setAttribute("d", trackShape === "circular" ?',
+            '          generateArcPath(0, 2 * Math.PI) :',
+            '          generateWavyPath(0, 2 * Math.PI, phase));',
+            '      }',
+            '    } else {',
+            '      const p = Math.max(0, Math.min(100, currentProgress)) / 100;',
+            '      const theta0 = -Math.PI / 2;',
+            '      const gapAngle = 4 / baseRadius;',
+            '      if (p >= 0.999) {',
+            '        if (activePath) activePath.setAttribute("d", generateWavyPath(theta0, theta0 + 2 * Math.PI, phase));',
+            '        if (trackPath) trackPath.setAttribute("d", "");',
+            '      } else if (p <= 0.001) {',
+            '        if (activePath) activePath.setAttribute("d", "");',
+            '        if (trackPath) {',
+            '          trackPath.setAttribute("d", trackShape === "circular" ?',
+            '            generateArcPath(0, 2 * Math.PI) :',
+            '            generateWavyPath(0, 2 * Math.PI, phase));',
+            '        }',
+            '      } else {',
+            '        if (activePath) activePath.setAttribute("d", generateWavyPath(theta0, theta0 + p * 2 * Math.PI - gapAngle / 2, phase, false, true));',
+            '        if (trackPath) {',
+            '          trackPath.setAttribute("d", trackShape === "circular" ?',
+            '            generateArcPath(theta0 + p * 2 * Math.PI + gapAngle / 2, theta0 + 2 * Math.PI - gapAngle / 2) :',
+            '            generateWavyPath(theta0 + p * 2 * Math.PI + gapAngle / 2, theta0 + 2 * Math.PI - gapAngle / 2, phase, true, true));',
+            '        }',
+            '      }',
+            '    }',
+            '    if (isAnimated) rafId = requestAnimationFrame(update);',
+            '  }',
+            '',
+            '  function setProgress(percent) {',
+            '    currentProgress = Math.max(0, Math.min(100, percent));',
+            '    el.setAttribute("aria-valuenow", currentProgress);',
+            '    if (!isAnimated) update(performance.now());',
+            '  }',
+            '',
+            '  function setIndeterminate(val) {',
+            '    isIndeterminate = !!val;',
+            '    el.classList.toggle("m3-circular-progress--indeterminate", isIndeterminate);',
+            '    if (!isAnimated) update(performance.now());',
+            '  }',
+            '',
+            '  if (isAnimated) rafId = requestAnimationFrame(update);',
+            '  else update(performance.now());',
+            '  return { setProgress, setIndeterminate, getProgress: () => currentProgress, destroy: () => cancelAnimationFrame(rafId) };',
+            '}'
+          ].join('\n');
+        }
+      },
+
+      generateFullDocument(s) {
+        const html = this.generateHTML(s);
+        const css = this.generateCSS(s);
+        const js = s.circularEngine === 'js' ? this.generateJS(s) : null;
+
+        const lines = [
+          '<!DOCTYPE html>',
+          '<html lang="en">',
+          '<head>',
+          '  <meta charset="UTF-8">',
+          '  <meta name="viewport" content="width=device-width, initial-scale=1.0">',
+          '  <title>Material 3 Circular Progress Indicator</title>',
+          '  <style>',
+          css.split('\n').map(l => '    ' + l).join('\n'),
+          '  </style>',
+          '</head>',
+          '<body>',
+          '',
+          '  <!-- Material 3 Circular Progress Demo Container -->',
+          '  <main style="display: flex; min-height: 100vh; align-items: center; justify-content: center; background-color: #fef7ff; padding: 24px;">',
+          html.split('\n').map(l => '    ' + l).join('\n'),
+          '  </main>'
+        ];
+
+        if (js) {
+          lines.push('');
+          lines.push('  <script>');
+          lines.push(js.split('\n').map(l => '    ' + l).join('\n'));
+          lines.push('  </script>');
+        }
+
+        lines.push('</body>');
+        lines.push('</html>');
+
+        return lines.join('\n');
+      }
+    },
+
+    /* ------------------------------------------------------------------------
+       Component 4: Common Buttons
+       ------------------------------------------------------------------------ */
+    button: {
+      name: 'Common Buttons',
+      category: 'Actions',
+      description: 'Material 3 filled, elevated, tonal, outlined, and text buttons with interactive state layers and ripple effects',
+      referenceUrl: 'https://m3.material.io/components/all-buttons/overview',
+
+      initPreview(container) {
+        container.innerHTML = [
+          '<div class="preview-button-wrapper">',
+          '  <button id="preview-m3-button" type="button" class="m3-button">',
+          '    <span class="m3-button__icon"></span>',
+          '    <span class="m3-button__label"></span>',
+          '  </button>',
+          '</div>'
+        ].join('\n');
+        const btn = document.getElementById('preview-m3-button');
+        if (btn) attachM3Ripple(btn);
+      },
+
+      renderPreview(container, s) {
+        const btn = document.getElementById('preview-m3-button');
+        if (!btn) return;
+
+        btn.className = 'm3-button';
+        btn.classList.add('m3-button--' + (s.buttonVariant || 'filled'));
+        if (s.buttonSize && s.buttonSize !== 'medium') {
+          btn.classList.add('m3-button--' + s.buttonSize);
+        }
+        if (s.buttonCorner && s.buttonCorner !== 'full') {
+          btn.classList.add('m3-button--corner-' + s.buttonCorner);
+        }
+        if (s.buttonFullWidth) {
+          btn.classList.add('m3-button--full-width');
+        }
+        if (s.buttonDisabled) {
+          btn.classList.add('m3-button--disabled');
+          btn.disabled = true;
+        } else {
+          btn.disabled = false;
+        }
+
+        btn.style.setProperty('--m3-btn-color', s.buttonColor || '#6750A4');
+
+        const iconSpan = btn.querySelector('.m3-button__icon');
+        const labelSpan = btn.querySelector('.m3-button__label');
+
+        if (labelSpan) {
+          labelSpan.textContent = s.buttonLabel || 'Button';
+        }
+
+        if (iconSpan) {
+          const iconSvg = M3_ICONS[s.buttonIcon] || M3_ICONS.sparkle;
+          if (s.buttonIconPlacement === 'none') {
+            iconSpan.style.display = 'none';
+            iconSpan.innerHTML = '';
+          } else {
+            iconSpan.style.display = 'inline-flex';
+            iconSpan.innerHTML = iconSvg;
+            if (s.buttonIconPlacement === 'trailing') {
+              btn.appendChild(iconSpan);
+            } else {
+              btn.insertBefore(iconSpan, labelSpan);
+            }
+          }
+        }
+      },
+
+      generateHTML(s) {
+        const classes = ['m3-button', 'm3-button--' + (s.buttonVariant || 'filled')];
+        if (s.buttonSize && s.buttonSize !== 'medium') {
+          classes.push('m3-button--' + s.buttonSize);
+        }
+        if (s.buttonCorner && s.buttonCorner !== 'full') {
+          classes.push('m3-button--corner-' + s.buttonCorner);
+        }
+        if (s.buttonFullWidth) {
+          classes.push('m3-button--full-width');
+        }
+        const disabledAttr = s.buttonDisabled ? ' disabled' : '';
+        const label = s.buttonLabel || 'Button';
+        const hasIcon = s.buttonIconPlacement && s.buttonIconPlacement !== 'none';
+        const iconSvg = M3_ICONS[s.buttonIcon] || M3_ICONS.sparkle;
+
+        const lines = [
+          '<!-- Material 3 ' + (s.buttonVariant.charAt(0).toUpperCase() + s.buttonVariant.slice(1)) + ' Button -->',
+          '<button type="button" class="' + classes.join(' ') + '"' + disabledAttr + '>'
+        ];
+
+        if (hasIcon && s.buttonIconPlacement === 'leading') {
+          lines.push('  <span class="m3-button__icon" aria-hidden="true">' + iconSvg + '</span>');
+        }
+        lines.push('  <span class="m3-button__label">' + label + '</span>');
+        if (hasIcon && s.buttonIconPlacement === 'trailing') {
+          lines.push('  <span class="m3-button__icon" aria-hidden="true">' + iconSvg + '</span>');
+        }
+        lines.push('</button>');
+
+        return lines.join('\n');
+      },
+
+      generateCSS(s) {
+        const isJsRipple = s.buttonEngine === 'js';
+        const lines = [
+          '/*',
+          ' * Material 3 Button Styles',
+          ' * https://m3.material.io/components/all-buttons/overview',
+          ' */',
+          ':root {',
+          '  --m3-btn-color: ' + (s.buttonColor || '#6750A4') + ';',
+          '  --m3-btn-height: 40px;',
+          '  --m3-btn-padding-h: 24px;',
+          '  --m3-btn-font-size: 14px;',
+          '  --m3-btn-radius: 9999px;',
+          '  --m3-btn-bg: var(--m3-btn-color);',
+          '  --m3-btn-text: #ffffff;',
+          '  --m3-btn-border: transparent;',
+          '  --m3-btn-shadow: none;',
+          '}',
+          '',
+          '/* Base Button */',
+          '.m3-button {',
+          '  position: relative;',
+          '  display: inline-flex;',
+          '  align-items: center;',
+          '  justify-content: center;',
+          '  gap: 8px;',
+          '  height: var(--m3-btn-height);',
+          '  padding: 0 var(--m3-btn-padding-h);',
+          '  border: 1px solid var(--m3-btn-border);',
+          '  border-radius: var(--m3-btn-radius);',
+          '  background-color: var(--m3-btn-bg);',
+          '  color: var(--m3-btn-text);',
+          '  box-shadow: var(--m3-btn-shadow);',
+          '  font-family: inherit;',
+          '  font-size: var(--m3-btn-font-size);',
+          '  font-weight: 500;',
+          '  letter-spacing: 0.1px;',
+          '  line-height: 1;',
+          '  text-decoration: none;',
+          '  cursor: pointer;',
+          '  user-select: none;',
+          '  overflow: hidden;',
+          '  box-sizing: border-box;',
+          '  vertical-align: middle;',
+          '  transition: box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1),',
+          '              background-color 0.2s cubic-bezier(0.2, 0, 0, 1),',
+          '              color 0.2s cubic-bezier(0.2, 0, 0, 1),',
+          '              border-color 0.2s cubic-bezier(0.2, 0, 0, 1);',
+          '}',
+          '',
+          '/* Material 3 State Layer (Hover / Focus / Press) */',
+          '.m3-button::before {',
+          '  content: "";',
+          '  position: absolute;',
+          '  inset: 0;',
+          '  background-color: currentColor;',
+          '  opacity: 0;',
+          '  pointer-events: none;',
+          '  transition: opacity 0.15s cubic-bezier(0.2, 0, 0, 1);',
+          '}',
+          '',
+          '.m3-button:hover::before {',
+          '  opacity: 0.08;',
+          '}',
+          '',
+          '.m3-button:focus-visible::before {',
+          '  opacity: 0.12;',
+          '}',
+          '',
+          '.m3-button:active::before {',
+          '  opacity: 0.12;',
+          '}',
+          '',
+          '.m3-button:focus-visible {',
+          '  outline: 2px solid var(--m3-btn-color);',
+          '  outline-offset: 2px;',
+          '}',
+          '',
+          '/* Variants */',
+          '.m3-button--filled {',
+          '  --m3-btn-bg: var(--m3-btn-color);',
+          '  --m3-btn-text: #ffffff;',
+          '  --m3-btn-shadow: 0 0 0 0 transparent;',
+          '}',
+          '.m3-button--filled:hover {',
+          '  --m3-btn-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);',
+          '}',
+          '',
+          '.m3-button--elevated {',
+          '  --m3-btn-bg: #f7f2fa;',
+          '  --m3-btn-text: var(--m3-btn-color);',
+          '  --m3-btn-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);',
+          '}',
+          '.m3-button--elevated:hover {',
+          '  --m3-btn-shadow: 0 2px 6px 2px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);',
+          '}',
+          '',
+          '.m3-button--tonal {',
+          '  --m3-btn-bg: #e8def8;',
+          '  --m3-btn-text: #1d192b;',
+          '}',
+          '.m3-button--tonal:hover {',
+          '  --m3-btn-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);',
+          '}',
+          '',
+          '.m3-button--outlined {',
+          '  --m3-btn-bg: transparent;',
+          '  --m3-btn-text: var(--m3-btn-color);',
+          '  --m3-btn-border: #79747e;',
+          '}',
+          '.m3-button--outlined:hover {',
+          '  --m3-btn-border: var(--m3-btn-color);',
+          '}',
+          '',
+          '.m3-button--text {',
+          '  --m3-btn-bg: transparent;',
+          '  --m3-btn-text: var(--m3-btn-color);',
+          '  --m3-btn-padding-h: 12px;',
+          '}',
+          '',
+          '/* Sizes */',
+          '.m3-button--small {',
+          '  --m3-btn-height: 32px;',
+          '  --m3-btn-padding-h: 16px;',
+          '  --m3-btn-font-size: 13px;',
+          '}',
+          '.m3-button--large {',
+          '  --m3-btn-height: 48px;',
+          '  --m3-btn-padding-h: 28px;',
+          '  --m3-btn-font-size: 16px;',
+          '}',
+          '',
+          '/* Corner Shapes */',
+          '.m3-button--corner-full { --m3-btn-radius: 9999px; }',
+          '.m3-button--corner-rounded { --m3-btn-radius: 12px; }',
+          '.m3-button--corner-sharp { --m3-btn-radius: 4px; }',
+          '',
+          '/* Layout */',
+          '.m3-button--full-width {',
+          '  width: 100%;',
+          '}',
+          '',
+          '/* Disabled State */',
+          '.m3-button:disabled,',
+          '.m3-button--disabled {',
+          '  pointer-events: none !important;',
+          '  cursor: default !important;',
+          '  box-shadow: none !important;',
+          '  background-color: rgba(29, 25, 43, 0.12) !important;',
+          '  color: rgba(29, 25, 43, 0.38) !important;',
+          '  border-color: transparent !important;',
+          '}',
+          '.m3-button--outlined:disabled,',
+          '.m3-button--outlined.m3-button--disabled {',
+          '  background-color: transparent !important;',
+          '  border-color: rgba(29, 25, 43, 0.12) !important;',
+          '}',
+          '.m3-button--text:disabled,',
+          '.m3-button--text.m3-button--disabled {',
+          '  background-color: transparent !important;',
+          '}',
+          '',
+          '/* Icon & Label */',
+          '.m3-button__icon {',
+          '  display: inline-flex;',
+          '  align-items: center;',
+          '  justify-content: center;',
+          '  width: 18px;',
+          '  height: 18px;',
+          '  flex-shrink: 0;',
+          '}',
+          '.m3-button__icon svg {',
+          '  width: 100%;',
+          '  height: 100%;',
+          '  fill: currentColor;',
+          '}',
+          '.m3-button__label {',
+          '  display: inline-block;',
+          '  white-space: nowrap;',
+          '}'
+        ];
+
+        if (isJsRipple) {
+          lines.push(
+            '',
+            '/* Material 3 Interactive Ripple Ink */',
+            '.m3-ripple-ink {',
+            '  position: absolute;',
+            '  border-radius: 50%;',
+            '  background-color: currentColor;',
+            '  pointer-events: none;',
+            '  opacity: 0.16;',
+            '  transform: scale(0);',
+            '  animation: m3-ripple 0.6s cubic-bezier(0.2, 0, 0, 1) forwards;',
+            '}',
+            '',
+            '@keyframes m3-ripple {',
+            '  to {',
+            '    transform: scale(2.5);',
+            '    opacity: 0;',
+            '  }',
+            '}'
+          );
+        }
+
+        lines.push(
+          '',
+          '/* Motion Accessibility */',
+          '@media (prefers-reduced-motion: reduce) {',
+          '  .m3-button,',
+          '  .m3-button::before {',
+          '    transition: none !important;',
+          '  }',
+          '}'
+        );
+
+        return lines.join('\n');
+      },
+
+      generateJS(s) {
+        if (s.buttonEngine !== 'js') {
+          return [
+            '/*',
+            ' * Pure CSS Button: No JavaScript required.',
+            ' * Material 3 state layers and elevation transitions are handled 100% via CSS.',
+            ' */'
+          ].join('\n');
+        }
+
+        return [
+          '/*',
+          ' * Material 3 Interactive Click Ripple Controller',
+          ' * Attaches radial expansion ripple to M3 buttons',
+          ' */',
+          'function attachM3Ripple(el) {',
+          '  if (!el || el._hasM3Ripple) return;',
+          '  el._hasM3Ripple = true;',
+          '',
+          '  el.addEventListener("pointerdown", function (e) {',
+          '    if (el.disabled || el.classList.contains("m3-button--disabled")) return;',
+          '    const rect = el.getBoundingClientRect();',
+          '    const size = Math.max(rect.width, rect.height);',
+          '    const x = e.clientX - rect.left - size / 2;',
+          '    const y = e.clientY - rect.top - size / 2;',
+          '',
+          '    const ink = document.createElement("span");',
+          '    ink.className = "m3-ripple-ink";',
+          '    ink.style.width = size + "px";',
+          '    ink.style.height = size + "px";',
+          '    ink.style.left = x + "px";',
+          '    ink.style.top = y + "px";',
+          '    el.appendChild(ink);',
+          '',
+          '    setTimeout(() => {',
+          '      ink.remove();',
+          '    }, 650);',
+          '  });',
+          '}',
+          '',
+          '// Initialize ripple on all M3 buttons',
+          'document.querySelectorAll(".m3-button").forEach(attachM3Ripple);'
+        ].join('\n');
+      },
+
+      generateFullDocument(s) {
+        const html = this.generateHTML(s);
+        const css = this.generateCSS(s);
+        const js = s.buttonEngine === 'js' ? this.generateJS(s) : null;
+
+        const lines = [
+          '<!DOCTYPE html>',
+          '<html lang="en">',
+          '<head>',
+          '  <meta charset="UTF-8">',
+          '  <meta name="viewport" content="width=device-width, initial-scale=1.0">',
+          '  <title>Material 3 Button Demo</title>',
+          '  <style>',
+          css.split('\n').map(l => '    ' + l).join('\n'),
+          '  </style>',
+          '</head>',
+          '<body>',
+          '',
+          '  <!-- Material 3 Button Demo Container -->',
+          '  <main style="display: flex; min-height: 100vh; align-items: center; justify-content: center; background-color: #fef7ff; padding: 24px;">',
+          html.split('\n').map(l => '    ' + l).join('\n'),
+          '  </main>'
+        ];
+
+        if (js) {
+          lines.push('');
+          lines.push('  <script>');
+          lines.push(js.split('\n').map(l => '    ' + l).join('\n'));
+          lines.push('  </script>');
+        }
+
+        lines.push('</body>');
+        lines.push('</html>');
+
+        return lines.join('\n');
+      }
+    },
+
+    /* ------------------------------------------------------------------------
+       Component 5: Floating Action Button (FAB)
+       ------------------------------------------------------------------------ */
+    fab: {
+      name: 'Floating Action Button',
+      category: 'Actions',
+      description: 'Material 3 floating action button (Standard 56dp, Small 40dp, Large 96dp, Extended)',
+      referenceUrl: 'https://m3.material.io/components/floating-action-button/overview',
+
+      initPreview(container) {
+        container.innerHTML = [
+          '<div class="preview-fab-wrapper">',
+          '  <button id="preview-m3-fab" type="button" class="m3-fab">',
+          '    <span class="m3-fab__icon"></span>',
+          '    <span class="m3-fab__label"></span>',
+          '  </button>',
+          '</div>'
+        ].join('\n');
+        const fab = document.getElementById('preview-m3-fab');
+        if (fab) attachM3Ripple(fab);
+      },
+
+      renderPreview(container, s) {
+        const fab = document.getElementById('preview-m3-fab');
+        if (!fab) return;
+
+        fab.className = 'm3-fab';
+        fab.classList.add('m3-fab--' + (s.fabVariant || 'standard'));
+        fab.classList.add('m3-fab--' + (s.fabColorRole || 'surface'));
+        if (s.fabElevation === 'lowered') {
+          fab.classList.add('m3-fab--lowered');
+        }
+        if (s.fabDisabled) {
+          fab.classList.add('m3-fab--disabled');
+          fab.disabled = true;
+        } else {
+          fab.disabled = false;
+        }
+
+        const iconSpan = fab.querySelector('.m3-fab__icon');
+        const labelSpan = fab.querySelector('.m3-fab__label');
+        const iconSvg = M3_ICONS[s.fabIcon] || M3_ICONS.add;
+
+        if (iconSpan) {
+          iconSpan.innerHTML = iconSvg;
+        }
+
+        if (labelSpan) {
+          if (s.fabVariant === 'extended') {
+            labelSpan.style.display = 'inline-block';
+            labelSpan.textContent = s.fabLabel || 'Action';
+            fab.setAttribute('aria-label', s.fabLabel || 'Action');
+          } else {
+            labelSpan.style.display = 'none';
+            labelSpan.textContent = '';
+            fab.setAttribute('aria-label', (s.fabIcon || 'FAB') + ' action');
+          }
+        }
+      },
+
+      generateHTML(s) {
+        const classes = ['m3-fab', 'm3-fab--' + (s.fabVariant || 'standard'), 'm3-fab--' + (s.fabColorRole || 'surface')];
+        if (s.fabElevation === 'lowered') {
+          classes.push('m3-fab--lowered');
+        }
+        const disabledAttr = s.fabDisabled ? ' disabled' : '';
+        const isExtended = s.fabVariant === 'extended';
+        const label = s.fabLabel || 'Action';
+        const ariaLabel = isExtended ? label : ((s.fabIcon || 'FAB') + ' action');
+        const iconSvg = M3_ICONS[s.fabIcon] || M3_ICONS.add;
+
+        const lines = [
+          '<!-- Material 3 ' + (s.fabVariant.charAt(0).toUpperCase() + s.fabVariant.slice(1)) + ' FAB (' + (s.fabColorRole.charAt(0).toUpperCase() + s.fabColorRole.slice(1)) + ') -->',
+          '<button type="button" class="' + classes.join(' ') + '" aria-label="' + ariaLabel + '"' + disabledAttr + '>',
+          '  <span class="m3-fab__icon" aria-hidden="true">' + iconSvg + '</span>'
+        ];
+
+        if (isExtended) {
+          lines.push('  <span class="m3-fab__label">' + label + '</span>');
+        }
+        lines.push('</button>');
+
+        return lines.join('\n');
+      },
+
+      generateCSS(s) {
+        const isJsRipple = s.fabEngine === 'js';
+        const lines = [
+          '/*',
+          ' * Material 3 Floating Action Button (FAB) Styles',
+          ' * https://m3.material.io/components/floating-action-button/overview',
+          ' */',
+          ':root {',
+          '  --m3-fab-size: 56px;',
+          '  --m3-fab-radius: 16px;',
+          '  --m3-fab-icon-size: 24px;',
+          '  --m3-fab-bg: #ece6f0;',
+          '  --m3-fab-color: #6750a4;',
+          '  --m3-fab-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.20);',
+          '  --m3-fab-shadow-hover: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.20);',
+          '}',
+          '',
+          '/* Base FAB */',
+          '.m3-fab {',
+          '  position: relative;',
+          '  display: inline-flex;',
+          '  align-items: center;',
+          '  justify-content: center;',
+          '  width: var(--m3-fab-size);',
+          '  height: var(--m3-fab-size);',
+          '  border-radius: var(--m3-fab-radius);',
+          '  background-color: var(--m3-fab-bg);',
+          '  color: var(--m3-fab-color);',
+          '  box-shadow: var(--m3-fab-shadow);',
+          '  border: none;',
+          '  cursor: pointer;',
+          '  overflow: hidden;',
+          '  box-sizing: border-box;',
+          '  user-select: none;',
+          '  font-family: inherit;',
+          '  font-size: 14px;',
+          '  font-weight: 500;',
+          '  letter-spacing: 0.1px;',
+          '  transition: box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1),',
+          '              background-color 0.2s cubic-bezier(0.2, 0, 0, 1),',
+          '              color 0.2s cubic-bezier(0.2, 0, 0, 1);',
+          '}',
+          '',
+          '/* State Layer */',
+          '.m3-fab::before {',
+          '  content: "";',
+          '  position: absolute;',
+          '  inset: 0;',
+          '  background-color: currentColor;',
+          '  opacity: 0;',
+          '  pointer-events: none;',
+          '  transition: opacity 0.15s cubic-bezier(0.2, 0, 0, 1);',
+          '}',
+          '',
+          '.m3-fab:hover {',
+          '  box-shadow: var(--m3-fab-shadow-hover);',
+          '}',
+          '.m3-fab:hover::before {',
+          '  opacity: 0.08;',
+          '}',
+          '',
+          '.m3-fab:focus-visible {',
+          '  outline: 2px solid var(--m3-fab-color);',
+          '  outline-offset: 2px;',
+          '}',
+          '.m3-fab:focus-visible::before {',
+          '  opacity: 0.12;',
+          '}',
+          '',
+          '.m3-fab:active {',
+          '  box-shadow: var(--m3-fab-shadow);',
+          '}',
+          '.m3-fab:active::before {',
+          '  opacity: 0.12;',
+          '}',
+          '',
+          '/* Sizes */',
+          '.m3-fab--small {',
+          '  --m3-fab-size: 40px;',
+          '  --m3-fab-radius: 12px;',
+          '  --m3-fab-icon-size: 24px;',
+          '}',
+          '.m3-fab--large {',
+          '  --m3-fab-size: 96px;',
+          '  --m3-fab-radius: 28px;',
+          '  --m3-fab-icon-size: 36px;',
+          '}',
+          '.m3-fab--extended {',
+          '  width: auto;',
+          '  min-width: 80px;',
+          '  height: 56px;',
+          '  padding: 0 20px;',
+          '  gap: 12px;',
+          '  border-radius: 16px;',
+          '}',
+          '',
+          '/* Color Roles */',
+          '.m3-fab--surface {',
+          '  --m3-fab-bg: #ece6f0;',
+          '  --m3-fab-color: #6750a4;',
+          '}',
+          '.m3-fab--primary {',
+          '  --m3-fab-bg: #eaddff;',
+          '  --m3-fab-color: #21005d;',
+          '}',
+          '.m3-fab--secondary {',
+          '  --m3-fab-bg: #e8def8;',
+          '  --m3-fab-color: #1d192b;',
+          '}',
+          '.m3-fab--tertiary {',
+          '  --m3-fab-bg: #ffd8e4;',
+          '  --m3-fab-color: #31111d;',
+          '}',
+          '',
+          '/* Lowered Elevation */',
+          '.m3-fab--lowered {',
+          '  --m3-fab-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);',
+          '  --m3-fab-shadow-hover: 0 2px 6px 2px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.30);',
+          '}',
+          '',
+          '/* Disabled FAB */',
+          '.m3-fab:disabled,',
+          '.m3-fab--disabled {',
+          '  pointer-events: none !important;',
+          '  cursor: default !important;',
+          '  box-shadow: none !important;',
+          '  background-color: rgba(29, 25, 43, 0.12) !important;',
+          '  color: rgba(29, 25, 43, 0.38) !important;',
+          '}',
+          '',
+          '/* Icon & Label */',
+          '.m3-fab__icon {',
+          '  display: inline-flex;',
+          '  align-items: center;',
+          '  justify-content: center;',
+          '  width: var(--m3-fab-icon-size);',
+          '  height: var(--m3-fab-icon-size);',
+          '  flex-shrink: 0;',
+          '}',
+          '.m3-fab__icon svg {',
+          '  width: 100%;',
+          '  height: 100%;',
+          '  fill: currentColor;',
+          '}',
+          '.m3-fab__label {',
+          '  display: inline-block;',
+          '  white-space: nowrap;',
+          '}'
+        ];
+
+        if (isJsRipple) {
+          lines.push(
+            '',
+            '/* Material 3 Interactive Ripple Ink */',
+            '.m3-ripple-ink {',
+            '  position: absolute;',
+            '  border-radius: 50%;',
+            '  background-color: currentColor;',
+            '  pointer-events: none;',
+            '  opacity: 0.16;',
+            '  transform: scale(0);',
+            '  animation: m3-ripple 0.6s cubic-bezier(0.2, 0, 0, 1) forwards;',
+            '}',
+            '',
+            '@keyframes m3-ripple {',
+            '  to {',
+            '    transform: scale(2.5);',
+            '    opacity: 0;',
+            '  }',
+            '}'
+          );
+        }
+
+        lines.push(
+          '',
+          '/* Motion Accessibility */',
+          '@media (prefers-reduced-motion: reduce) {',
+          '  .m3-fab,',
+          '  .m3-fab::before {',
+          '    transition: none !important;',
+          '  }',
+          '}'
+        );
+
+        return lines.join('\n');
+      },
+
+      generateJS(s) {
+        if (s.fabEngine !== 'js') {
+          return [
+            '/*',
+            ' * Pure CSS FAB: No JavaScript required.',
+            ' * Material 3 elevation and hover transitions are handled 100% via CSS.',
+            ' */'
+          ].join('\n');
+        }
+
+        return [
+          '/*',
+          ' * Material 3 Interactive Click Ripple Controller',
+          ' * Attaches radial expansion ripple to M3 Floating Action Buttons',
+          ' */',
+          'function attachM3Ripple(el) {',
+          '  if (!el || el._hasM3Ripple) return;',
+          '  el._hasM3Ripple = true;',
+          '',
+          '  el.addEventListener("pointerdown", function (e) {',
+          '    if (el.disabled || el.classList.contains("m3-fab--disabled")) return;',
+          '    const rect = el.getBoundingClientRect();',
+          '    const size = Math.max(rect.width, rect.height);',
+          '    const x = e.clientX - rect.left - size / 2;',
+          '    const y = e.clientY - rect.top - size / 2;',
+          '',
+          '    const ink = document.createElement("span");',
+          '    ink.className = "m3-ripple-ink";',
+          '    ink.style.width = size + "px";',
+          '    ink.style.height = size + "px";',
+          '    ink.style.left = x + "px";',
+          '    ink.style.top = y + "px";',
+          '    el.appendChild(ink);',
+          '',
+          '    setTimeout(() => {',
+          '      ink.remove();',
+          '    }, 650);',
+          '  });',
+          '}',
+          '',
+          '// Initialize ripple on all M3 FABs',
+          'document.querySelectorAll(".m3-fab").forEach(attachM3Ripple);'
+        ].join('\n');
+      },
+
+      generateFullDocument(s) {
+        const html = this.generateHTML(s);
+        const css = this.generateCSS(s);
+        const js = s.fabEngine === 'js' ? this.generateJS(s) : null;
+
+        const lines = [
+          '<!DOCTYPE html>',
+          '<html lang="en">',
+          '<head>',
+          '  <meta charset="UTF-8">',
+          '  <meta name="viewport" content="width=device-width, initial-scale=1.0">',
+          '  <title>Material 3 Floating Action Button Demo</title>',
+          '  <style>',
+          css.split('\n').map(l => '    ' + l).join('\n'),
+          '  </style>',
+          '</head>',
+          '<body>',
+          '',
+          '  <!-- Material 3 FAB Demo Container -->',
           '  <main style="display: flex; min-height: 100vh; align-items: center; justify-content: center; background-color: #fef7ff; padding: 24px;">',
           html.split('\n').map(l => '    ' + l).join('\n'),
           '  </main>'
@@ -1183,7 +2850,8 @@
     }
 
     const isRunning = (state.activeComponent === 'loadingIndicator' && state.animated) ||
-                      (state.activeComponent === 'linearProgress' && state.linearAnimated);
+                      (state.activeComponent === 'linearProgress' && state.linearAnimated) ||
+                      (state.activeComponent === 'circularProgress' && state.circularAnimated);
     if (isRunning) {
       previewRafId = requestAnimationFrame(previewAnimationLoop);
     }
@@ -1201,7 +2869,8 @@
     }
 
     const isRunning = (state.activeComponent === 'loadingIndicator' && state.animated) ||
-                      (state.activeComponent === 'linearProgress' && state.linearAnimated);
+                      (state.activeComponent === 'linearProgress' && state.linearAnimated) ||
+                      (state.activeComponent === 'circularProgress' && state.circularAnimated);
     if (isRunning) {
       previewRafId = requestAnimationFrame(previewAnimationLoop);
     }
@@ -1237,8 +2906,21 @@
 
     const badgeEngine = document.getElementById('badge-engine-type');
     if (badgeEngine) {
-      const eng = state.activeComponent === 'loadingIndicator' ? state.engine : state.linearEngine;
-      badgeEngine.textContent = eng === 'css' ? 'Pure CSS/SVG' : 'Vanilla JS';
+      let eng = state.engine;
+      if (state.activeComponent === 'linearProgress') {
+        eng = state.linearEngine;
+      } else if (state.activeComponent === 'circularProgress') {
+        eng = state.circularEngine;
+      } else if (state.activeComponent === 'button') {
+        eng = state.buttonEngine;
+      } else if (state.activeComponent === 'fab') {
+        eng = state.fabEngine;
+      }
+      if (state.activeComponent === 'button' || state.activeComponent === 'fab') {
+        badgeEngine.textContent = eng === 'css' ? 'Pure CSS' : 'CSS + Ripple JS';
+      } else {
+        badgeEngine.textContent = eng === 'css' ? 'Pure CSS/SVG' : 'Vanilla JS';
+      }
     }
   }
 
@@ -1343,9 +3025,19 @@
         const fullDoc = comp.generateFullDocument(state);
         const blob = new Blob([fullDoc], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
+        let filename = 'm3-loading-indicator.html';
+        if (state.activeComponent === 'linearProgress') {
+          filename = 'm3-linear-progress.html';
+        } else if (state.activeComponent === 'circularProgress') {
+          filename = 'm3-circular-progress.html';
+        } else if (state.activeComponent === 'button') {
+          filename = 'm3-button.html';
+        } else if (state.activeComponent === 'fab') {
+          filename = 'm3-fab.html';
+        }
         const a = document.createElement('a');
         a.href = url;
-        a.download = (state.activeComponent === 'loadingIndicator' ? 'm3-loading-indicator.html' : 'm3-linear-progress.html');
+        a.download = filename;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -1642,9 +3334,37 @@
         btn.classList.add('active');
         btn.setAttribute('aria-checked', 'true');
         state.linearVariant = btn.dataset.linearVariant;
+
+        const ampRow = document.getElementById('linear-amplitude-row');
+        const waveRow = document.getElementById('linear-wavelength-row');
+        if (ampRow) ampRow.style.display = state.linearVariant === 'wavy' ? 'flex' : 'none';
+        if (waveRow) waveRow.style.display = state.linearVariant === 'wavy' ? 'flex' : 'none';
+
         onStateChange();
       });
     });
+
+    // Linear Amplitude slider
+    const linearAmpSlider = document.getElementById('linear-amplitude-slider');
+    const linearAmpVal = document.getElementById('linear-amplitude-val');
+    if (linearAmpSlider) {
+      linearAmpSlider.addEventListener('input', (e) => {
+        state.linearAmplitude = parseInt(e.target.value, 10);
+        if (linearAmpVal) linearAmpVal.textContent = state.linearAmplitude + 'px';
+        onStateChange();
+      });
+    }
+
+    // Linear Wavelength slider
+    const linearWaveSlider = document.getElementById('linear-wavelength-slider');
+    const linearWaveVal = document.getElementById('linear-wavelength-val');
+    if (linearWaveSlider) {
+      linearWaveSlider.addEventListener('input', (e) => {
+        state.linearWavelength = parseInt(e.target.value, 10);
+        if (linearWaveVal) linearWaveVal.textContent = state.linearWavelength + 'px';
+        onStateChange();
+      });
+    }
 
     // Linear Height slider
     const linearHeightSlider = document.getElementById('linear-height-slider');
@@ -1784,6 +3504,501 @@
       });
     });
 
+    /* --- Circular Progress Controls --- */
+    // Circular Mode (Indeterminate vs Determinate)
+    document.querySelectorAll('[data-circular-mode]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-circular-mode]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.circularMode = btn.dataset.circularMode;
+
+        const valRow = document.getElementById('circular-val-row');
+        const fourColRow = document.getElementById('circular-four-color-row');
+        if (valRow) valRow.style.display = state.circularMode === 'determinate' ? 'flex' : 'none';
+        if (fourColRow) fourColRow.style.display = state.circularMode === 'indeterminate' ? 'flex' : 'none';
+        onStateChange();
+      });
+    });
+
+    // Circular Progress slider
+    const circularSlider = document.getElementById('circular-progress-slider');
+    const circularVal = document.getElementById('circular-progress-val');
+    if (circularSlider) {
+      circularSlider.addEventListener('input', (e) => {
+        state.circularProgress = parseInt(e.target.value, 10);
+        if (circularVal) circularVal.textContent = state.circularProgress + '%';
+        onStateChange();
+      });
+    }
+
+    // Circular Variant (Standard vs Wavy)
+    document.querySelectorAll('[data-circular-variant]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-circular-variant]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.circularVariant = btn.dataset.circularVariant;
+
+        const ampRow = document.getElementById('circular-amplitude-row');
+        const wavesRow = document.getElementById('circular-waves-row');
+        const trackShapeRow = document.getElementById('circular-track-shape-row');
+        if (ampRow) ampRow.style.display = state.circularVariant === 'wavy' ? 'flex' : 'none';
+        if (wavesRow) wavesRow.style.display = state.circularVariant === 'wavy' ? 'flex' : 'none';
+        if (trackShapeRow) trackShapeRow.style.display = state.circularVariant === 'wavy' ? 'flex' : 'none';
+        onStateChange();
+      });
+    });
+
+    // Circular Track Shape (Wavy vs Circular)
+    document.querySelectorAll('[data-circular-track-shape]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-circular-track-shape]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.circularTrackShape = btn.dataset.circularTrackShape;
+        onStateChange();
+      });
+    });
+
+    // Circular Size (Diameter) slider
+    const circularSizeSlider = document.getElementById('circular-size-slider');
+    const circularSizeVal = document.getElementById('circular-size-val');
+    if (circularSizeSlider) {
+      circularSizeSlider.addEventListener('input', (e) => {
+        state.circularSize = parseInt(e.target.value, 10);
+        if (circularSizeVal) circularSizeVal.textContent = state.circularSize + 'px';
+        onStateChange();
+      });
+    }
+
+    // Circular Stroke Thickness slider
+    const circularStrokeSlider = document.getElementById('circular-stroke-slider');
+    const circularStrokeVal = document.getElementById('circular-stroke-val');
+    if (circularStrokeSlider) {
+      circularStrokeSlider.addEventListener('input', (e) => {
+        state.circularStroke = parseInt(e.target.value, 10);
+        if (circularStrokeVal) circularStrokeVal.textContent = state.circularStroke + 'px';
+        onStateChange();
+      });
+    }
+
+    // Circular Wave Amplitude slider
+    const circularAmpSlider = document.getElementById('circular-amplitude-slider');
+    const circularAmpVal = document.getElementById('circular-amplitude-val');
+    if (circularAmpSlider) {
+      circularAmpSlider.addEventListener('input', (e) => {
+        state.circularAmplitude = parseInt(e.target.value, 10);
+        if (circularAmpVal) circularAmpVal.textContent = state.circularAmplitude + 'px';
+        onStateChange();
+      });
+    }
+
+    // Circular Wave Cycles (Petals) slider
+    const circularWavesSlider = document.getElementById('circular-waves-slider');
+    const circularWavesVal = document.getElementById('circular-waves-val');
+    if (circularWavesSlider) {
+      circularWavesSlider.addEventListener('input', (e) => {
+        state.circularWaves = parseInt(e.target.value, 10);
+        if (circularWavesVal) circularWavesVal.textContent = state.circularWaves;
+        onStateChange();
+      });
+    }
+
+    // Circular Speed slider
+    const circularSpeedSlider = document.getElementById('circular-speed-slider');
+    const circularSpeedVal = document.getElementById('circular-speed-val');
+    if (circularSpeedSlider) {
+      circularSpeedSlider.addEventListener('input', (e) => {
+        state.circularSpeed = parseFloat(e.target.value);
+        if (circularSpeedVal) circularSpeedVal.textContent = state.circularSpeed.toFixed(1) + 's';
+        onStateChange();
+      });
+    }
+
+    // Circular Animate switch
+    const circularAnimSwitch = document.getElementById('circular-animated-switch');
+    if (circularAnimSwitch) {
+      circularAnimSwitch.addEventListener('change', (e) => {
+        state.circularAnimated = e.target.checked;
+        updatePlayBtnIcon();
+        onStateChange();
+      });
+    }
+
+    // Circular Four Color switch
+    const circularFourSwitch = document.getElementById('circular-four-color-switch');
+    if (circularFourSwitch) {
+      circularFourSwitch.addEventListener('change', (e) => {
+        state.circularFourColor = e.target.checked;
+        onStateChange();
+      });
+    }
+
+    // Circular Indicator Color
+    const circularColorPicker = document.getElementById('circular-color-picker');
+    const circularColorHex = document.getElementById('circular-color-hex');
+
+    document.querySelectorAll('.circular-color-swatch').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.circular-color-swatch').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.circularColor = btn.dataset.color;
+        if (circularColorPicker) circularColorPicker.value = state.circularColor;
+        if (circularColorHex) circularColorHex.value = state.circularColor.toUpperCase();
+        onStateChange();
+      });
+    });
+
+    if (circularColorPicker) {
+      circularColorPicker.addEventListener('input', (e) => {
+        state.circularColor = e.target.value;
+        if (circularColorHex) circularColorHex.value = state.circularColor.toUpperCase();
+        document.querySelectorAll('.circular-color-swatch').forEach(b => b.classList.remove('active'));
+        onStateChange();
+      });
+    }
+
+    if (circularColorHex) {
+      circularColorHex.addEventListener('input', (e) => {
+        const val = e.target.value;
+        if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+          state.circularColor = val;
+          if (circularColorPicker) circularColorPicker.value = val;
+          document.querySelectorAll('.circular-color-swatch').forEach(b => b.classList.remove('active'));
+          onStateChange();
+        }
+      });
+    }
+
+    // Circular Track Color
+    const circularTrackPicker = document.getElementById('circular-track-picker');
+    const circularTrackHex = document.getElementById('circular-track-hex');
+
+    document.querySelectorAll('.circular-track-swatch').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.circular-track-swatch').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.circularTrackColor = btn.dataset.trackColor;
+        if (circularTrackPicker) circularTrackPicker.value = state.circularTrackColor;
+        if (circularTrackHex) circularTrackHex.value = state.circularTrackColor.toUpperCase();
+        onStateChange();
+      });
+    });
+
+    if (circularTrackPicker) {
+      circularTrackPicker.addEventListener('input', (e) => {
+        state.circularTrackColor = e.target.value;
+        if (circularTrackHex) circularTrackHex.value = state.circularTrackColor.toUpperCase();
+        document.querySelectorAll('.circular-track-swatch').forEach(b => b.classList.remove('active'));
+        onStateChange();
+      });
+    }
+
+    if (circularTrackHex) {
+      circularTrackHex.addEventListener('input', (e) => {
+        const val = e.target.value;
+        if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+          state.circularTrackColor = val;
+          if (circularTrackPicker) circularTrackPicker.value = val;
+          document.querySelectorAll('.circular-track-swatch').forEach(b => b.classList.remove('active'));
+          onStateChange();
+        }
+      });
+    }
+
+    // Circular Engine
+    document.querySelectorAll('[data-circular-engine]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-circular-engine]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.circularEngine = btn.dataset.circularEngine;
+        onStateChange();
+      });
+    });
+
+    /* --- Common Buttons Controls --- */
+    // Button Variant
+    document.querySelectorAll('[data-button-variant]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-button-variant]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.buttonVariant = btn.dataset.buttonVariant;
+        const desc = document.getElementById('button-variant-desc');
+        if (desc) {
+          const map = {
+            filled: 'Filled: High emphasis primary action container.',
+            elevated: 'Elevated: High emphasis with subtle shadow on flat background.',
+            tonal: 'Tonal: Medium emphasis secondary container for alternative actions.',
+            outlined: 'Outlined: Medium emphasis with subtle border and clear boundary.',
+            text: 'Text: Low emphasis action with no border or surface container.'
+          };
+          desc.textContent = map[state.buttonVariant] || '';
+        }
+        onStateChange();
+      });
+    });
+
+    // Button Label
+    const buttonLabelInput = document.getElementById('button-label-input');
+    if (buttonLabelInput) {
+      buttonLabelInput.addEventListener('input', (e) => {
+        state.buttonLabel = e.target.value;
+        onStateChange();
+      });
+    }
+
+    // Button Icon Placement
+    document.querySelectorAll('[data-button-icon-placement]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-button-icon-placement]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.buttonIconPlacement = btn.dataset.buttonIconPlacement;
+        const iconRow = document.getElementById('button-icon-select-row');
+        if (iconRow) {
+          iconRow.style.display = state.buttonIconPlacement === 'none' ? 'none' : 'flex';
+        }
+        onStateChange();
+      });
+    });
+
+    // Button Icon Select
+    const buttonIconSelect = document.getElementById('button-icon-select');
+    if (buttonIconSelect) {
+      buttonIconSelect.addEventListener('change', (e) => {
+        state.buttonIcon = e.target.value;
+        onStateChange();
+      });
+    }
+
+    // Button Size / Density
+    document.querySelectorAll('[data-button-size]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-button-size]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.buttonSize = btn.dataset.buttonSize;
+        onStateChange();
+      });
+    });
+
+    // Button Corner Radius
+    document.querySelectorAll('[data-button-corner]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-button-corner]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.buttonCorner = btn.dataset.buttonCorner;
+        onStateChange();
+      });
+    });
+
+    // Button Full Width
+    const buttonFullWidthSwitch = document.getElementById('button-full-width-switch');
+    if (buttonFullWidthSwitch) {
+      buttonFullWidthSwitch.addEventListener('change', (e) => {
+        state.buttonFullWidth = e.target.checked;
+        onStateChange();
+      });
+    }
+
+    // Button Disabled
+    const buttonDisabledSwitch = document.getElementById('button-disabled-switch');
+    if (buttonDisabledSwitch) {
+      buttonDisabledSwitch.addEventListener('change', (e) => {
+        state.buttonDisabled = e.target.checked;
+        onStateChange();
+      });
+    }
+
+    // Button Color Presets & Pickers
+    const buttonColorPicker = document.getElementById('button-color-picker');
+    const buttonColorHex = document.getElementById('button-color-hex');
+
+    document.querySelectorAll('.button-color-swatch').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.button-color-swatch').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.buttonColor = btn.dataset.color;
+        if (buttonColorPicker) buttonColorPicker.value = state.buttonColor;
+        if (buttonColorHex) buttonColorHex.value = state.buttonColor.toUpperCase();
+        onStateChange();
+      });
+    });
+
+    if (buttonColorPicker) {
+      buttonColorPicker.addEventListener('input', (e) => {
+        state.buttonColor = e.target.value;
+        if (buttonColorHex) buttonColorHex.value = state.buttonColor.toUpperCase();
+        document.querySelectorAll('.button-color-swatch').forEach(b => b.classList.remove('active'));
+        onStateChange();
+      });
+    }
+
+    if (buttonColorHex) {
+      buttonColorHex.addEventListener('input', (e) => {
+        const val = e.target.value;
+        if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+          state.buttonColor = val;
+          if (buttonColorPicker) buttonColorPicker.value = val;
+          document.querySelectorAll('.button-color-swatch').forEach(b => b.classList.remove('active'));
+          onStateChange();
+        }
+      });
+    }
+
+    // Button Engine
+    document.querySelectorAll('[data-button-engine]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-button-engine]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.buttonEngine = btn.dataset.buttonEngine;
+        onStateChange();
+      });
+    });
+
+    /* --- Floating Action Button (FAB) Controls --- */
+    // FAB Variant / Size
+    document.querySelectorAll('[data-fab-variant]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-fab-variant]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.fabVariant = btn.dataset.fabVariant;
+
+        const labelRow = document.getElementById('fab-label-row');
+        if (labelRow) {
+          labelRow.style.display = state.fabVariant === 'extended' ? 'flex' : 'none';
+        }
+
+        const desc = document.getElementById('fab-variant-desc');
+        if (desc) {
+          const map = {
+            standard: 'Standard FAB: Canonical 56dp primary floating action trigger.',
+            small: 'Small FAB: Compact 40dp button for secondary actions or tight spaces.',
+            large: 'Large FAB: Prominent 96dp action container for high-visual priority.',
+            extended: 'Extended FAB: Floating container with both icon and text label.'
+          };
+          desc.textContent = map[state.fabVariant] || '';
+        }
+        onStateChange();
+      });
+    });
+
+    // FAB Label
+    const fabLabelInput = document.getElementById('fab-label-input');
+    if (fabLabelInput) {
+      fabLabelInput.addEventListener('input', (e) => {
+        state.fabLabel = e.target.value;
+        onStateChange();
+      });
+    }
+
+    // FAB Color Role
+    document.querySelectorAll('[data-fab-color-role]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-fab-color-role]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.fabColorRole = btn.dataset.fabColorRole;
+
+        const desc = document.getElementById('fab-color-desc');
+        if (desc) {
+          const map = {
+            surface: 'Surface FAB: Default tonal surface elevation container.',
+            primary: 'Primary FAB: High emphasis with primary container background.',
+            secondary: 'Secondary FAB: Medium emphasis with secondary tonal container.',
+            tertiary: 'Tertiary FAB: Expressive emphasis with tertiary container accent.'
+          };
+          desc.textContent = map[state.fabColorRole] || '';
+        }
+        onStateChange();
+      });
+    });
+
+    // FAB Icon
+    const fabIconSelect = document.getElementById('fab-icon-select');
+    if (fabIconSelect) {
+      fabIconSelect.addEventListener('change', (e) => {
+        state.fabIcon = e.target.value;
+        onStateChange();
+      });
+    }
+
+    // FAB Elevation
+    document.querySelectorAll('[data-fab-elevation]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-fab-elevation]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.fabElevation = btn.dataset.fabElevation;
+        onStateChange();
+      });
+    });
+
+    // FAB Disabled
+    const fabDisabledSwitch = document.getElementById('fab-disabled-switch');
+    if (fabDisabledSwitch) {
+      fabDisabledSwitch.addEventListener('change', (e) => {
+        state.fabDisabled = e.target.checked;
+        onStateChange();
+      });
+    }
+
+    // FAB Engine
+    document.querySelectorAll('[data-fab-engine]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-fab-engine]').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        state.fabEngine = btn.dataset.fabEngine;
+        onStateChange();
+      });
+    });
+
     /* --- Toolbar controls --- */
     document.querySelectorAll('[data-bg]').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1801,9 +4016,13 @@
         if (state.activeComponent === 'loadingIndicator') {
           state.animated = !state.animated;
           if (animSwitch) animSwitch.checked = state.animated;
-        } else {
+        } else if (state.activeComponent === 'linearProgress') {
           state.linearAnimated = !state.linearAnimated;
           if (linearAnimSwitch) linearAnimSwitch.checked = state.linearAnimated;
+        } else if (state.activeComponent === 'circularProgress') {
+          state.circularAnimated = !state.circularAnimated;
+          const circAnimSwitch = document.getElementById('circular-animated-switch');
+          if (circAnimSwitch) circAnimSwitch.checked = state.circularAnimated;
         }
         updatePlayBtnIcon();
         onStateChange();
@@ -1849,13 +4068,15 @@
           if (strokeContainer) strokeContainer.style.display = 'none';
           const singleContainer = document.getElementById('single-shape-container');
           if (singleContainer) singleContainer.style.display = 'none';
-        } else {
+        } else if (state.activeComponent === 'linearProgress') {
           // Reset Linear Progress
           state.linearMode = 'indeterminate';
           state.linearProgress = 65;
           state.linearVariant = 'standard';
           state.linearHeight = 4;
           state.linearWidth = 320;
+          state.linearAmplitude = 6;
+          state.linearWavelength = 32;
           state.linearColor = '#6750A4';
           state.linearTrackColor = '#E6E0E9';
           state.linearFourColor = false;
@@ -1869,6 +4090,10 @@
           if (linearHeightVal) linearHeightVal.textContent = '4px';
           if (linearWidthSlider) linearWidthSlider.value = 320;
           if (linearWidthVal) linearWidthVal.textContent = '320px';
+          if (linearAmpSlider) linearAmpSlider.value = 6;
+          if (linearAmpVal) linearAmpVal.textContent = '6px';
+          if (linearWaveSlider) linearWaveSlider.value = 32;
+          if (linearWaveVal) linearWaveVal.textContent = '32px';
           if (linearSpeedSlider) linearSpeedSlider.value = 2.0;
           if (linearSpeedVal) linearSpeedVal.textContent = '2.0s';
           if (linearAnimSwitch) linearAnimSwitch.checked = true;
@@ -1884,8 +4109,158 @@
 
           const valRow = document.getElementById('linear-val-row');
           const fourColRow = document.getElementById('linear-four-color-row');
+          const ampRow = document.getElementById('linear-amplitude-row');
+          const waveRow = document.getElementById('linear-wavelength-row');
           if (valRow) valRow.style.display = 'none';
           if (fourColRow) fourColRow.style.display = 'flex';
+          if (ampRow) ampRow.style.display = 'none';
+          if (waveRow) waveRow.style.display = 'none';
+        } else if (state.activeComponent === 'circularProgress') {
+          // Reset Circular Progress
+          state.circularMode = 'indeterminate';
+          state.circularProgress = 65;
+          state.circularVariant = 'wavy';
+          state.circularTrackShape = 'wavy';
+          state.circularSize = 112;
+          state.circularStroke = 7;
+          state.circularAmplitude = 6;
+          state.circularWaves = 12;
+          state.circularSpeed = 1.4;
+          state.circularAnimated = true;
+          state.circularFourColor = false;
+          state.circularColor = '#6750A4';
+          state.circularTrackColor = '#E6E0E9';
+          state.circularEngine = 'css';
+
+          const circSlider = document.getElementById('circular-progress-slider');
+          const circVal = document.getElementById('circular-progress-val');
+          if (circSlider) circSlider.value = 65;
+          if (circVal) circVal.textContent = '65%';
+
+          const circSizeSlider = document.getElementById('circular-size-slider');
+          const circSizeVal = document.getElementById('circular-size-val');
+          if (circSizeSlider) circSizeSlider.value = 112;
+          if (circSizeVal) circSizeVal.textContent = '112px';
+
+          const circStrokeSlider = document.getElementById('circular-stroke-slider');
+          const circStrokeVal = document.getElementById('circular-stroke-val');
+          if (circStrokeSlider) circStrokeSlider.value = 7;
+          if (circStrokeVal) circStrokeVal.textContent = '7px';
+
+          const circAmpSlider = document.getElementById('circular-amplitude-slider');
+          const circAmpVal = document.getElementById('circular-amplitude-val');
+          if (circAmpSlider) circAmpSlider.value = 6;
+          if (circAmpVal) circAmpVal.textContent = '6px';
+
+          const circWavesSlider = document.getElementById('circular-waves-slider');
+          const circWavesVal = document.getElementById('circular-waves-val');
+          if (circWavesSlider) circWavesSlider.value = 12;
+          if (circWavesVal) circWavesVal.textContent = '12';
+
+          const circSpeedSlider = document.getElementById('circular-speed-slider');
+          const circSpeedVal = document.getElementById('circular-speed-val');
+          if (circSpeedSlider) circSpeedSlider.value = 1.4;
+          if (circSpeedVal) circSpeedVal.textContent = '1.4s';
+
+          const circAnimSwitch = document.getElementById('circular-animated-switch');
+          if (circAnimSwitch) circAnimSwitch.checked = true;
+
+          const circFourSwitch = document.getElementById('circular-four-color-switch');
+          if (circFourSwitch) circFourSwitch.checked = false;
+
+          const circColorPicker = document.getElementById('circular-color-picker');
+          const circColorHex = document.getElementById('circular-color-hex');
+          if (circColorPicker) circColorPicker.value = '#6750A4';
+          if (circColorHex) circColorHex.value = '#6750A4';
+
+          const circTrackPicker = document.getElementById('circular-track-picker');
+          const circTrackHex = document.getElementById('circular-track-hex');
+          if (circTrackPicker) circTrackPicker.value = '#E6E0E9';
+          if (circTrackHex) circTrackHex.value = '#E6E0E9';
+
+          resetSegmentedButton('[data-circular-mode]', 'indeterminate');
+          resetSegmentedButton('[data-circular-variant]', 'wavy');
+          resetSegmentedButton('[data-circular-track-shape]', 'wavy');
+          resetSegmentedButton('[data-circular-engine]', 'css');
+
+          const cValRow = document.getElementById('circular-val-row');
+          const cFourColRow = document.getElementById('circular-four-color-row');
+          const cAmpRow = document.getElementById('circular-amplitude-row');
+          const cWavesRow = document.getElementById('circular-waves-row');
+          const cTrackShapeRow = document.getElementById('circular-track-shape-row');
+          if (cValRow) cValRow.style.display = 'none';
+          if (cFourColRow) cFourColRow.style.display = 'flex';
+          if (cAmpRow) cAmpRow.style.display = 'flex';
+          if (cWavesRow) cWavesRow.style.display = 'flex';
+          if (cTrackShapeRow) cTrackShapeRow.style.display = 'flex';
+        } else if (state.activeComponent === 'button') {
+          // Reset Button
+          state.buttonVariant = 'filled';
+          state.buttonLabel = 'Explore Material 3';
+          state.buttonIconPlacement = 'leading';
+          state.buttonIcon = 'sparkle';
+          state.buttonSize = 'medium';
+          state.buttonCorner = 'full';
+          state.buttonFullWidth = false;
+          state.buttonDisabled = false;
+          state.buttonColor = '#6750A4';
+          state.buttonEngine = 'css';
+
+          const btnLabelIn = document.getElementById('button-label-input');
+          if (btnLabelIn) btnLabelIn.value = 'Explore Material 3';
+          const btnIconSel = document.getElementById('button-icon-select');
+          if (btnIconSel) btnIconSel.value = 'sparkle';
+          const btnFullSw = document.getElementById('button-full-width-switch');
+          if (btnFullSw) btnFullSw.checked = false;
+          const btnDisSw = document.getElementById('button-disabled-switch');
+          if (btnDisSw) btnDisSw.checked = false;
+          const btnColPk = document.getElementById('button-color-picker');
+          const btnColHex = document.getElementById('button-color-hex');
+          if (btnColPk) btnColPk.value = '#6750A4';
+          if (btnColHex) btnColHex.value = '#6750A4';
+
+          document.querySelectorAll('.button-color-swatch').forEach(b => {
+            b.classList.toggle('active', b.dataset.color === '#6750A4');
+          });
+
+          resetSegmentedButton('[data-button-variant]', 'filled');
+          resetSegmentedButton('[data-button-icon-placement]', 'leading');
+          resetSegmentedButton('[data-button-size]', 'medium');
+          resetSegmentedButton('[data-button-corner]', 'full');
+          resetSegmentedButton('[data-button-engine]', 'css');
+
+          const btnIconRow = document.getElementById('button-icon-select-row');
+          if (btnIconRow) btnIconRow.style.display = 'flex';
+          const btnVarDesc = document.getElementById('button-variant-desc');
+          if (btnVarDesc) btnVarDesc.textContent = 'Filled: High emphasis primary action container.';
+        } else if (state.activeComponent === 'fab') {
+          // Reset FAB
+          state.fabVariant = 'standard';
+          state.fabColorRole = 'surface';
+          state.fabLabel = 'Compose';
+          state.fabIcon = 'add';
+          state.fabElevation = 'standard';
+          state.fabDisabled = false;
+          state.fabEngine = 'css';
+
+          const fabLabelIn = document.getElementById('fab-label-input');
+          if (fabLabelIn) fabLabelIn.value = 'Compose';
+          const fabIconSel = document.getElementById('fab-icon-select');
+          if (fabIconSel) fabIconSel.value = 'add';
+          const fabDisSw = document.getElementById('fab-disabled-switch');
+          if (fabDisSw) fabDisSw.checked = false;
+
+          resetSegmentedButton('[data-fab-variant]', 'standard');
+          resetSegmentedButton('[data-fab-color-role]', 'surface');
+          resetSegmentedButton('[data-fab-elevation]', 'standard');
+          resetSegmentedButton('[data-fab-engine]', 'css');
+
+          const fabLblRow = document.getElementById('fab-label-row');
+          if (fabLblRow) fabLblRow.style.display = 'none';
+          const fabVarDesc = document.getElementById('fab-variant-desc');
+          if (fabVarDesc) fabVarDesc.textContent = 'Standard FAB: Canonical 56dp primary floating action trigger.';
+          const fabColDesc = document.getElementById('fab-color-desc');
+          if (fabColDesc) fabColDesc.textContent = 'Surface FAB: Default tonal surface elevation container.';
         }
 
         updatePlayBtnIcon();
@@ -1918,7 +4293,20 @@
                     (btn.dataset.engine === value) ||
                     (btn.dataset.linearMode === value) ||
                     (btn.dataset.linearVariant === value) ||
-                    (btn.dataset.linearEngine === value);
+                    (btn.dataset.linearEngine === value) ||
+                    (btn.dataset.circularMode === value) ||
+                    (btn.dataset.circularVariant === value) ||
+                    (btn.dataset.circularTrackShape === value) ||
+                    (btn.dataset.circularEngine === value) ||
+                    (btn.dataset.buttonVariant === value) ||
+                    (btn.dataset.buttonIconPlacement === value) ||
+                    (btn.dataset.buttonSize === value) ||
+                    (btn.dataset.buttonCorner === value) ||
+                    (btn.dataset.buttonEngine === value) ||
+                    (btn.dataset.fabVariant === value) ||
+                    (btn.dataset.fabColorRole === value) ||
+                    (btn.dataset.fabElevation === value) ||
+                    (btn.dataset.fabEngine === value);
       if (match) {
         btn.classList.add('active');
         btn.setAttribute('aria-checked', 'true');
@@ -1936,7 +4324,25 @@
     const iconPlay = playBtn.querySelector('.icon-play');
     const btnText = playBtn.querySelector('.btn-text');
 
-    const isAnimated = state.activeComponent === 'loadingIndicator' ? state.animated : state.linearAnimated;
+    if (state.activeComponent === 'button' || state.activeComponent === 'fab') {
+      playBtn.style.opacity = '0.5';
+      playBtn.style.pointerEvents = 'none';
+      if (btnText) btnText.textContent = 'Interactive';
+      if (iconPause) iconPause.style.display = 'none';
+      if (iconPlay) iconPlay.style.display = 'block';
+      playBtn.setAttribute('aria-label', 'Interactive component');
+      return;
+    }
+
+    playBtn.style.opacity = '1';
+    playBtn.style.pointerEvents = 'auto';
+
+    let isAnimated = state.animated;
+    if (state.activeComponent === 'linearProgress') {
+      isAnimated = state.linearAnimated;
+    } else if (state.activeComponent === 'circularProgress') {
+      isAnimated = state.circularAnimated;
+    }
 
     if (isAnimated) {
       if (iconPause) iconPause.style.display = 'block';
